@@ -1,0 +1,38 @@
+package https.github.com.wallas5h.LaskoMed.infrastructure.database.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Set;
+
+@Getter
+@Setter
+@EqualsAndHashCode(of = "clinicId")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "clinic")
+public class ClinicEntity {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="clinic_id")
+  private Integer clinicId;
+
+  @Column(name="name")
+  private String name;
+
+  @Column(name="regon")
+  private String regon;
+
+  @Column(name="nip")
+  private String nip;
+
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "clinic")
+  private AddressEntity address;
+
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "clinic")
+  private Set<MedicalAppointmentEntity> appointments;
+}
