@@ -1,13 +1,14 @@
 CREATE TABLE medical_appointment (
-    id SERIAL PRIMARY KEY       NOT NULL,
+    appointment_id SERIAL PRIMARY KEY       NOT NULL,
+    appointment_status      VARCHAR(20) CHECK (appointment_status IN ('completed', 'missed', 'interrupted')) NOT NULL,
+    diagnosis   VARCHAR(255)  ,
+    cost        DECIMAL(6, 2),
+    prescription TEXT         ,
     patient_id INT              NOT NULL,
     doctor_id INT               NOT NULL,
     clinic_id INT               NOT NULL,
     booking_appointment_id INT  NOT NULL,
-    appointment_status      VARCHAR(20) CHECK (status IN ('completed', 'missed', 'interrupted')) NOT NULL,
-    diagnosis   VARCHAR(255)  ,
-    cost        DECIMAL(6, 2),
-    prescription TEXT           ,
+    referral_id INT             ,
     CONSTRAINT fk_medical_appointment_patient
         FOREIGN KEY (patient_id)
             REFERENCES patient(patient_id),
