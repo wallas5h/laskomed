@@ -1,5 +1,5 @@
 CREATE TABLE booking_appointment (
-    id SERIAL PRIMARY KEY,
+    booking_id SERIAL PRIMARY KEY,
     patient_id INT              NOT NULL,
     doctor_id INT               NOT NULL,
     clinic_id INT               NOT NULL,
@@ -10,8 +10,8 @@ CREATE TABLE booking_appointment (
             REFERENCES patient(id),
     CONSTRAINT fk_medical_appointment_doctor
         FOREIGN KEY (doctor_id)
-            REFERENCES doctor(id),
+            REFERENCES doctor(doctor_id),
     CONSTRAINT fk_medical_appointment_clinic
         FOREIGN KEY (clinic_id)
-            REFERENCES clinic(id)
+            REFERENCES clinic(clinic_id)
 );

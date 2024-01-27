@@ -10,14 +10,14 @@ CREATE TABLE medical_appointment (
     prescription TEXT           ,
     CONSTRAINT fk_medical_appointment_patient
         FOREIGN KEY (patient_id)
-            REFERENCES patient(id),
+            REFERENCES patient(patient_id),
     CONSTRAINT fk_medical_appointment_doctor
         FOREIGN KEY (doctor_id)
-            REFERENCES doctor(id),
+            REFERENCES doctor(doctor_id),
     CONSTRAINT fk_medical_appointment_clinic
         FOREIGN KEY (clinic_id)
-            REFERENCES clinic(id),
+            REFERENCES clinic(clinic_id),
     CONSTRAINT fk_medical_appointment_booking_appointment
         FOREIGN KEY (booking_appointment_id)
-            REFERENCES booking_appointment(id)
+            REFERENCES booking_appointment(booking_id)
 );

@@ -1,5 +1,5 @@
 CREATE TABLE prescription (
-    id SERIAL                   PRIMARY KEY NOT NULL,
+    prescription_id SERIAL                   PRIMARY KEY NOT NULL,
     prescription_number         VARCHAR(20) NOT NULL,
     prescription_issue_date     TIMESTAMP   NOT NULL,
     prescription_completion_date TIMESTAMP  NOT NULL,
@@ -13,11 +13,11 @@ CREATE TABLE prescription (
     instructions TEXT,
     CONSTRAINT fk_prescription_patient
         FOREIGN KEY (patient_id)
-            REFERENCES patient(id),
+            REFERENCES patient(patient_id),
     CONSTRAINT fk_prescription_doctor
         FOREIGN KEY (doctor_id)
-            REFERENCES doctor(id),
+            REFERENCES doctor(doctor_id),
     CONSTRAINT fk_prescription_clinic
         FOREIGN KEY (clinic_id)
-            REFERENCES clinic(id)
+            REFERENCES clinic(clinic_id)
 );

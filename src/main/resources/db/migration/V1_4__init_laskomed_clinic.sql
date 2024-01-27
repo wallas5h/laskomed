@@ -1,5 +1,5 @@
 CREATE TABLE clinic (
-    id SERIAL PRIMARY KEY   NOT NULL,
+    clinic_id SERIAL PRIMARY KEY   NOT NULL,
     name VARCHAR(100)       NOT NULL,
     address_id INT          NOT NULL,
     regon VARCHAR(20)       NOT NULL,
