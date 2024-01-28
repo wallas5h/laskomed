@@ -18,7 +18,7 @@ public class DiagnosedDiseaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "diagnosed_disease_id")
-  private Integer diagnosedDiseaseId;
+  private Long diagnosedDiseaseId;
 
   @Column(name = "diagnosis_date")
   private OffsetDateTime diagnosisDate;

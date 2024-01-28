@@ -18,7 +18,7 @@ public class BookingAppointmentEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "booking_id")
-  private Integer bookingId;
+  private Long bookingId;
 
   @Column(name = "booking_date")
   private OffsetDateTime bookingDate;

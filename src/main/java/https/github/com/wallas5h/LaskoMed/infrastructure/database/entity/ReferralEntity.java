@@ -18,7 +18,7 @@ public class ReferralEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "referral_id")
-  private String referralId;
+  private Long referralId;
 
   @Column(name = "referral_date")
   private OffsetDateTime referralDate;

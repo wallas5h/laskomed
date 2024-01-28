@@ -18,7 +18,7 @@ public class MedicalAppointmentEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "appointment_id")
-  private Integer appointmentId;
+  private Long appointmentId;
 
   @Column(name = "appointment_status")
   private String appointmentStatus;

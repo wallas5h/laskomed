@@ -19,7 +19,7 @@ public class DoctorAvailabilityEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="availability_id")
-  private Integer availabilityId;
+  private Long availabilityId;
 
   @Column(name = "date_available")  // '2024-01-27'
   private LocalDate dateAvailable;
