@@ -13,7 +13,7 @@ public class Address {
 
     Long addressId;
     String country;
-    String vivodeship;
+    String voivodeship;
     String postalCode;
     String houseNumber;
     String region;
