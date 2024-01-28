@@ -26,6 +26,9 @@ public class MedicalAppointmentEntity {
   @Column(name = "diagnosis")
   private String diagnosis;
 
+  @Column(name = "doctor_comment")
+  private String doctorComment;
+
   @Column(name = "cost")
   private BigDecimal cost;
 

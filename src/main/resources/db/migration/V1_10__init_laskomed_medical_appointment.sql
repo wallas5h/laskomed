@@ -2,6 +2,7 @@ CREATE TABLE medical_appointment (
     appointment_id SERIAL PRIMARY KEY       NOT NULL,
     appointment_status      VARCHAR(20) CHECK (appointment_status IN ('completed', 'missed', 'interrupted')) NOT NULL,
     diagnosis   VARCHAR(255)  ,
+    doctor_comment   VARCHAR(255)  ,
     cost        DECIMAL(6, 2),
     prescription TEXT         ,
     patient_id INT              NOT NULL,

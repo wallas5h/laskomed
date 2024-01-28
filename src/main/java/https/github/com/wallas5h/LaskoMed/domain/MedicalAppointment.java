@@ -14,6 +14,7 @@ public class MedicalAppointment {
   Long appointmentId;
   String appointmentStatus;
   String diagnosis;
+  String doctorComment;
   BigDecimal cost;
   String prescription;
   Clinic clinic;
