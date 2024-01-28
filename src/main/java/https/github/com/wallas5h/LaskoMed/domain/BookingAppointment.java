@@ -1,8 +1,5 @@
 package https.github.com.wallas5h.LaskoMed.domain;
 
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.ClinicEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -18,7 +15,7 @@ public class BookingAppointment {
   OffsetDateTime bookingDate;
   String bookingStatus;
   String type;
-  PatientEntity patient;
-  DoctorEntity doctor;
-  ClinicEntity clinic;
+  Patient patient;
+  Doctor doctor;
+  Clinic clinic;
 }

@@ -1,7 +1,5 @@
 package https.github.com.wallas5h.LaskoMed.domain;
 
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.AddressEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -17,6 +15,6 @@ public class DiagnosedDisease {
   OffsetDateTime diagnosisDate;
   String diseaseName;
   String description;
-  PatientEntity patient;
-  AddressEntity doctor;
+  Patient patient;
+  Address doctor;
 }

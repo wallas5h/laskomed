@@ -1,9 +1,5 @@
 package https.github.com.wallas5h.LaskoMed.domain;
 
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.BookingAppointmentEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.ClinicEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -20,8 +16,8 @@ public class MedicalAppointment {
   String diagnosis;
   BigDecimal cost;
   String prescription;
-  ClinicEntity clinic;
-  PatientEntity patient;
-  BookingAppointmentEntity bookingAppointment;
-  DoctorEntity doctor;
+  Clinic clinic;
+  Patient patient;
+  BookingAppointment bookingAppointment;
+  Doctor doctor;
 }

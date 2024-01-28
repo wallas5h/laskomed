@@ -1,9 +1,5 @@
 package https.github.com.wallas5h.LaskoMed.domain;
 
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.AddressEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.ClinicEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -21,8 +17,8 @@ public class Referral {
   OffsetDateTime referralDate;
   String referralPurpose;
   String referralDiagnosis;
-  AddressEntity address;
-  DoctorEntity doctor;
-  ClinicEntity clinic;
-  PatientEntity patient;
+  Address address;
+  Doctor doctor;
+  Clinic clinic;
+  Patient patient;
 }
