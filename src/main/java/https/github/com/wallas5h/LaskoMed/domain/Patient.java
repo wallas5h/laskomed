@@ -10,7 +10,8 @@ import java.util.Set;
 @Value
 @Builder
 @EqualsAndHashCode(of = "patientId")
-@ToString(of = {})
+@ToString(of = {"patientId", "name", "surname", "pesel", "birthdate", "email", "password", "phone",
+    "medicalPackage", "gender" })
 public class Patient {
 
     Long patientId;

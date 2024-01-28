@@ -9,8 +9,8 @@ import java.util.Set;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "addressId")
-@ToString(of = {})
+@EqualsAndHashCode(of = "doctorId")
+@ToString(of = {"doctorId", "name", "surname", "pesel", "specialization", "PWZ_number", "phone"})
 public class Doctor {
   Long doctorId;
   String name;
