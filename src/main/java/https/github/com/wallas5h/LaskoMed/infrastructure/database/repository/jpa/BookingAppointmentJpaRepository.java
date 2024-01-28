@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookingAppointmentJpaRepository  extends JpaRepository<BookingAppointmentEntity, Integer> {
+public interface BookingAppointmentJpaRepository  extends JpaRepository<BookingAppointmentEntity, Long> {
 
 }
