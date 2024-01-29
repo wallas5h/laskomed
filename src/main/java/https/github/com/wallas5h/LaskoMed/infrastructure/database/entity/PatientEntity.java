@@ -57,12 +57,12 @@ public class PatientEntity {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
   private Set<BookingAppointmentEntity> bookings;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
   private Set<PrescriptionEntity> prescriptions;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
   private Set<ReferralEntity> referrals;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
   private Set<DiagnosedDiseaseEntity> diagnosedDiseases;
 }
