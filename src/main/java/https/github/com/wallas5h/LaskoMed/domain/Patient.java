@@ -20,7 +20,6 @@ public class Patient {
     String pesel;
     String birthdate;
     String email;
-    String password;
     String phone;
     String medicalPackage;
     String gender;

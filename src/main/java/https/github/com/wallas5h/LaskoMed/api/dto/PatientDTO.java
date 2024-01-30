@@ -19,14 +19,13 @@ public class PatientDTO {
     private String pesel;
     private String birthdate;
     private String email;
-    private String password;
     private String phone;
     private String medicalPackage;
     private String gender;
     private AddressDTO addressDTO;
     private Set<MedicalAppointmentDTO> appointments;
     private Set<BookingAppointmentDTO> bookings;
-    private Set<PrescriptionDTO> prescriptionDTOS;
+    private Set<PrescriptionDTO> prescriptions;
     private Set<ReferralDTO> referrals;
     private Set<DiagnosedDiseaseDTO> diagnosedDiseases;
 

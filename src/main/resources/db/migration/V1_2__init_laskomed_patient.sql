@@ -6,7 +6,6 @@ CREATE TABLE patient
     pesel       VARCHAR(32) NOT NULL,
     birthdate   DATE        NOT NULL,
     email       VARCHAR(32) NOT NULL,
-    password    VARCHAR(64) NOT NULL,
     phone       VARCHAR(32) NOT NULL,
     gender      VARCHAR(20) NOT NULL,
     medical_package VARCHAR(20) CHECK (medical_package IN ('premium', 'standard')) NOT NULL,
