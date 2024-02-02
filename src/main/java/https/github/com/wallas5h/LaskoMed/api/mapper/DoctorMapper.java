@@ -11,5 +11,7 @@ public interface DoctorMapper {
 
   Doctor mapFromEntity(DoctorEntity entity);
 
+  DoctorDTO mapFromEntityToDto(DoctorEntity entity);
+
   DoctorEntity mapToEntity(Doctor object);
 }

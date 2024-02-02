@@ -12,6 +12,10 @@ public interface AddressMapper {
 
   @Mapping(target = "patient", ignore = true )
   @Mapping(target = "clinic", ignore = true )
+  AddressDTO mapFromEntityToDto(AddressEntity entity);
+
+  @Mapping(target = "patient", ignore = true )
+  @Mapping(target = "clinic", ignore = true )
   Address mapFromEntity(AddressEntity entity);
 
   AddressEntity mapToEntity(Address object);

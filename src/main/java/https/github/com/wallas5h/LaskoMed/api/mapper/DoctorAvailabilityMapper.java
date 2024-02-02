@@ -14,5 +14,9 @@ public interface DoctorAvailabilityMapper {
   @Mapping(target = "clinic", ignore = true )
   DoctorAvailability mapFromEntity(DoctorAvailabilityEntity entity);
 
+  @Mapping(target = "doctor", ignore = true )
+  @Mapping(target = "clinic", ignore = true )
+  DoctorAvailabilityDTO mapFromEntityToDto(DoctorAvailabilityEntity entity);
+
   DoctorAvailabilityEntity mapToEntity(DoctorAvailability object);
 }

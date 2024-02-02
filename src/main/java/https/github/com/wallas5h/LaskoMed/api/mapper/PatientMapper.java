@@ -13,6 +13,11 @@ public interface PatientMapper {
   @Mapping(target = "prescriptions", ignore = true )
   @Mapping(target = "referrals", ignore = true )
   @Mapping(target = "diagnosedDiseases", ignore = true )
+  PatientDTO mapFromEntityToDto(PatientEntity patient);
+
+  @Mapping(target = "prescriptions", ignore = true )
+  @Mapping(target = "referrals", ignore = true )
+  @Mapping(target = "diagnosedDiseases", ignore = true )
   Patient mapFromEntity(PatientEntity entity);
 
   PatientEntity mapToEntity(Patient object);
