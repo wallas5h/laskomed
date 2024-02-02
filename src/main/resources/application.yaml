@@ -17,6 +17,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
+    show-sql: true
     url: jdbc:postgresql://localhost:5432/laskomed
     username: postgres
     password: 1234
@@ -32,6 +33,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
   # tylko na developmencie
 logging:
   level:
