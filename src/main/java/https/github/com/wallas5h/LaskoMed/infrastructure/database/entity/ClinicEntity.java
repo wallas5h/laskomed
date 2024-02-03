@@ -30,7 +30,7 @@ public class ClinicEntity {
   private String nip;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "clinic")
+  @JoinColumn(name = "clinic_id")
   private AddressEntity address;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "clinic")
