@@ -10,7 +10,7 @@ import java.util.Set;
 @Value
 @Builder
 @EqualsAndHashCode(of = "patientId")
-@ToString(of = {"patientId", "name", "surname", "pesel", "birthdate", "email", "password", "phone",
+@ToString(of = {"patientId", "name", "surname", "pesel", "birthdate", "email", "appUser", "phone",
     "medicalPackage", "gender" })
 public class Patient {
 
@@ -24,6 +24,7 @@ public class Patient {
     String medicalPackage;
     String gender;
     Address address;
+    AppUser appUser;
     Set<MedicalAppointment> appointments;
     Set<BookingAppointment> bookings;
     Set<Prescription> prescriptions;

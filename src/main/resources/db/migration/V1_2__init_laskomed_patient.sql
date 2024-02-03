@@ -10,9 +10,13 @@ CREATE TABLE patient
     gender      VARCHAR(20) NOT NULL,
     medical_package VARCHAR(20) CHECK (medical_package IN ('premium', 'standard')) NOT NULL,
     address_id  INT,
+    user_id     INT,
     PRIMARY KEY (patient_id),
-    UNIQUE (email),
+    UNIQUE (email, user_id),
     CONSTRAINT fk_patient_address
         FOREIGN KEY (address_id)
-            REFERENCES address (address_id)
+            REFERENCES address (address_id),
+    CONSTRAINT fk_patient_app_user
+        FOREIGN KEY (user_id)
+            REFERENCES app_user (app_user_id)
 );

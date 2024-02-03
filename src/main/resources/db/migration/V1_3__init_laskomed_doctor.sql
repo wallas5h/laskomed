@@ -7,5 +7,9 @@ CREATE TABLE doctor
     specialization  VARCHAR(100) NOT NULL,
     PWZ_number      VARCHAR(32) ,
     phone           VARCHAR(32) ,
-    PRIMARY KEY (doctor_id)
+    user_id         INT UNIQUE,
+    PRIMARY KEY (doctor_id),
+    CONSTRAINT fk_doctor_app_user
+        FOREIGN KEY (user_id)
+            REFERENCES app_user (app_user_id)
 );

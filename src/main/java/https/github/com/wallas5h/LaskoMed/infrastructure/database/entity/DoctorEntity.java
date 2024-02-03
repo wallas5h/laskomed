@@ -38,6 +38,10 @@ public class DoctorEntity {
   @Column(name="phone")
   private String phone;
 
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "user_id")
+  private AppUserEntity appUser;
+
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
   private Set<MedicalAppointmentEntity> appointments;
 

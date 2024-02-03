@@ -48,10 +48,14 @@ public class PatientEntity {
   @JoinColumn(name = "address_id")
   private AddressEntity address;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name = "user_id")
+  private AppUserEntity appUser;
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
   private Set<MedicalAppointmentEntity> appointments;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
   private Set<BookingAppointmentEntity> bookings;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
