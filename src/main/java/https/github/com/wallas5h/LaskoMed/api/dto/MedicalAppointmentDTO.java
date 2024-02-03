@@ -17,8 +17,8 @@ public class MedicalAppointmentDTO {
   private String doctorComment;
   private BigDecimal cost;
   private String prescription;
-  private ClinicDTO clinicDTO;
-  private PatientDTO patientDTO;
-  private BookingAppointmentDTO bookingAppointmentDTO;
+  private ClinicDTO clinic;
+  private PatientDTO patient;
+  private BookingAppointmentDTO bookingAppointment;
   private DoctorDTO doctor;
 }

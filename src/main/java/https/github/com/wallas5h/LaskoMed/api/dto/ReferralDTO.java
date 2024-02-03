@@ -17,8 +17,8 @@ public class ReferralDTO {
   private OffsetDateTime referralDate;
   private String referralPurpose;
   private String referralDiagnosis;
-  private AddressDTO addressDTO;
+  private AddressDTO address;
   private DoctorDTO doctor;
-  private ClinicDTO clinicDTO;
-  private PatientDTO patientDTO;
+  private ClinicDTO clinic;
+  private PatientDTO patient;
 }
