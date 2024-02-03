@@ -21,10 +21,4 @@ public class Address {
     Patient patient;
     Clinic clinic;
 
-
-
-
-
-
-
 }
