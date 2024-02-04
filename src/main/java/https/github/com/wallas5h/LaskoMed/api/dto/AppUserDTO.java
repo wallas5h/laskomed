@@ -1,9 +1,12 @@
 package https.github.com.wallas5h.LaskoMed.api.dto;
 
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -15,4 +18,5 @@ public class AppUserDTO {
   private String email;
   private Boolean enabled;
   private Boolean confirmed;
+  private Set<RoleDTO> roles;
 }

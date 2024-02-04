@@ -35,4 +35,12 @@ public class AppUserEntity {
 
   @Column(name = "confirmed")
   private Boolean confirmed;
+
+  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "app_user_role",
+      joinColumns = {@JoinColumn(name = "app_user_id")},
+      inverseJoinColumns = {@JoinColumn(name = "role_id")}
+  )
+  private Set<RoleEntity> roles;
 }
