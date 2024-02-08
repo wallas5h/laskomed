@@ -40,7 +40,7 @@ public class DoctorEntity {
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
-  private AppUserEntity appUser;
+  private UserEntity appUser;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
   private Set<MedicalAppointmentEntity> appointments;

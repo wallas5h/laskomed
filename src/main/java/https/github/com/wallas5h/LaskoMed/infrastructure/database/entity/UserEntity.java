@@ -3,23 +3,22 @@ package https.github.com.wallas5h.LaskoMed.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "appUserId")
+@EqualsAndHashCode(of = "userId")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "app_user")
-public class AppUserEntity {
+public class UserEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "app_user_id")
-  private Long appUserId;
+  @Column(name = "user_id")
+  private Long userId;
 
   @Column(name = "username")
   private String username;
@@ -39,7 +38,7 @@ public class AppUserEntity {
   @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinTable(
       name = "app_user_role",
-      joinColumns = {@JoinColumn(name = "app_user_id")},
+      joinColumns = {@JoinColumn(name = "user_id")},
       inverseJoinColumns = {@JoinColumn(name = "role_id")}
   )
   private Set<RoleEntity> roles;
