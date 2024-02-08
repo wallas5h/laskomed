@@ -51,3 +51,8 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
+# notes
+notes.md
+notes2.md
+drop_tables.sql
+
