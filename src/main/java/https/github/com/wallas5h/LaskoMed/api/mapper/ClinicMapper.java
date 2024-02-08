@@ -10,8 +10,8 @@ import org.mapstruct.Mapping;
 public interface ClinicMapper {
   ClinicDTO map(Clinic clinic);
 
-  @Mapping(target = "address", ignore = true )
-  ClinicDTO mapFromEntityToDto(ClinicEntity entity);
+//  @Mapping(target = "address", ignore = true )
+//  ClinicDTO mapFromEntityToDto(ClinicEntity entity);
 
   @Mapping(target = "address", ignore = true )
   Clinic mapFromEntity(ClinicEntity entity);
