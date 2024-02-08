@@ -1,7 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.domain;
 
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.RoleEntity;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
@@ -11,10 +10,10 @@ import java.util.Set;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "appUserId")
-@ToString(of = {"appUserId", "username", "password", "email", "enabled", "confirmed"  })
-public class AppUser {
-  Long appUserId;
+@EqualsAndHashCode(of = "userId")
+@ToString(of = {"userId", "username", "password", "email", "enabled", "confirmed"  })
+public class User {
+  Long userId;
   String username;
   String password;
   String email;

@@ -24,7 +24,7 @@ public class Patient {
     String medicalPackage;
     String gender;
     Address address;
-    AppUser appUser;
+    User appUser;
     Set<MedicalAppointment> appointments;
     Set<BookingAppointment> bookings;
     Set<Prescription> prescriptions;

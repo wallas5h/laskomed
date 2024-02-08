@@ -19,7 +19,7 @@ public class Doctor {
   String specialization;
   String PWZ_number;
   String phone;
-  AppUser appUser;
+  User appUser;
   Set<MedicalAppointment> appointments;
   Set<DoctorAvailability> availabilities;
 

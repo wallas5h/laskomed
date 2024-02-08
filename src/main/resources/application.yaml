@@ -4,7 +4,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /laskomed
+    context-path: /laskomed/api
 
 # api store dla zewnętrznego api
 api:
