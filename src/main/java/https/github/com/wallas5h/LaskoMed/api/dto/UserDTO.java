@@ -1,6 +1,5 @@
 package https.github.com.wallas5h.LaskoMed.api.dto;
 
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +11,8 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppUserDTO {
-  private Long appUserId;
+public class UserDTO {
+  private Long userId;
   private String username;
   private String email;
   private Boolean enabled;

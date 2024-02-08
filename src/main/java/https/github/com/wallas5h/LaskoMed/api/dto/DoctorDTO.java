@@ -17,5 +17,5 @@ public class DoctorDTO {
   private String specialization;
   private String PWZ_number;
   private String phone;
-  private AppUserDTO appUser;
+  private UserDTO appUser;
 }

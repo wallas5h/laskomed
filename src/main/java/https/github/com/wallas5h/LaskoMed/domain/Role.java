@@ -1,7 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.domain;
 
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.AppUserEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.RoleEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import lombok.*;
 
 import java.util.HashSet;
@@ -17,9 +16,9 @@ public class Role {
 
   Long roleId;
   String name;
-  Set<AppUserEntity> users;
+  Set<UserEntity> users;
 
-  public Set<AppUserEntity> getRoles(){
+  public Set<UserEntity> getRoles(){
     return Objects.isNull( users) ? new HashSet<>() : users;
   }
 }
