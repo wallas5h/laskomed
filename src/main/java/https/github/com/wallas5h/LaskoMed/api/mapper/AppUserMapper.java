@@ -1,18 +1,18 @@
 package https.github.com.wallas5h.LaskoMed.api.mapper;
 
-import https.github.com.wallas5h.LaskoMed.api.dto.AppUserDTO;
+import https.github.com.wallas5h.LaskoMed.api.dto.UserDTO;
 import https.github.com.wallas5h.LaskoMed.domain.AppUser;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.AppUserEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface AppUserMapper {
 
-  AppUserDTO map(AppUser address);
+  UserDTO map(AppUser address);
 
-  AppUserDTO mapFromEntityToDto(AppUserEntity entity);
+  UserDTO mapFromEntityToDto(UserEntity entity);
 
-  AppUser mapFromEntity(AppUserEntity entity);
+  AppUser mapFromEntity(UserEntity entity);
 
-  AppUserEntity mapToEntity(AppUser object);
+  UserEntity mapToEntity(AppUser object);
 }
