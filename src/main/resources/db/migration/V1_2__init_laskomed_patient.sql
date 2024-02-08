@@ -18,5 +18,5 @@ CREATE TABLE patient
             REFERENCES address (address_id),
     CONSTRAINT fk_patient_app_user
         FOREIGN KEY (user_id)
-            REFERENCES app_user (app_user_id)
+            REFERENCES app_user (user_id)
 );
