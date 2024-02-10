@@ -6,13 +6,13 @@ CREATE TABLE booking_appointment (
     booking_date TIMESTAMP  NOT NULL,
     booking_status VARCHAR(20) CHECK (booking_status IN ('pending', 'confirmed', 'cancelled')),
     appointment_type VARCHAR(20) CHECK (appointment_type IN ('teleconsultation', 'facility', 'online')),
-    CONSTRAINT fk_medical_appointment_patient
+    CONSTRAINT fk_booking_appointment_patient
         FOREIGN KEY (patient_id)
             REFERENCES patient(patient_id),
-    CONSTRAINT fk_medical_appointment_doctor
+    CONSTRAINT fk_booking_appointment_doctor
         FOREIGN KEY (doctor_id)
             REFERENCES doctor(doctor_id),
-    CONSTRAINT fk_medical_appointment_clinic
+    CONSTRAINT fk_booking_appointment_clinic
         FOREIGN KEY (clinic_id)
             REFERENCES clinic(clinic_id)
 );
