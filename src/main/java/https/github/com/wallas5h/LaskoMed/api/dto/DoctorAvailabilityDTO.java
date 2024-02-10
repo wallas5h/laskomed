@@ -18,6 +18,6 @@ public class DoctorAvailabilityDTO {
   private LocalDate dateAvailable;
   private LocalTime startTime;
   private LocalTime endTime;
-  private ClinicDTO clinic;
-  private DoctorDTO doctor;
+  private ClinicDtoId clinic;
+  private DoctorsDtoId doctor;
 }

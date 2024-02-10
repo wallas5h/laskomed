@@ -10,12 +10,9 @@ import org.mapstruct.Mapping;
 public interface DoctorAvailabilityMapper {
   DoctorAvailabilityDTO map(DoctorAvailability doctorAvailability);
 
-  @Mapping(target = "doctor", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
   DoctorAvailability mapFromEntity(DoctorAvailabilityEntity entity);
 
-  @Mapping(target = "doctor", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
+
   DoctorAvailabilityDTO mapFromEntityToDto(DoctorAvailabilityEntity entity);
 
   DoctorAvailabilityEntity mapToEntity(DoctorAvailability object);
