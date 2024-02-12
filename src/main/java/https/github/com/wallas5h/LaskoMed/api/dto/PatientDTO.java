@@ -23,7 +23,7 @@ public class PatientDTO {
     private String medicalPackage;
     private String gender;
     private AddressDTO address;
-    private UserDTO appUser;
+    private UserDtoId appUser;
     private Set<MedicalAppointmentDTO> appointments;
     private Set<BookingAppointmentDTO> bookings;
     private Set<PrescriptionDTO> prescriptions;
