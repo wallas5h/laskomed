@@ -1,9 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.business.services;
 
-import https.github.com.wallas5h.LaskoMed.api.dto.AvailabilityRequestDTO;
-import https.github.com.wallas5h.LaskoMed.api.dto.DoctorAvailabilityDTO;
-import https.github.com.wallas5h.LaskoMed.api.dto.DoctorDTO;
-import https.github.com.wallas5h.LaskoMed.api.dto.DoctorsDTO;
+import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.api.mapper.DoctorAvailabilityMapper;
 import https.github.com.wallas5h.LaskoMed.api.mapper.DoctorMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.ValidationDoctorAvailabilityResult;
@@ -29,6 +26,7 @@ public class DoctorService {
   private DoctorRepository doctorRepository;
   private DoctorAvailabilityRepository doctorAvailabilityRepository;
   private EntityManager entityManager;
+  private AppointmentsService appointmentsService;
 
   private DoctorAvailabilityMapper doctorAvailabilityMapper;
   private DoctorMapper doctorMapper;
@@ -49,14 +47,15 @@ public class DoctorService {
         ));
   }
 
-  public DoctorDTO getDoctorAppointments(Long doctorId) {
-    return null;
-  }
 
   public List<DoctorAvailabilityDTO> getDoctorAvailabilities(Long doctorId) {
     return doctorAvailabilityRepository.findByDoctorId(doctorId).stream()
         .map(a-> doctorAvailabilityMapper.mapFromEntityToDto(a))
         .toList();
+  }
+
+  public List<BookingAppointmentDTO> getDoctorUpcomingAppointments(Long doctorId) {
+    return appointmentsService.getDoctorUpcomingAppointments(doctorId);
   }
 
   public List<DoctorAvailabilityDTO> getDoctorPresentAvailabilities(Long doctorId) {
@@ -80,11 +79,17 @@ public class DoctorService {
         .endTime(LocalTime.parse(request.getEndTime()))
         .build();
 
-    return doctorAvailabilityRepository.save(newAvailability);
+    DoctorAvailabilityEntity saved = doctorAvailabilityRepository.save(newAvailability);
+
+      appointmentsService.createAppointmentsFromDoctorAvailabilities(convertRequestToCreatedAppointmentDTO2(request));
+
+//    @TODO podzielić czas dostępności na createdAppointments co 20 min
+
+    return saved;
   }
 
   public boolean hasConflictingAvailabilities(AvailabilityRequestDTO request) {
-    Result result = convertRequestToObjects(request);
+    CreatedAppointmentDTO2 result = convertRequestToCreatedAppointmentDTO2(request);
 
     List<DoctorAvailabilityEntity> conflictingAvailabilities =
         doctorAvailabilityRepository.findConflictingAvailabilities(
@@ -100,7 +105,7 @@ public class DoctorService {
   public ValidationDoctorAvailabilityResult validateAvailability(AvailabilityRequestDTO request) {
     boolean isCorrect= true;
     String message="";
-    Result result = convertRequestToObjects(request);
+    CreatedAppointmentDTO2 result = convertRequestToCreatedAppointmentDTO2(request);
 
     // Sprawdź czy dateAvailable jest po obecnej dacie
     if (result.dateAvailable() != null && result.dateAvailable().isBefore(LocalDate.now().plusDays(1))) {
@@ -122,15 +127,16 @@ public class DoctorService {
     return new ValidationDoctorAvailabilityResult(isCorrect, message);
   }
 
-  private static Result convertRequestToObjects(AvailabilityRequestDTO request) {
+  private static CreatedAppointmentDTO2 convertRequestToCreatedAppointmentDTO2(AvailabilityRequestDTO request) {
     Long doctorId = Long.valueOf(request.getDoctorId());
+    Long clinicId = Long.valueOf(request.getClinicId());
     LocalDate dateAvailable = LocalDate.parse(request.getDateAvailable());
     LocalTime startTime = LocalTime.parse(request.getStartTime());
     LocalTime endTime = LocalTime.parse(request.getEndTime());
-    Result result = new Result(doctorId, dateAvailable, startTime, endTime);
+    CreatedAppointmentDTO2 result = new CreatedAppointmentDTO2(doctorId, clinicId, dateAvailable, startTime, endTime);
     return result;
   }
 
-  private record Result(Long doctorId, LocalDate dateAvailable, LocalTime startTime, LocalTime endTime) {
+  public record CreatedAppointmentDTO2(Long doctorId, Long clincId, LocalDate dateAvailable, LocalTime startTime, LocalTime endTime) {
   }
 }
