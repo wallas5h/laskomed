@@ -11,8 +11,6 @@ public interface PatientMapper {
   PatientDTO map(Patient patient);
 
   @Mapping(target = "address.patient", ignore = true )
-  @Mapping(target = "appUser.roles", ignore = true )
-//  @Mapping(target = "appUser", ignore = true )
   @Mapping(target = "appointments", ignore = true )
   @Mapping(target = "bookings", ignore = true )
   @Mapping(target = "prescriptions", ignore = true )

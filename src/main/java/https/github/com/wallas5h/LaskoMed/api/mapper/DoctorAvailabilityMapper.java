@@ -16,4 +16,6 @@ public interface DoctorAvailabilityMapper {
   DoctorAvailabilityDTO mapFromEntityToDto(DoctorAvailabilityEntity entity);
 
   DoctorAvailabilityEntity mapToEntity(DoctorAvailability object);
+
+//  mapFromAvailabilityRequestTo
 }
