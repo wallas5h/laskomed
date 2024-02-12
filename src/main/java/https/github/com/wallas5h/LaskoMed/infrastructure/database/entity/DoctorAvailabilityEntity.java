@@ -21,10 +21,10 @@ public class DoctorAvailabilityEntity {
   @Column(name="availability_id")
   private Long availabilityId;
 
-  @Column(name = "date_available")  // '2024-01-27'
+  @Column(name = "date_available")
   private LocalDate dateAvailable;
 
-  @Column(name = "start_time")     // "09:00:00"
+  @Column(name = "start_time")
   private LocalTime startTime;
 
   @Column(name = "end_time")
