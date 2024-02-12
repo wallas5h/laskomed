@@ -1,9 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.api.controller;
 
-import https.github.com.wallas5h.LaskoMed.api.dto.AvailabilityRequestDTO;
-import https.github.com.wallas5h.LaskoMed.api.dto.DoctorAvailabilityDTO;
-import https.github.com.wallas5h.LaskoMed.api.dto.DoctorDTO;
-import https.github.com.wallas5h.LaskoMed.api.dto.DoctorsDTO;
+import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.business.services.DoctorService;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
 import jakarta.validation.Valid;
@@ -25,9 +22,9 @@ public class DoctorController {
   public static final String DOCTORS_ID_APPOINTMENTS = "/{doctorId}/appointments";
   public static final String DOCTORS_ID_AVAILABILITIES = "/{doctorId}/availabilities";
   public static final String DOCTORS_ID_AVAILABILITIES_PRESENT = "/{doctorId}/availabilities/present";
-  public static final String DOCTORS_ID_AVAILABILITIES_ARCHIVED = "/{doctorId}/availabilities/archived";
   public static final String DOCTORS_AVAILABILITIES = "/availabilities";
   public static final String DOCTORS_AVAILABILITIES_CREATE = "/availabilities/create";
+  public static final String DOCTORS_ID_APPOINTMENTS_UPCOMING = "/{doctorId}/appointments/upcoming";
 
 
   private DoctorService doctorService;
@@ -55,6 +52,12 @@ public class DoctorController {
       @PathVariable Long doctorId
   ) {
     return doctorService.getDoctorPresentAvailabilities(doctorId);
+  }
+  @GetMapping(DOCTORS_ID_APPOINTMENTS_UPCOMING)
+  public List<BookingAppointmentDTO> getDoctorUpcomingAppointments(
+      @PathVariable Long doctorId
+  ) {
+    return doctorService.getDoctorUpcomingAppointments(doctorId);
   }
 
   @PostMapping(
