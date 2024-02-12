@@ -10,14 +10,9 @@ import org.mapstruct.Mapping;
 public interface BookingAppointmentMapper {
   BookingAppointmentDTO map(BookingAppointment bookingAppointment);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
   BookingAppointmentDTO mapFromEntityToDto(BookingAppointmentEntity entity);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
+
   BookingAppointment mapFromEntity(BookingAppointmentEntity entity);
 
   BookingAppointmentEntity mapToEntity(BookingAppointment object);
