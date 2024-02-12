@@ -18,8 +18,12 @@ public class Clinic {
   String nip;
   Address address;
   Set<MedicalAppointment> appointments;
+  Set<CreatedAppointment> createdAppointments;
 
   public Set<MedicalAppointment> getAppointments() {
     return Objects.isNull(appointments) ? new HashSet<>() : appointments;
+  }
+  public Set<CreatedAppointment> getCreatedAppointments() {
+    return Objects.isNull(createdAppointments) ? new HashSet<>() : createdAppointments;
   }
 }
