@@ -10,7 +10,7 @@ VALUES (1, 1, '2024-02-10', '08:00:00', '12:00:00'),
 INSERT INTO booking_appointment (booking_id, patient_id, doctor_id, clinic_id, booking_date, booking_status, appointment_type)
 VALUES (1, 1, 1, 1, '2024-02-10 10:00:00', 'confirmed', 'teleconsultation'),
 (2, 2, 2, 1, '2024-02-11 14:30:00', 'pending', 'facility'),
-(3, 3, 1, 1, '2024-02-12 09:0:00', 'cancelled', 'online'),
+(3, 3, 1, 1, '2024-02-12 09:00:00', 'cancelled', 'online'),
 (4, 4, 4, 1, '2024-02-13 11:30:00', 'confirmed', 'teleconsultation'),
 (5, 5, 5, 1, '2024-02-14 11:00:00', 'pending', 'facility');
 
