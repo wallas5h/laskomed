@@ -22,6 +22,7 @@ public class Doctor {
   User appUser;
   Set<MedicalAppointment> appointments;
   Set<DoctorAvailability> availabilities;
+  Set<CreatedAppointment> createdAppointments;
 
    public Set<MedicalAppointment> getAppointments() {
     return Objects.isNull(appointments) ? new HashSet<>() : appointments;
@@ -29,5 +30,9 @@ public class Doctor {
 
    public Set<DoctorAvailability> getAvailabilities() {
     return Objects.isNull(availabilities) ? new HashSet<>() : availabilities;
+  }
+
+   public Set<CreatedAppointment> getCreatedAppointments() {
+    return Objects.isNull(createdAppointments) ? new HashSet<>() : createdAppointments;
   }
 }
