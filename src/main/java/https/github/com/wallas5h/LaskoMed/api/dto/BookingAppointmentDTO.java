@@ -17,7 +17,7 @@ public class BookingAppointmentDTO {
   private OffsetDateTime bookingDate;
   private String bookingStatus;
   private String type;
-  private PatientDTO patient;
-  private DoctorDTO doctor;
-  private ClinicDTO clinic;
+  private PatientDtoShorter patient;
+  private DoctorsDtoId doctor;
+  private ClinicDtoId clinic;
 }
