@@ -31,10 +31,10 @@ public class CreatedAppointmentEntity {
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "doctor_id")
-  private PatientEntity doctor;
+  private DoctorEntity doctor;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "clinic_id")
-  private PatientEntity clinic;
+  private ClinicEntity clinic;
 
 }
