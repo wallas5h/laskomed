@@ -3,6 +3,7 @@ package https.github.com.wallas5h.LaskoMed.api.controller;
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.business.services.DoctorService;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.MedicalAppointmentEntity;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,12 @@ import java.util.Objects;
 public class DoctorController {
   public static final String DOCTORS = "/doctors";
   public static final String DOCTORS_ID = "/{doctorId}";
-  public static final String DOCTORS_ID_APPOINTMENTS = "/{doctorId}/appointments";
   public static final String DOCTORS_ID_AVAILABILITIES = "/{doctorId}/availabilities";
   public static final String DOCTORS_ID_AVAILABILITIES_PRESENT = "/{doctorId}/availabilities/present";
   public static final String DOCTORS_AVAILABILITIES = "/availabilities";
   public static final String DOCTORS_AVAILABILITIES_CREATE = "/availabilities/create";
+  public static final String DOCTORS_ID_APPOINTMENTS = "/{doctorId}/appointments";
+  public static final String DOCTORS_PROCESSING_APPOINTMENT = "/{doctorId}/appointments/processing";
   public static final String DOCTORS_ID_APPOINTMENTS_UPCOMING = "/{doctorId}/appointments/upcoming";
 
 
@@ -81,10 +83,25 @@ public class DoctorController {
     }
 
     DoctorAvailabilityEntity newAvailability = doctorService.addDoctorAvailabilities(request);
+
     if (Objects.isNull(newAvailability.getAvailabilityId())) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input data");
     }
     return ResponseEntity.ok("Availability added successfully");
   }
+  @PostMapping(
+      value = DOCTORS_PROCESSING_APPOINTMENT,
+      produces = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE,
+      }
+  )
+  public MedicalAppointmentDTO addMedicalAppointment(
+      @Valid @RequestBody MedicalAppointmentRequestDTO request
+  ) {
+    return doctorService.addMedicalAppointment(request);
+  }
+
+
 
 }

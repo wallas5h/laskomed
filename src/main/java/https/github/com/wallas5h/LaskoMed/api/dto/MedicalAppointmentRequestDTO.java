@@ -5,22 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicalAppointmentDTO {
-  private Long appointmentId;
+public class MedicalAppointmentRequestDTO {
   private String appointmentStatus;
   private String diagnosis;
   private String doctorComment;
-  private BigDecimal cost;
   private String prescription;
-  private ClinicDtoId clinic;
-  private PatientDtoId patient;
-  private BookingAppointmentDtoId bookingAppointment;
-  private DoctorsDtoId doctor;
-
-  private String errorMessage;
+  private String clinicId;
+  private String patientId;
+  private String bookingAppointmentId;
+  private String doctorId;
 }

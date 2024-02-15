@@ -16,10 +16,7 @@ public interface MedicalAppointmentMapper {
   @Mapping(target = "doctor", ignore = true )
   MedicalAppointment mapFromEntity(MedicalAppointmentEntity entity);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
-  @Mapping(target = "bookingAppointment", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
+
   MedicalAppointmentDTO mapFromEntityToDto(MedicalAppointmentEntity entity);
 
   MedicalAppointmentEntity mapToEntity(MedicalAppointment object);

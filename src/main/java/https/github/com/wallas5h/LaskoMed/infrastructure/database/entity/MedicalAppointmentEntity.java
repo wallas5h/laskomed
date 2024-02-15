@@ -39,7 +39,7 @@ public class MedicalAppointmentEntity {
   @JoinColumn(name = "clinic_id")
   private ClinicEntity clinic;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "patient_id")
   private PatientEntity patient;
 
