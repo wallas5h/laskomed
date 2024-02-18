@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Slf4j
@@ -68,7 +70,10 @@ public class DoctorService {
   }
 
   public List<BookingAppointmentDTO> getDoctorUpcomingAppointments(Long doctorId) {
-    return appointmentsService.getDoctorUpcomingAppointments(doctorId);
+    OffsetDateTime offsetDateTime= OffsetDateTime.of(
+        LocalDate.now(), LocalTime.now().minusHours(1), ZoneOffset.UTC);
+    OffsetDateTime toDateTime=offsetDateTime.plusDays(30);
+    return appointmentsService.getDoctorAppointmentsByDateRange(doctorId, offsetDateTime, toDateTime);
   }
 
   public List<DoctorAvailabilityDTO> getDoctorPresentAvailabilities(Long doctorId) {
