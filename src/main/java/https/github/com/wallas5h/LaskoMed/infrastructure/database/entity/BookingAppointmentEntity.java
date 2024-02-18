@@ -40,4 +40,8 @@ public class BookingAppointmentEntity {
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "clinic_id")
   private ClinicEntity clinic;
+
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "available_appointment_id")
+  private AvailableAppointmentEntity availableAppointment;
 }

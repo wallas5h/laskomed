@@ -20,4 +20,5 @@ public class BookingAppointmentDTO {
   private PatientDtoShorter patient;
   private DoctorsDtoId doctor;
   private ClinicDtoId clinic;
+  private AvailableAppointmentDTO availableAppointment;
 }
