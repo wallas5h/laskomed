@@ -12,9 +12,9 @@ import java.time.LocalTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatedAppointmentDTO {
+public class AvailableAppointmentDTO {
 
-  private Long createdAppointmentId;
+  private Long availableAppointmentId;
   private LocalDate dateAvailable;
   private LocalTime startTime;
   private LocalTime endTime;

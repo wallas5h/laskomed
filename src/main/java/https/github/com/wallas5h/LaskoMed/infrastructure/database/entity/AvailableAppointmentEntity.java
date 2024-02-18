@@ -8,17 +8,17 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "createdAppointmentId")
+@EqualsAndHashCode(of = "availableAppointmentId")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "created_appointment")
-public class CreatedAppointmentEntity {
+@Table(name = "available_appointment")
+public class AvailableAppointmentEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "created_appointment_id")
-  private Long createdAppointmentId;
+  @Column(name = "available_appointment_id")
+  private Long availableAppointmentId;
 
   @Column(name = "date_available")
   private LocalDate dateAvailable;
