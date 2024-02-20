@@ -11,4 +11,7 @@ import java.util.List;
 public class DoctorsDtoId {
 
   private Long doctorId;
+  private String name;
+  private String surname;
+  private String specialization;
 }

@@ -18,4 +18,5 @@ public class MedicalAppointmentRequestDTO {
   private String patientId;
   private String bookingAppointmentId;
   private String doctorId;
+  private boolean addNewDisease;
 }

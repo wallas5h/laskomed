@@ -18,6 +18,7 @@ public class AvailableAppointmentDTO {
   private LocalDate dateAvailable;
   private LocalTime startTime;
   private LocalTime endTime;
+  private Boolean isActive;
   private ClinicDtoId clinic;
   private DoctorsDtoId doctor;
 }
