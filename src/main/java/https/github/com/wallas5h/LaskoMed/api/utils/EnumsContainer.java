@@ -7,6 +7,9 @@ public class EnumsContainer {
     STANDARD
   }
 
+  public enum BookingStatus {
+    PENDING, CONFIRMED, CANCELLED, COMPLETED, MISSED, INTERRUPTED
+  }
   public enum AppointmentStatus {
     COMPLETED, MISSED, INTERRUPTED
   }
