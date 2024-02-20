@@ -26,6 +26,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   private static final Map< Class<?>, HttpStatus> EXCEPTION_STATUS= Map.of(
       BindException.class, HttpStatus.BAD_REQUEST,
       ConstraintViolationException.class, HttpStatus.BAD_REQUEST,
+      IllegalArgumentException.class, HttpStatus.BAD_REQUEST,
       EntityNotFoundException.class, HttpStatus.NOT_FOUND
   );
 

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,5 +22,12 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
   @Modifying
   @Query("UPDATE MedicalAppointmentEntity ma SET ma = :newData WHERE ma.bookingAppointment.bookingId = :bookingId")
   int updateByBookingId(@Param("bookingId") Long bookingId, @Param("newData") MedicalAppointmentEntity newData);
+
+  @Query("""
+      SELECT ma FROM MedicalAppointmentEntity ma
+      WHERE ma.patient.patientId = :patientId
+      ORDER BY ma.bookingAppointment.bookingDate
+      """)
+  List<MedicalAppointmentEntity> findByPatientId(@Param("patientId") Long patientId);
 }
 
