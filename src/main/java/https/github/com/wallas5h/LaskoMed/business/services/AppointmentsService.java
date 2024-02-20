@@ -234,6 +234,11 @@ public class AppointmentsService {
         .map(a -> medicalAppointmentMapper.mapFromEntityToDto(a))
         .toList();
   }
+  public List<MedicalAppointmentDTO> getPatientMedicalAppointments(Long patientId, String specialization) {
+    return medicalAppointmentRepository.findByPatientIdAndSpecialization(patientId, specialization).stream()
+        .map(a -> medicalAppointmentMapper.mapFromEntityToDto(a))
+        .toList();
+  }
 
   public MedicalAppointmentDTO getPatientMedicalAppointmentDeatails(Long appointmentId) {
     return medicalAppointmentRepository.findById(appointmentId)

@@ -1,11 +1,13 @@
 package https.github.com.wallas5h.LaskoMed.business.services;
 
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
+import https.github.com.wallas5h.LaskoMed.api.mapper.DiagnosedDiseaseMapper;
 import https.github.com.wallas5h.LaskoMed.api.mapper.PatientMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.EnumsContainer;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.BookingAppointmentEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.AvailableAppointmentRepository;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DiagnosesDiseaseRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -23,9 +25,11 @@ import java.util.Optional;
 public class PatientService {
   private PatientRepository patientRepository;
   private AvailableAppointmentRepository availableAppointmentRepository;
+  private DiagnosesDiseaseRepository diseaseRepository;
 
   private AppointmentsService appointmentsService;
   private PatientMapper patientMapper;
+  private DiagnosedDiseaseMapper diagnosedDiseaseMapper;
 
   public PatientsDTO getPatientsList() {
     return PatientsDTO.of(patientRepository.findAll().stream()
@@ -62,6 +66,14 @@ public class PatientService {
 
   public List<MedicalAppointmentDTO> getPatientAppointments(Long patientId) {
     return appointmentsService.getPatientMedicalAppointments(patientId);
+  }
+  public List<MedicalAppointmentDTO> getPatientAppointments(Long patientId, String specialization) {
+    specialization = specialization == null ? "" : specialization;
+    
+    if (specialization.isEmpty()){
+      return appointmentsService.getPatientMedicalAppointments(patientId);
+    }
+    return appointmentsService.getPatientMedicalAppointments(patientId, specialization);
   }
 
   public boolean isBookingStatusValid(BookingAppointmentRequestDTO request) {
@@ -109,5 +121,11 @@ public class PatientService {
       isCollision=true ;
     }
     return isCollision;
+  }
+
+  public List<DiagnosedDiseaseDTO> getPatientDiseases(Long patientId) {
+    return diseaseRepository.findByPatientId(patientId).stream()
+        .map(diagnosedDiseaseMapper::mapFromEntityToDto)
+        .toList();
   }
 }

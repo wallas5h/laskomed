@@ -14,7 +14,7 @@ public interface DiagnosedDiseaseMapper {
   DiagnosedDisease mapFromEntity(DiagnosedDiseaseEntity entity);
 
 //  @Mapping(target = "patient", ignore = true )
-//  DiagnosedDiseaseDTO mapFromEntityToDto(DiagnosedDiseaseEntity entity);
+  DiagnosedDiseaseDTO mapFromEntityToDto(DiagnosedDiseaseEntity entity);
 
   DiagnosedDiseaseEntity mapToEntity(DiagnosedDisease object);
 }

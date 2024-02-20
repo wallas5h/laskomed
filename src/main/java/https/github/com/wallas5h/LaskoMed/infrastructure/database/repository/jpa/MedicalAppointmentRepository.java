@@ -29,5 +29,15 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
       ORDER BY ma.bookingAppointment.bookingDate
       """)
   List<MedicalAppointmentEntity> findByPatientId(@Param("patientId") Long patientId);
-}
 
+  @Query("""
+      SELECT ma FROM MedicalAppointmentEntity ma
+      WHERE ma.patient.patientId = :patientId
+      AND (COALESCE(:specialization, '') = '' OR ma.doctor.specialization = :specialization)
+      ORDER BY ma.bookingAppointment.bookingDate
+      """)
+  Optional<MedicalAppointmentEntity> findByPatientIdAndSpecialization(
+      @Param("patientId") Long patientId,
+      @Param("specialization") String specialization
+  );
+}
