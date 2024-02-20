@@ -49,6 +49,6 @@ public class DoctorEntity {
   private Set<DoctorAvailabilityEntity> availabilities;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
-  private Set<CreatedAppointmentEntity> createdAppointments;
+  private Set<AvailableAppointmentEntity> createdAppointments;
 
 }

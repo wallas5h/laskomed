@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,5 +36,8 @@ public class DiagnosedDiseaseEntity {
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "doctor_id")
-  private AddressEntity doctor;
+  private DoctorEntity doctor;
+
+//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "disease")
+//  private Set<MedicalAppointmentEntity> appointments;
 }

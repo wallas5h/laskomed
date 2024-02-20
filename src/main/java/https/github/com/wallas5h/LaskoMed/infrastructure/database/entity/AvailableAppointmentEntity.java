@@ -29,6 +29,9 @@ public class AvailableAppointmentEntity {
   @Column(name = "end_time")
   private LocalTime endTime;
 
+  @Column(name = "is_active")
+  private Boolean isActive;
+
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "doctor_id")
   private DoctorEntity doctor;
