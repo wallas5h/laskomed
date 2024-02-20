@@ -76,7 +76,6 @@ public class PatientController {
     return patientService.changeBookingStatus(patientId, request);
   }
 
-  // @TODO tu skończyłem
   @GetMapping(PATIENT_ID_APPOINTMENTS_HISTORY)
   public List<MedicalAppointmentDTO> getPatientAppointments(
       @PathVariable Long patientId
