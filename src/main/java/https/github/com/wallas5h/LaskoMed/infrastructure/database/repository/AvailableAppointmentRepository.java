@@ -1,4 +1,4 @@
-package https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.java;
+package https.github.com.wallas5h.LaskoMed.infrastructure.database.repository;
 
 import https.github.com.wallas5h.LaskoMed.api.dto.AvailableAppointmentDTO;
 import https.github.com.wallas5h.LaskoMed.api.mapper.AvailableAppointmentMapper;
