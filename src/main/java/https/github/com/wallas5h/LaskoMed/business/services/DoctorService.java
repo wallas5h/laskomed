@@ -2,17 +2,16 @@ package https.github.com.wallas5h.LaskoMed.business.services;
 
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.api.mapper.DoctorAvailabilityMapper;
-import https.github.com.wallas5h.LaskoMed.api.mapper.DoctorMapper;
 import https.github.com.wallas5h.LaskoMed.api.mapper.MedicalAppointmentMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.ValidationDoctorAvailabilityResult;
+import https.github.com.wallas5h.LaskoMed.business.dao.DoctorAvailabilityDAO;
+import https.github.com.wallas5h.LaskoMed.business.dao.DoctorDAO;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.ClinicEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.MedicalAppointmentEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DoctorAvailabilityRepository;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DoctorRepository;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DoctorAvailabilityJpaRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,14 +27,11 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class DoctorService {
-  private DoctorRepository doctorRepository;
-  private DoctorAvailabilityRepository doctorAvailabilityRepository;
+  private DoctorDAO doctorDAO;
+  private DoctorAvailabilityDAO doctorAvailabilityDAO;
+
   private EntityManager entityManager;
   private AppointmentsService appointmentsService;
-
-  private DoctorAvailabilityMapper doctorAvailabilityMapper;
-  private DoctorMapper doctorMapper;
-  private MedicalAppointmentMapper medicalAppointmentMapper;
 
   private static CreatedAppointmentDTO2 convertRequestToCreatedAppointmentDTO2(AvailabilityRequestDTO request) {
     Long doctorId = Long.valueOf(request.getDoctorId());
@@ -47,40 +43,24 @@ public class DoctorService {
     return result;
   }
 
-  public DoctorsDTO getDoctorsList() {
-    return DoctorsDTO.of(
-        doctorRepository.findAll().stream()
-            .map(a -> doctorMapper.mapFromEntityToDto(a))
-            .toList()
-    );
-  }
-
   public DoctorDTO getDoctorDetails(Long doctorId) {
-    return doctorRepository.findAllByDoctorId(doctorId)
-        .map(a -> doctorMapper.mapFromEntityToDto(a))
-        .orElseThrow(() -> new EntityNotFoundException(
-            "Doctor details not found, doctorId: [%s]".formatted(doctorId)
-        ));
+    return doctorDAO.findAllByDoctorId(doctorId);
+
   }
 
   public List<DoctorAvailabilityDTO> getDoctorAvailabilities(Long doctorId) {
-    return doctorAvailabilityRepository.findByDoctorId(doctorId).stream()
-        .map(a -> doctorAvailabilityMapper.mapFromEntityToDto(a))
-        .toList();
+    return doctorAvailabilityDAO.findByDoctorId(doctorId);
   }
 
   public List<BookingAppointmentDTO> getDoctorUpcomingAppointments(Long doctorId) {
     OffsetDateTime offsetDateTime= OffsetDateTime.of(
         LocalDate.now(), LocalTime.now().minusHours(1), ZoneOffset.UTC);
-    OffsetDateTime toDateTime=offsetDateTime.plusDays(30);
+    OffsetDateTime toDateTime=offsetDateTime.plusDays(60);
     return appointmentsService.getDoctorAppointmentsByDateRange(doctorId, offsetDateTime, toDateTime);
   }
 
   public List<DoctorAvailabilityDTO> getDoctorPresentAvailabilities(Long doctorId) {
-    return doctorAvailabilityRepository.findPresentAvailabilities(doctorId, LocalDate.now())
-        .stream()
-        .map(a -> doctorAvailabilityMapper.mapFromEntityToDto(a))
-        .toList();
+    return doctorAvailabilityDAO.findPresentAvailabilities(doctorId, LocalDate.now());
   }
 
   public DoctorAvailabilityEntity addDoctorAvailabilities(AvailabilityRequestDTO request) {
@@ -97,7 +77,7 @@ public class DoctorService {
         .endTime(LocalTime.parse(request.getEndTime()))
         .build();
 
-    DoctorAvailabilityEntity saved = doctorAvailabilityRepository.save(newAvailability);
+    DoctorAvailabilityEntity saved = doctorAvailabilityDAO.save(newAvailability);
 
     appointmentsService.createAppointmentsFromDoctorAvailabilities(convertRequestToCreatedAppointmentDTO2(request));
 
@@ -108,7 +88,7 @@ public class DoctorService {
     CreatedAppointmentDTO2 result = convertRequestToCreatedAppointmentDTO2(request);
 
     List<DoctorAvailabilityEntity> conflictingAvailabilities =
-        doctorAvailabilityRepository.findConflictingAvailabilities(
+        doctorAvailabilityDAO.findConflictingAvailabilities(
             result.doctorId(),
             result.dateAvailable(),
             result.startTime(),
@@ -143,8 +123,7 @@ public class DoctorService {
   public MedicalAppointmentDTO addMedicalAppointment(MedicalAppointmentRequestDTO request) {
     if (!appointmentsService.isExistMedicalAppointment(request)) {
       appointmentsService.addMedicalAppointment(request);
-      MedicalAppointmentEntity medicalAppointmentEntity = appointmentsService.getMedicalAppointmentById(request);
-      return medicalAppointmentMapper.mapFromEntityToDto(medicalAppointmentEntity);
+      return appointmentsService.getMedicalAppointmentById(request);
     } else {
       return MedicalAppointmentDTO.builder()
           .errorMessage("Adding a medical appointment is not possible. Appointment already exists.")
@@ -156,8 +135,7 @@ public class DoctorService {
   private MedicalAppointmentDTO updateMedicalAppointment(MedicalAppointmentRequestDTO request) {
     if (appointmentsService.isExistMedicalAppointment(request)) {
       appointmentsService.updateMedicalAppointment(request);
-      MedicalAppointmentEntity medicalAppointmentEntity = appointmentsService.getMedicalAppointmentById(request);
-      return medicalAppointmentMapper.mapFromEntityToDto(medicalAppointmentEntity);
+      return appointmentsService.getMedicalAppointmentById(request);
     }else {
       return MedicalAppointmentDTO.builder()
           .errorMessage("Updating a medical appointment is not possible. Appointment do not exists.")
@@ -165,7 +143,7 @@ public class DoctorService {
     }
   }
 
-  public record CreatedAppointmentDTO2(Long doctorId, Long clincId, LocalDate dateAvailable, LocalTime startTime,
-                                       LocalTime endTime) {
+  public record CreatedAppointmentDTO2(
+      Long doctorId, Long clincId, LocalDate dateAvailable, LocalTime startTime, LocalTime endTime) {
   }
 }

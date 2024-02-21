@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface AvailableAppointmentRepository extends JpaRepository<AvailableAppointmentEntity, Long> {
+public interface AvailableAppointmentJpaRepository extends JpaRepository<AvailableAppointmentEntity, Long> {
 
   @Query("""
     SELECT aa FROM AvailableAppointmentEntity aa

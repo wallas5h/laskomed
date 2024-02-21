@@ -36,10 +36,6 @@ public class DoctorController {
   private DoctorService doctorService;
   private PatientService patientService;
 
-  @GetMapping
-  public DoctorsDTO patientsList() {
-    return doctorService.getDoctorsList();
-  }
 
   @GetMapping(DOCTORS_ID)
   public DoctorDTO doctorDetails(
@@ -94,6 +90,8 @@ public class DoctorController {
     }
     return ResponseEntity.ok("Availability added successfully");
   }
+
+//  @TODO podwójne zapytanie wywołyje błąd, dodać opcję update
   @PostMapping(
       value = DOCTORS_PROCESSING_APPOINTMENT,
       produces = {

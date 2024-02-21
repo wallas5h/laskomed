@@ -25,10 +25,6 @@ public class PatientController {
 
   private PatientService patientService;
 
-  @GetMapping
-  public PatientsDTO patientsList() {
-    return patientService.getPatientsList();
-  }
 
   @GetMapping(PATIENT_ID)
   public PatientDTO getPatientDetails(

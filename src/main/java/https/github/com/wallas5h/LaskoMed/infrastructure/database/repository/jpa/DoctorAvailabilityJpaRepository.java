@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public interface DoctorAvailabilityRepository extends JpaRepository<DoctorAvailabilityEntity, Long> {
+public interface DoctorAvailabilityJpaRepository extends JpaRepository<DoctorAvailabilityEntity, Long> {
 
   @Query("""
         SELECT dae FROM DoctorAvailabilityEntity dae

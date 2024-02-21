@@ -2,17 +2,13 @@ package https.github.com.wallas5h.LaskoMed.business.services;
 
 import https.github.com.wallas5h.LaskoMed.api.controller.GlobalExceptionHandler;
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
-import https.github.com.wallas5h.LaskoMed.api.mapper.AvailableAppointmentMapper;
-import https.github.com.wallas5h.LaskoMed.api.mapper.BookingAppointmentMapper;
-import https.github.com.wallas5h.LaskoMed.api.mapper.MedicalAppointmentMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.EnumsContainer;
+import https.github.com.wallas5h.LaskoMed.business.dao.AvailableAppointmentDAO;
+import https.github.com.wallas5h.LaskoMed.business.dao.BookingAppointmentDAO;
+import https.github.com.wallas5h.LaskoMed.business.dao.DiagnosedDiseaseDAO;
+import https.github.com.wallas5h.LaskoMed.business.dao.MedicalAppointmentDAO;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.*;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.AvailableAppointmentRepository;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.BookingAppointmentRepository;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DiagnosesDiseaseRepository;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.MedicalAppointmentRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,21 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
 @Service
 @AllArgsConstructor
 public class AppointmentsService {
-  private AvailableAppointmentRepository availableAppointmentRepository;
-  private BookingAppointmentRepository bookingAppointmentRepository;
-  private MedicalAppointmentRepository medicalAppointmentRepository;
-  private DiagnosesDiseaseRepository diagnosesDiseaseRepository;
-  private EntityManager entityManager;
+  private final BookingAppointmentDAO bookingAppointmentDAO;
+  private final MedicalAppointmentDAO medicalAppointmentDAO;
+  private final AvailableAppointmentDAO availableAppointmentDAO;
+  private final DiagnosedDiseaseDAO diagnosedDiseaseDAO;
 
-  private BookingAppointmentMapper bookingAppointmentMapper;
-  private MedicalAppointmentMapper medicalAppointmentMapper;
-  private AvailableAppointmentMapper availableAppointmentMapper;
+  private EntityManager entityManager;
 
   private static OffsetDateTime getOffsetDateTime(AvailableAppointmentEntity availableAppointment) {
     return OffsetDateTime.of(
@@ -45,24 +39,19 @@ public class AppointmentsService {
   }
 
   public List<BookingAppointmentDTO> getDoctorAllAppointments(Long doctorId) {
-    return bookingAppointmentRepository.findByDoctorId(doctorId).stream()
-        .map(a -> bookingAppointmentMapper.mapFromEntityToDto(a))
-        .toList();
+    return bookingAppointmentDAO.findByDoctorId(doctorId);
   }
 
   public List<BookingAppointmentDTO> getDoctorAppointmentsByDateRange(
       Long doctorId,
       OffsetDateTime fromDateTime,
       OffsetDateTime toDateTime) {
-    return bookingAppointmentRepository.findByDoctorIdAndDateRange(doctorId, fromDateTime, toDateTime).stream()
-        .map(a -> bookingAppointmentMapper.mapFromEntityToDto(a))
-        .toList();
+    return bookingAppointmentDAO.findByDoctorIdAndDateRange(doctorId, fromDateTime, toDateTime);
+
   }
 
   public List<BookingAppointmentDTO> getPatientUpcomingBookings(Long patientId) {
-    return bookingAppointmentRepository.findByPatientId(patientId).stream()
-        .map(a -> bookingAppointmentMapper.mapFromEntityToDto(a))
-        .toList();
+    return bookingAppointmentDAO.findByPatientId(patientId);
   }
 
   @Transactional
@@ -90,7 +79,7 @@ public class AppointmentsService {
           .isActive(true)
           .build();
 
-      availableAppointmentRepository.save(newCreatedAppointment);
+      availableAppointmentDAO.save(newCreatedAppointment);
 
       currentTime = currentTime.plus(appointmentDuration);
     }
@@ -101,18 +90,19 @@ public class AppointmentsService {
 
     MapResult result = mapRequestDtoToEntity(request);
     if (request.isAddNewDisease()) {
-      DiagnosedDiseaseEntity newDisease = DiagnosedDiseaseEntity.builder()
-          .patient(result.newMedicalAppointmentEntity.getPatient())
-          .doctor(result.newMedicalAppointmentEntity.getDoctor())
-          .diseaseName(result.newMedicalAppointmentEntity.getDiagnosis())
-          .description(result.newMedicalAppointmentEntity.getDoctorComment())
-          .diagnosisDate(OffsetDateTime.now())
-          .build();
-      diagnosesDiseaseRepository.save(newDisease);
+      diagnosedDiseaseDAO.createDiagnosedDiseaseAndSave(
+          result.newMedicalAppointmentEntity.getPatient(),
+          result.newMedicalAppointmentEntity.getDoctor(),
+          result.newMedicalAppointmentEntity.getDiagnosis(),
+          result.newMedicalAppointmentEntity.getDoctorComment(),
+          OffsetDateTime.now()
+      );
+
     }
-    bookingAppointmentRepository.updateBookingStatus(result.bookingAppointment().getBookingId(),
-        result.newMedicalAppointmentEntity().getAppointmentStatus());
-    return medicalAppointmentRepository.save(result.newMedicalAppointmentEntity());
+    bookingAppointmentDAO.updateBookingStatus(result.bookingAppointment().getBookingId(),
+        result.newMedicalAppointmentEntity().getAppointmentStatus().toUpperCase());
+
+    return medicalAppointmentDAO.save(result.newMedicalAppointmentEntity());
   }
 
   @Transactional
@@ -120,9 +110,9 @@ public class AppointmentsService {
 
     MapResult result = mapRequestDtoToEntity(request);
 
-    int rowUpdated = medicalAppointmentRepository
+    int rowUpdated = medicalAppointmentDAO
         .updateByBookingId(result.bookingAppointment().getBookingId(), result.newMedicalAppointmentEntity());
-    bookingAppointmentRepository.updateBookingStatus(result.bookingAppointment().getBookingId(),
+    bookingAppointmentDAO.updateBookingStatus(result.bookingAppointment().getBookingId(),
         result.newMedicalAppointmentEntity().getAppointmentStatus());
     return rowUpdated;
   }
@@ -155,21 +145,15 @@ public class AppointmentsService {
 
   @Transactional
   public Boolean isExistMedicalAppointment(MedicalAppointmentRequestDTO request) {
-    BookingAppointmentEntity bookingAppointment = entityManager.find(
-        BookingAppointmentEntity.class, request.getBookingAppointmentId());
-
-    Optional<MedicalAppointmentEntity> medicalAppointmentByBookingId = medicalAppointmentRepository
-        .findByBookingId(bookingAppointment.getBookingId());
-    return medicalAppointmentByBookingId.isPresent();
+    MedicalAppointmentDTO byBookingId = getMedicalAppointmentById(request);
+    return Objects.isNull(byBookingId);
   }
 
-  public MedicalAppointmentEntity getMedicalAppointmentById(MedicalAppointmentRequestDTO request) {
+  public MedicalAppointmentDTO getMedicalAppointmentById(MedicalAppointmentRequestDTO request) {
     BookingAppointmentEntity bookingAppointment = entityManager.find(
         BookingAppointmentEntity.class, request.getBookingAppointmentId());
 
-    Optional<MedicalAppointmentEntity> medicalAppointmentByBookingId = medicalAppointmentRepository
-        .findByBookingId(bookingAppointment.getBookingId());
-    return medicalAppointmentByBookingId.get();
+    return medicalAppointmentDAO.findByBookingId(bookingAppointment.getBookingId());
   }
 
   private BigDecimal getMedicalAppointmentCost(String medicalPackage, String type, String status) {
@@ -207,52 +191,38 @@ public class AppointmentsService {
 
     changeAvailableAppointmentToActiveIfRequestIsToCanceled(request);
 
-    int updatedBookingRows = bookingAppointmentRepository.updateBookingStatusByPatient(
+    return bookingAppointmentDAO.updateBookingStatusByPatient(
         Long.parseLong(request.getBookingId()),
         request.getBookingStatus(),
         patientId,
         currentDateTime
     );
 
-    return updatedBookingRows;
   }
 
-// @TODO nie dziła
   private void changeAvailableAppointmentToActiveIfRequestIsToCanceled(BookingAppointmentRequestDTO request) {
     if(request.getBookingStatus().equals(EnumsContainer.BookingStatus.CANCELLED.name())){
-      Optional<BookingAppointmentEntity> bookingEntity = bookingAppointmentRepository.findById(Long.valueOf(request.getBookingId()));
+      Optional<BookingAppointmentEntity> bookingEntity = bookingAppointmentDAO.findById(Long.valueOf(request.getBookingId()));
       if(bookingEntity.isPresent()){
-        AvailableAppointmentEntity availableAppointment = bookingEntity.get().getAvailableAppointment();
-        availableAppointment.setIsActive(true);
-        availableAppointmentRepository.save(availableAppointment);
+        availableAppointmentDAO.changeAvailableAppointmentToActive(bookingEntity);
       }
     }
   }
 
   public List<MedicalAppointmentDTO> getPatientMedicalAppointments(Long patientId) {
-    return medicalAppointmentRepository.findByPatientId(patientId).stream()
-        .map(a -> medicalAppointmentMapper.mapFromEntityToDto(a))
-        .toList();
+    return medicalAppointmentDAO.findByPatientId(patientId);
+
   }
   public List<MedicalAppointmentDTO> getPatientMedicalAppointments(Long patientId, String specialization) {
-    return medicalAppointmentRepository.findByPatientIdAndSpecialization(patientId, specialization).stream()
-        .map(a -> medicalAppointmentMapper.mapFromEntityToDto(a))
-        .toList();
+    return medicalAppointmentDAO.findByPatientIdAndSpecialization(patientId, specialization);
   }
 
   public MedicalAppointmentDTO getPatientMedicalAppointmentDeatails(Long appointmentId) {
-    return medicalAppointmentRepository.findById(appointmentId)
-        .map(a -> medicalAppointmentMapper.mapFromEntityToDto(a))
-        .orElseThrow(() -> new EntityNotFoundException(
-            "MedicalAppointmentEntity not found, appointmentId: [%s]".formatted(appointmentId)
-        ));
+    return medicalAppointmentDAO.findById(appointmentId);
   }
 
   public List<AvailableAppointmentDTO> getAvailableMedicalAppointments(LocalDate date, String specialization, String location) {
-    return availableAppointmentRepository.getAvailableMedicalAppointments(
-            date, specialization, location).stream()
-        .map(a -> availableAppointmentMapper.mapFromEntityToDto(a))
-        .toList();
+    return availableAppointmentDAO.getAvailableMedicalAppointments(date, specialization, location);
   }
 
   public Optional<BookingAppointmentEntity> findAppointmentByDateAndPatient(AppointmentReservationRequestDto request) {
@@ -262,7 +232,8 @@ public class AppointmentsService {
         PatientEntity.class, request.getPatientId());
 
     OffsetDateTime date = getOffsetDateTime(availableAppointment);
-    return bookingAppointmentRepository.findByPatientIdAndDate(patient.getPatientId(), date);
+    return bookingAppointmentDAO.findByPatientIdAndDate(patient.getPatientId(), date);
+
 
   }
 
@@ -291,9 +262,9 @@ public class AppointmentsService {
         .bookingStatus(EnumsContainer.BookingStatus.PENDING.name())
         .build();
 
-    BookingAppointmentEntity bookingAppointmentEntity = bookingAppointmentRepository.save(newReservedAppointment);
+    BookingAppointmentEntity bookingAppointmentEntity = bookingAppointmentDAO.save(newReservedAppointment);
     availableAppointment.setIsActive(false);
-    availableAppointmentRepository.save(availableAppointment);
+    availableAppointmentDAO.save(availableAppointment);
     return bookingAppointmentEntity;
   }
 
@@ -316,7 +287,7 @@ public class AppointmentsService {
     }
   }
 
-  private record MapResult(BookingAppointmentEntity bookingAppointment,
+  public record MapResult(BookingAppointmentEntity bookingAppointment,
                            MedicalAppointmentEntity newMedicalAppointmentEntity) {
   }
 }

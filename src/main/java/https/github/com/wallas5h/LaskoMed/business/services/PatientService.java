@@ -4,12 +4,11 @@ import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.api.mapper.DiagnosedDiseaseMapper;
 import https.github.com.wallas5h.LaskoMed.api.mapper.PatientMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.EnumsContainer;
+import https.github.com.wallas5h.LaskoMed.business.dao.PatientDAO;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.BookingAppointmentEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.AvailableAppointmentRepository;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DiagnosesDiseaseRepository;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.PatientRepository;
-import jakarta.persistence.EntityNotFoundException;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.AvailableAppointmentJpaRepository;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DiagnosesDiseaseJpaRepository;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.PatientJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,33 +22,35 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class PatientService {
-  private PatientRepository patientRepository;
-  private AvailableAppointmentRepository availableAppointmentRepository;
-  private DiagnosesDiseaseRepository diseaseRepository;
+  private final PatientDAO patientDAO;
+
+  private PatientJpaRepository patientJpaRepository;
+  private AvailableAppointmentJpaRepository availableAppointmentJpaRepository;
+  private DiagnosesDiseaseJpaRepository diseaseRepository;
 
   private AppointmentsService appointmentsService;
   private PatientMapper patientMapper;
   private DiagnosedDiseaseMapper diagnosedDiseaseMapper;
 
-  public PatientsDTO getPatientsList() {
-    return PatientsDTO.of(patientRepository.findAll().stream()
-        .map(a -> patientMapper.mapFromEntityToDto(a))
-        .toList()
-    );
-  }
-
   public PatientDTO getPatientDetails(Long patientId) {
-    Optional<PatientEntity> entity = patientRepository.findById(patientId);
-
-    return entity.map(patientEntity -> patientMapper.mapFromEntityToDto(patientEntity))
-        .orElseThrow(() -> new EntityNotFoundException(
-            "PatientEntity not found, patientId: [%s]".formatted(patientId)
-        ));
+   return patientDAO.findById(patientId);
 
   }
 
   public List<BookingAppointmentDTO> getPatientUpcomingAppointments(Long patientId) {
     return appointmentsService.getPatientUpcomingBookings(patientId);
+  }
+  public List<MedicalAppointmentDTO> getPatientAppointments(Long patientId) {
+    return appointmentsService.getPatientMedicalAppointments(patientId);
+  }
+
+  public List<MedicalAppointmentDTO> getPatientAppointments(Long patientId, String specialization) {
+    specialization = specialization == null ? "" : specialization;
+
+    if (specialization.isEmpty()){
+      return appointmentsService.getPatientMedicalAppointments(patientId);
+    }
+    return appointmentsService.getPatientMedicalAppointments(patientId, specialization);
   }
 
   public ResponseEntity<?> changeBookingStatus(Long patientId, BookingAppointmentRequestDTO request) {
@@ -62,18 +63,6 @@ public class PatientService {
       }
       return ResponseEntity.ok("Booking changed successfully");
     }
-  }
-
-  public List<MedicalAppointmentDTO> getPatientAppointments(Long patientId) {
-    return appointmentsService.getPatientMedicalAppointments(patientId);
-  }
-  public List<MedicalAppointmentDTO> getPatientAppointments(Long patientId, String specialization) {
-    specialization = specialization == null ? "" : specialization;
-    
-    if (specialization.isEmpty()){
-      return appointmentsService.getPatientMedicalAppointments(patientId);
-    }
-    return appointmentsService.getPatientMedicalAppointments(patientId, specialization);
   }
 
   public boolean isBookingStatusValid(BookingAppointmentRequestDTO request) {

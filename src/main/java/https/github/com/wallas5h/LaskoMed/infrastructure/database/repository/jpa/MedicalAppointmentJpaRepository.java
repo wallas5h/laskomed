@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppointmentEntity, Long> {
+public interface MedicalAppointmentJpaRepository extends JpaRepository<MedicalAppointmentEntity, Long> {
 
   @Query("""
       SELECT ma FROM MedicalAppointmentEntity ma
