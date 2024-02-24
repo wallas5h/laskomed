@@ -32,6 +32,12 @@ registerRequest
  "role":"PATIENT"
 }
 
+loginRequest
+{
+"usernameOrEmail": "testowy",
+"password": "test"
+}
+
 
 select * from app_user
 delete from app_user

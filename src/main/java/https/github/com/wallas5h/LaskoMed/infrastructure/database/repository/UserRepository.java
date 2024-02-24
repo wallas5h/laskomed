@@ -23,13 +23,13 @@ public class UserRepository implements UserDao {
   public UserEntity findByUsernameOrEmail(String usernameOrEmail) {
     return userJpaRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail).orElseThrow(
         ()->
-            new UsernameNotFoundException("User not found by username or email: {%s}".formatted(usernameOrEmail)));
+            new UsernameNotFoundException("User not found by username or email: [%s]".formatted(usernameOrEmail)));
   }
 
   public UserEntity findByUsernameOrEmail(String username, String email) {
     return userJpaRepository.findByUsernameOrEmail(username, email).orElseThrow(
         ()->
-            new UsernameNotFoundException("User not found by username or email: {%s}, {%s}".formatted(username, email)));
+            new UsernameNotFoundException("User not found by username or email: [%s], [%s]".formatted(username, email)));
   }
 
   @Override
