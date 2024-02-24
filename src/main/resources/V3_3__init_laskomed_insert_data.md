@@ -25,3 +25,10 @@ VALUES
   ('completed', 'Influenza', 'Patient advised rest and fluids.', 120.00, 'Antiviral medication', 4, 4, 3, currval('booking_appointment_booking_id_seq'), NULL),
   ('interrupted', 'Migraine', 'Appointment interrupted due to emergency.', 0, NULL, 5, 5, 2, currval('booking_appointment_booking_id_seq'), null);
 
+INSERT INTO patient (name, surname, pesel, birthdate, email, phone, gender, medical_package, address_id, user_id)
+VALUES
+( 'John', 'Doe', '90011578901', '1990-01-15', 'john.doe@example.com', '123456789', 'Male', 'premium', 1, lastval()),
+( 'Jane', 'Smith', '85052032101', '1985-05-20', 'jane.smith@example.com', '987654321', 'Female', 'standard', 2, lastval()),
+( 'Mike', 'Johnson', '78081055555', '1978-08-10', 'mike.johnson@example.com','555555555', 'Male', 'premium', 3, lastval()),
+( 'Alice', 'Williams', '92032522333', '1992-03-25', 'alice.williams@example.com', '111222333', 'Female', 'standard', 4, lastval()),
+( 'Bob', 'Miller', '80120588999', '1980-12-05', 'bob.miller@example.com', '777888999', 'Male', 'premium', 5, lastval());
