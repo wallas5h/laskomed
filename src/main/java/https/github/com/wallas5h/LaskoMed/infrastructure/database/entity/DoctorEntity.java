@@ -33,7 +33,7 @@ public class DoctorEntity {
   private String specialization;
 
   @Column(name="PWZ_number")
-  private String PWZ_number;
+  private String pwzNumber;
 
   @Column(name="phone")
   private String phone;

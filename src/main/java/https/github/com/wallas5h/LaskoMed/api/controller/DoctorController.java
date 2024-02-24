@@ -1,11 +1,10 @@
 package https.github.com.wallas5h.LaskoMed.api.controller;
 
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
+import https.github.com.wallas5h.LaskoMed.api.utils.UserServiceAdvice;
 import https.github.com.wallas5h.LaskoMed.business.services.DoctorService;
 import https.github.com.wallas5h.LaskoMed.business.services.PatientService;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DiagnosedDiseaseEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.MedicalAppointmentEntity;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -35,7 +36,26 @@ public class DoctorController {
 
   private DoctorService doctorService;
   private PatientService patientService;
+  private UserServiceAdvice userServiceAdvice;
 
+  @PostMapping
+  public ResponseEntity<?> createPatient(
+      @RequestBody DoctorCreateRequest request
+  ){
+    Map<String, Object> response = new HashMap<>();
+
+    try{
+      Long userId = userServiceAdvice.getUserId();
+
+      doctorService.createDoctor(request, userId);
+      response.put("response", "Doctor added successfully");
+      return ResponseEntity.ok().body(response);
+
+    } catch (Exception e){
+      response.put("error", e.getMessage());
+      return ResponseEntity.badRequest().body(response);
+    }
+  }
 
   @GetMapping(DOCTORS_ID)
   public DoctorDTO doctorDetails(

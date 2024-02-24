@@ -1,16 +1,10 @@
 package https.github.com.wallas5h.LaskoMed.business.services;
 
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
-import https.github.com.wallas5h.LaskoMed.api.mapper.DoctorAvailabilityMapper;
-import https.github.com.wallas5h.LaskoMed.api.mapper.MedicalAppointmentMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.ValidationDoctorAvailabilityResult;
 import https.github.com.wallas5h.LaskoMed.business.dao.DoctorAvailabilityDAO;
 import https.github.com.wallas5h.LaskoMed.business.dao.DoctorDAO;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.ClinicEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.MedicalAppointmentEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DoctorAvailabilityJpaRepository;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.*;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -141,6 +135,27 @@ public class DoctorService {
           .errorMessage("Updating a medical appointment is not possible. Appointment do not exists.")
           .build();
     }
+  }
+
+  public void createDoctor(DoctorCreateRequest request, Long userId) throws Exception {
+
+    if(doctorDAO.findByUserIdOptional(userId).isPresent()){
+      throw new Exception("Doctor exist with this credentials.");
+    }
+
+    UserEntity userReference = entityManager.getReference(UserEntity.class, userId);
+
+    DoctorEntity newDoctorEntity = DoctorEntity.builder()
+        .name(request.getName())
+        .surname(request.getSurname())
+        .pesel(request.getPesel())
+        .specialization(request.getSpecialization())
+        .pwzNumber(request.getPwzNumber())  // @TODO api zewnętrzne PWZ po pesel
+        .phone(request.getPhone())
+        .appUser(userReference)
+        .build();
+
+    doctorDAO.save(newDoctorEntity);
   }
 
   public record CreatedAppointmentDTO2(

@@ -9,13 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DoctorDTO {
-  private Long doctorId;
+public class DoctorCreateRequest {
   private String name;
   private String surname;
   private String pesel;
   private String specialization;
-  private String pwzNumber;
+  private String PwzNumber;
   private String phone;
-  private UserDtoId appUser;
 }

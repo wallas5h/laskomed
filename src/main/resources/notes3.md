@@ -56,6 +56,16 @@ createPatient
 }
 }
 
+create Doctor
+{
+"name": "testowyDoctor",
+"surname": "testowyDoctor",
+"pesel": "99090900900",
+"specialization":"neurolog",
+"PwzNumber":"5425740",
+"phone":"555555555"
+}
+
 
 select * from app_user
 delete from app_user
