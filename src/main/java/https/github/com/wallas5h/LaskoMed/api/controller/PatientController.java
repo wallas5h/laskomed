@@ -1,6 +1,7 @@
 package https.github.com.wallas5h.LaskoMed.api.controller;
 
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
+import https.github.com.wallas5h.LaskoMed.api.utils.UserServiceAdvice;
 import https.github.com.wallas5h.LaskoMed.business.services.PatientService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(PatientController.PATIENTS)
@@ -24,7 +27,25 @@ public class PatientController {
   public static final String PATIENT_ID_APPOINTMENTS_HISTORY_ID = "/{patientId}/appointments/history/{appointmentId}";
 
   private PatientService patientService;
+  private UserServiceAdvice userServiceAdvice;
 
+  @PostMapping
+  public ResponseEntity<?> createPatient(
+      @RequestBody PatientCreateRequest request
+  ){
+    Map<String, Object> response = new HashMap<>();
+
+    try{
+      Long userId = userServiceAdvice.getUserId();
+      patientService.createPatient(request, userId);
+      response.put("response", "User added successfully");
+      return ResponseEntity.ok().body(response);
+
+    } catch (Exception e){
+      response.put("error", e.getMessage());
+      return ResponseEntity.badRequest().body(response);
+    }
+  }
 
   @GetMapping(PATIENT_ID)
   public PatientDTO getPatientDetails(

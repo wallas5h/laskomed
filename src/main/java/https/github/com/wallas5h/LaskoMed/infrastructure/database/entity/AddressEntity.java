@@ -1,6 +1,8 @@
 package https.github.com.wallas5h.LaskoMed.infrastructure.database.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -19,28 +21,37 @@ public class AddressEntity {
     @Column(name = "address_id")
     private Long addressId;
 
-    @Column(name="country")
+    @NotBlank
+    @Size(max = 32)
+    @Column(name = "country")
     private String country;
 
-    @Column(name="voivodeship")
+    @NotBlank
+    @Size(max = 32)
+    @Column(name = "voivodeship")
     private String voivodeship;
 
-    @Column(name="postal_code")
+    @NotBlank
+    @Size(max = 32)
+    @Column(name = "postal_code")
     private String postalCode;
 
-    @Column(name="house_number")
+    @NotBlank
+    @Size(max = 10)
+    @Column(name = "house_number")
     private String houseNumber;
 
-    @Column(name="region")
-    private String region;
-
-    @Column(name="city")
+    @NotBlank
+    @Size(max = 32)
+    @Column(name = "city")
     private String city;
 
-    @Column(name="street")
+    @Size(max = 32)
+    @Column(name = "street")
     private String street;
 
-    @Column(name="apartment_number")
+    @Size(max = 10)
+    @Column(name = "apartment_number")
     private String apartmentNumber;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")

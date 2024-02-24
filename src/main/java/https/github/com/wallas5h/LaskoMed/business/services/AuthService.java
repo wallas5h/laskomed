@@ -84,7 +84,7 @@ public class AuthService {
 
     userRoleJpaRepository.save(userRoleEntity);
 
-    response.put("response", "User added succesfully");
+    response.put("response", "User added successfully");
     return ResponseEntity.ok().body(response);
   }
 

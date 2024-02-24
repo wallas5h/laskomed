@@ -38,6 +38,24 @@ loginRequest
 "password": "test"
 }
 
+createPatient
+{
+"name": "testowy",
+"surname": "testowy",
+"pesel": "99090900900",
+"birthdate": "1999-09-09",
+"email": "testowy@mail.com",
+"phone": "555555555",
+"gender": "male",
+"medicalPackage": "standard",
+"address": {
+      "city": "Warszawa",
+      "street": "Karmelicka",
+      "houseNumber": "3",
+      "apartmentNumber": "9"
+}
+}
+
 
 select * from app_user
 delete from app_user

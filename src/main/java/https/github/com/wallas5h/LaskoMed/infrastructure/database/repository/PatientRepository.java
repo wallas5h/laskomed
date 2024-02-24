@@ -34,4 +34,21 @@ public class PatientRepository implements PatientDAO {
             "PatientEntity not found, patientId: [%s]".formatted(patientId)
         ));
   }
+
+  @Override
+  public void save(PatientEntity newPatientEntiy) {
+    patientJpaRepository.save(newPatientEntiy);
+  }
+
+  @Override
+  public PatientDTO findByUserId(Long userId) {
+    Optional<PatientEntity> optionalPatientEntity =patientJpaRepository.findByUserId(userId);
+    return optionalPatientEntity.map(patientMapper::mapFromEntityToDto)
+        .orElseThrow(() -> new EntityNotFoundException(
+            "PatientEntity not found, userId: [%s]".formatted(userId)
+        ));
+  }
+  public Optional<PatientEntity> findByUserIdOptional(Long userId) {
+    return patientJpaRepository.findByUserId(userId);
+  }
 }

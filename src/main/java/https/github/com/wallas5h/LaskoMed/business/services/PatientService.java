@@ -5,10 +5,16 @@ import https.github.com.wallas5h.LaskoMed.api.mapper.DiagnosedDiseaseMapper;
 import https.github.com.wallas5h.LaskoMed.api.mapper.PatientMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.EnumsContainer;
 import https.github.com.wallas5h.LaskoMed.business.dao.PatientDAO;
+import https.github.com.wallas5h.LaskoMed.business.dao.UserDao;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.AddressEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.BookingAppointmentEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.AvailableAppointmentJpaRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DiagnosesDiseaseJpaRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.PatientJpaRepository;
+import https.github.com.wallas5h.LaskoMed.security.JwtTokenProvider;
+import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -23,6 +30,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PatientService {
   private final PatientDAO patientDAO;
+  private final UserDao userDao;
 
   private PatientJpaRepository patientJpaRepository;
   private AvailableAppointmentJpaRepository availableAppointmentJpaRepository;
@@ -31,6 +39,8 @@ public class PatientService {
   private AppointmentsService appointmentsService;
   private PatientMapper patientMapper;
   private DiagnosedDiseaseMapper diagnosedDiseaseMapper;
+  private EntityManager entityManager;
+  private JwtTokenProvider jwtTokenProvider;
 
   public PatientDTO getPatientDetails(Long patientId) {
    return patientDAO.findById(patientId);
@@ -116,5 +126,40 @@ public class PatientService {
     return diseaseRepository.findByPatientId(patientId).stream()
         .map(diagnosedDiseaseMapper::mapFromEntityToDto)
         .toList();
+  }
+
+  public void createPatient(PatientCreateRequest request, Long userId) throws Exception {
+
+   if(patientDAO.findByUserIdOptional(userId).isPresent()){
+     throw new Exception("Patient exist with this credentials.");
+    }
+
+    AddressEntity addressEntity = AddressEntity.builder()
+        .houseNumber(request.getAddress().getHouseNumber())
+        .city(request.getAddress().getCity())
+        .street(request.getAddress().getStreet())
+        .apartmentNumber(request.getAddress().getApartmentNumber())
+        .country("Poland")  // tutaj zewnętrzna api @TODO zewnętrzne api do zip code
+        .voivodeship("Mazowieckie")
+        .postalCode("01-891")
+        .build();
+
+    UserEntity userReference = entityManager.getReference(UserEntity.class, userId);
+
+    PatientEntity newPatientEntiy = PatientEntity.builder()
+        .name(request.getName())
+        .surname(request.getSurname())
+        .pesel(request.getPesel())
+        .birthdate(LocalDate.parse(request.getBirthdate()))
+        .email(request.getEmail())
+        .phone(request.getPhone())
+        .medicalPackage(request.getMedicalPackage())
+        .gender(request.getGender())
+        .address(addressEntity)
+        .appUser(userReference)
+        .build();
+
+      patientDAO.save(newPatientEntiy);
+
   }
 }
