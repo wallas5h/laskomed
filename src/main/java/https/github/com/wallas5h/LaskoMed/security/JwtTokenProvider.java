@@ -1,5 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.security;
 
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,11 +31,15 @@ public class JwtTokenProvider {
     // get username from JWT token
     return extractClaim(token, Claims::getSubject);
   }
+  public String getUserId(String token) {
+    return extractClaim(token, Claims::getId);
+  }
 
   private <T> T extractClaim (String token, Function<Claims, T> claimDecoder){
     Claims claims = extractAllClaims(token);
     return claimDecoder.apply(claims);
   }
+
 
   private Claims extractAllClaims(String token){
     return Jwts.parser()
@@ -45,17 +50,18 @@ public class JwtTokenProvider {
 
   }
 
-  public String generateToken(UserDetails userDetails){
+  public String generateToken(UserEntity userDetails){
     return generateToken(userDetails, new HashMap<>());
   }
 
-  private String generateToken(UserDetails userDetails, Map<String, Object> extractAllClaims){
+  private String generateToken(UserEntity userDetails, Map<String, Object> extractAllClaims){
 
     Date currentDate = new Date(System.currentTimeMillis());
     Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
 
     return Jwts.builder()
         .subject(userDetails.getUsername())
+        .id(String.valueOf(userDetails.getUserId()))
         .issuedAt(new Date(System.currentTimeMillis()))
         .expiration(expireDate)
         .signWith(key())
