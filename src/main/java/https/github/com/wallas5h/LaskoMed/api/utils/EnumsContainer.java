@@ -16,4 +16,8 @@ public class EnumsContainer {
   public enum AppointmentType {
     TELECONSULTATION, FACILITY, ONLINE
   }
+
+  public enum RoleNames{
+    PATIENT, DOCTOR, ADMIN
+  }
 }
