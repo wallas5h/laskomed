@@ -1,4 +1,4 @@
-CREATE TABLE app_user
+ CREATE TABLE app_user
 (
     user_id     SERIAL      PRIMARY KEY   NOT NULL,
     username        VARCHAR(32) UNIQUE         NOT NULL,

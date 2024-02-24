@@ -5,6 +5,9 @@ server:
   port: 8080
   servlet:
     context-path: /laskomed/api
+app:
+  jwt-secret: FxfGyCNl3uUwR2b/Te+s+TOe2l2FjL8ceWjA32vG62n0kY1/A+yW7M3fZdV6wLy9
+  jwt-expiration-milliseconds: 86400000
 
 # api store dla zewnętrznego api
 api:
@@ -39,4 +42,4 @@ logging:
   level:
     org:
       springframework:
-        security: INFO
+        security: TRACE

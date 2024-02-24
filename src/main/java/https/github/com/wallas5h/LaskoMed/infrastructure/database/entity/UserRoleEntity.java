@@ -18,10 +18,10 @@ public class UserRoleEntity {
   @Column(name = "app_user_role_id")
   private Long appUserRoleId;
 
-  @Column(name = "app_user_id")
+  @Column(name = "user_id")
   private Long appUserId;
 
-  @Column(name = "role")
-  private String role;
+  @Column(name = "role_id")
+  private Long roleId;
 
 }

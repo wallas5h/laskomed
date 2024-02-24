@@ -26,12 +26,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	//db
 	implementation 'org.flywaydb:flyway-core'
 	runtimeOnly 'org.postgresql:postgresql'
 
 	//api
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.5'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.5'
 
 	//annotations
 	compileOnly 'org.projectlombok:lombok'
