@@ -12,7 +12,7 @@ CREATE TABLE patient
     address_id  INT,
     user_id     INT,
     PRIMARY KEY (patient_id),
-    UNIQUE (email, user_id),
+    UNIQUE (email, user_id, pesel),
     CONSTRAINT fk_patient_address
         FOREIGN KEY (address_id)
             REFERENCES address (address_id),
