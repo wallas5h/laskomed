@@ -36,6 +36,7 @@ public class SecurityConfig {
           authorize.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
           authorize.requestMatchers("/css/**", "/favicon.ico", "/error").permitAll();
           authorize.requestMatchers("/auth/register", "/auth/login").permitAll();
+          authorize.requestMatchers( "/swagger-ui/**", "/v3/api-docs/**").permitAll();
           authorize.anyRequest().authenticated();
         })
         .httpBasic(Customizer.withDefaults());

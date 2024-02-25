@@ -25,7 +25,7 @@ PATIENT change status
 registerRequest
 {
  "username":"testowy",
- "password":"test",
+ "password":"TestPassword123.",
  "email":"testowy@mail.com",
  "enabled":true,
  "confirmed":true,
@@ -35,7 +35,7 @@ registerRequest
 loginRequest
 {
 "usernameOrEmail": "testowy",
-"password": "test"
+"password": "TestPassword123."
 }
 
 createPatient
@@ -66,6 +66,9 @@ create Doctor
 "phone":"555555555"
 }
 
+link do dokumentacji z api
+http://localhost:8080/laskomed/api/swagger-ui/index.html
+http://localhost:8080/laskomed/api/v3/api-docs/default
 
 select * from app_user
 delete from app_user
