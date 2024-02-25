@@ -1,6 +1,8 @@
 package https.github.com.wallas5h.LaskoMed.infrastructure.database.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,12 +25,18 @@ public class UserEntity implements UserDetails {
   @Column(name = "user_id")
   private Long userId;
 
+  @NotBlank
   @Column(name = "username")
   private String username;
 
+
+//  @Pattern(regexp = "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/")
+//  @Size(min = 7 , max = 32)
   @Column(name = "password")
   private String password;
 
+  @NotBlank
+  @Email
   @Column(name = "email")
   private String email;
 
