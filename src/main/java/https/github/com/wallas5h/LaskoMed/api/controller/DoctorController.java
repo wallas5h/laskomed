@@ -4,9 +4,20 @@ import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.api.utils.UserServiceAdvice;
 import https.github.com.wallas5h.LaskoMed.business.services.DoctorService;
 import https.github.com.wallas5h.LaskoMed.business.services.PatientService;
+import https.github.com.wallas5h.LaskoMed.infrastructure.configuration.SpringDocConfiguration;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Tag(name = "Doctor", description = "Methods for doctor management")
+@SecurityRequirement(name="Bearer Authentication" )
 @RestController
 @RequestMapping(DoctorController.DOCTORS)
 @AllArgsConstructor
@@ -38,8 +51,18 @@ public class DoctorController {
   private PatientService patientService;
   private UserServiceAdvice userServiceAdvice;
 
+  @Operation(summary = "Create new doctor")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "New doctor created",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = DoctorDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid input data",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @PostMapping
-  public ResponseEntity<?> createPatient(
+  public ResponseEntity<?> createDoctor(
       @RequestBody DoctorCreateRequest request
   ){
     Map<String, Object> response = new HashMap<>();
@@ -57,32 +80,99 @@ public class DoctorController {
     }
   }
 
+  @Operation(summary = "Get doctor details by id")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found the doctor's deatails",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = DoctorDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+          content = @Content),
+      @ApiResponse(responseCode = "404", description = "Doctor not found",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @GetMapping(DOCTORS_ID)
   public DoctorDTO doctorDetails(
+      @Parameter(description = "doctor id")
       @PathVariable Long doctorId
   ) {
     return doctorService.getDoctorDetails(doctorId);
   }
 
+  @Operation(summary = "Get doctor list availabilities")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found the doctor's availabilities",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = DoctorAvailabilityDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+          content = @Content),
+      @ApiResponse(responseCode = "404", description = "Not found doctor and availabilities",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @GetMapping(DOCTORS_ID_AVAILABILITIES)
   public List<DoctorAvailabilityDTO> getDoctorAllAvailabilities(
+      @Parameter(description = "doctor id")
       @PathVariable Long doctorId
   ) {
     return doctorService.getDoctorAvailabilities(doctorId);
   }
+
+  @Operation(summary = "Get doctor's list of present availabilities")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found the doctor's present availabilities",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = DoctorAvailabilityDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+          content = @Content),
+      @ApiResponse(responseCode = "404", description = "Not found doctor and availabilities",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @GetMapping(DOCTORS_ID_AVAILABILITIES_PRESENT)
   public List<DoctorAvailabilityDTO> getDoctorPresentAvailabilities(
+      @Parameter(description = "doctor id")
       @PathVariable Long doctorId
   ) {
     return doctorService.getDoctorPresentAvailabilities(doctorId);
   }
+
+
+  @Operation(summary = "Get doctor's upcoming appointments")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found the doctor's upcoming appointments",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = BookingAppointmentDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+          content = @Content),
+      @ApiResponse(responseCode = "404", description = "Not found doctor and appointments",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @GetMapping(DOCTORS_ID_APPOINTMENTS_UPCOMING)
   public List<BookingAppointmentDTO> getDoctorUpcomingAppointments(
+      @Parameter(description = "doctor id")
       @PathVariable Long doctorId
   ) {
     return doctorService.getDoctorUpcomingAppointments(doctorId);
   }
 
+  @Operation(summary = "Create doctor's availabilities")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Created",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = DoctorDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid input data",
+          content = @Content),
+      @ApiResponse(responseCode = "404", description = "Not found",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @PostMapping(
       value = DOCTORS_AVAILABILITIES_CREATE,
       produces = {
@@ -112,6 +202,16 @@ public class DoctorController {
   }
 
 //  @TODO podwójne zapytanie wywołyje błąd, dodać opcję update
+@Operation(summary = "Create medical appointment")
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Created",
+        content = { @Content(mediaType = "application/json",
+            schema = @Schema(implementation = MedicalAppointmentDTO.class)) }),
+    @ApiResponse(responseCode = "400", description = "Invalid input data",
+        content = @Content),
+    @ApiResponse(responseCode = "401", description = "Unauthorised access",
+        content = @Content)
+})
   @PostMapping(
       value = DOCTORS_PROCESSING_APPOINTMENT,
       produces = {
@@ -125,15 +225,42 @@ public class DoctorController {
     return doctorService.addMedicalAppointment(request);
   }
 
+  @Operation(summary = "Get a list of patient's appointments by doctor specialization ")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found the appointments",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = MedicalAppointmentDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid input data",
+          content = @Content),
+      @ApiResponse(responseCode = "404", description = "Patient not found",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @GetMapping(APPOINTMENTS_PATIENT)
   public List<MedicalAppointmentDTO> getPatientAppointments(
+      @Parameter(description = "patient id")
       @PathVariable Long patientId,
       @RequestParam(required = false) String specialization
   ) {
     return patientService.getPatientAppointments(patientId, specialization);
   }
+
+  @Operation(summary = "Get a list of patient's diseases ")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found the patient's diseases",
+          content = { @Content(mediaType = "application/json",
+              schema = @Schema(implementation = DiagnosedDiseaseDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+          content = @Content),
+      @ApiResponse(responseCode = "404", description = "Patient not found",
+          content = @Content),
+      @ApiResponse(responseCode = "401", description = "Unauthorised access",
+          content = @Content)
+  })
   @GetMapping(APPOINTMENTS_PATIENT_DISEASE)
   public List<DiagnosedDiseaseDTO> getPatientDiseases(
+      @Parameter(description = "patient id")
       @PathVariable Long patientId
   ) {
     return patientService.getPatientDiseases(patientId);
