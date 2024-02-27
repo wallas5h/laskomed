@@ -30,7 +30,8 @@ dependencies {
 
 	//db
 	implementation 'org.flywaydb:flyway-core'
-	runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.projectlombok:lombok:1.18.28'
+    runtimeOnly 'org.postgresql:postgresql'
 
 	//api
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.5'
@@ -56,8 +57,20 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'org.testcontainers', name: 'testcontainers-bom', version: '1.19.3', ext: 'pom'
+	testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.3.0'
+	testImplementation "org.slf4j:slf4j-api:${wiremockSlf4jVersion}"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }
