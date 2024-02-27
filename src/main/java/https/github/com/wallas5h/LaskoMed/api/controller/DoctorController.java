@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerErrorException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,19 +63,23 @@ public class DoctorController {
           content = @Content)
   })
   @PostMapping
-  public ResponseEntity<?> createDoctor(
+  public ResponseEntity<Map<String, String>> createDoctor(
       @RequestBody DoctorCreateRequest request
   ){
-    Map<String, Object> response = new HashMap<>();
+    Map<String, String> response = new HashMap<>();
 
     try{
       Long userId = userServiceAdvice.getUserId();
 
       doctorService.createDoctor(request, userId);
-      response.put("response", "Doctor added successfully");
+      response.put("message", "Doctor added successfully");
       return ResponseEntity.ok().body(response);
 
     } catch (Exception e){
+      if (e instanceof ServerErrorException) {
+        response.put("error", "Server error occurred");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+      }
       response.put("error", e.getMessage());
       return ResponseEntity.badRequest().body(response);
     }

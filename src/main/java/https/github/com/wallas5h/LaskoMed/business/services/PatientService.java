@@ -141,7 +141,7 @@ public class PatientService {
         .apartmentNumber(request.getAddress().getApartmentNumber())
         .country("Poland")  // tutaj zewnętrzna api @TODO zewnętrzne api do zip code
         .voivodeship("Mazowieckie")
-        .postalCode("01-891")
+        .postalCode(request.getAddress().getPostalCode())
         .build();
 
     UserEntity userReference = entityManager.getReference(UserEntity.class, userId);

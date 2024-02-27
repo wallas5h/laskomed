@@ -74,7 +74,7 @@ public class AuthService {
 
     if (Objects.isNull(newUser)) {
       response.put("error", "Sorry, try later.");
-      return ResponseEntity.badRequest().body(response);
+      return ResponseEntity.internalServerError().body(response);
     }
 
     UserRoleEntity userRoleEntity = UserRoleEntity.builder()
@@ -84,7 +84,7 @@ public class AuthService {
 
     userRoleJpaRepository.save(userRoleEntity);
 
-    response.put("response", "User added successfully");
+    response.put("message", "User registered successfully");
     return ResponseEntity.ok().body(response);
   }
 
@@ -103,7 +103,7 @@ public class AuthService {
       user = userDao.findByUsernameOrEmail(request.getUsernameOrEmail());
     } catch (UsernameNotFoundException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-          "error", e.getMessage()
+          "error", "Invalid credentials"
       ));
     }
 
@@ -113,8 +113,8 @@ public class AuthService {
           request.getPassword()
       ));
     } catch (BadCredentialsException e){
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-          "error", e.getMessage()
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+          "error", "Invalid credentials"
       ));
     }
 
@@ -122,7 +122,7 @@ public class AuthService {
     String token = jwtTokenProvider.generateToken(user);
 
     return ResponseEntity.ok().body(Map.of(
-        "response", "Login successful",
+        "message", "Login successful",
         "token", token
     ));
   }

@@ -49,7 +49,7 @@ public class PatientController {
           content = @Content)
   })
   @PostMapping
-  public ResponseEntity<?> createPatient(
+  public ResponseEntity<Map<String, Object>> createPatient(
       @RequestBody PatientCreateRequest request
   ){
     Map<String, Object> response = new HashMap<>();
@@ -57,7 +57,8 @@ public class PatientController {
     try{
       Long userId = userServiceAdvice.getUserId();
       patientService.createPatient(request, userId);
-      response.put("response", "User added successfully");
+
+      response.put("message", "Patient added successfully");
       return ResponseEntity.ok().body(response);
 
     } catch (Exception e){

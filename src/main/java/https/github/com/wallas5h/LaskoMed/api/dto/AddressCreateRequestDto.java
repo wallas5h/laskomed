@@ -14,5 +14,6 @@ public class AddressCreateRequestDto {
     private String street;
     private String houseNumber;
     private String apartmentNumber;
+    private String postalCode;
 
 }

@@ -34,8 +34,6 @@ public class AuthController {
       @ApiResponse(responseCode = "200", description = "New user created",
           content = @Content),
       @ApiResponse(responseCode = "400", description = "Invalid input data",
-          content = @Content),
-      @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
   @PostMapping(
@@ -56,8 +54,6 @@ public class AuthController {
           content = @Content),
       @ApiResponse(responseCode = "400", description = "Invalid input data",
           content = @Content),
-      @ApiResponse(responseCode = "401", description = "Unauthorised access",
-          content = @Content)
   })
   @PostMapping(LOGIN)
   public ResponseEntity<Map<String, Object>> login(
