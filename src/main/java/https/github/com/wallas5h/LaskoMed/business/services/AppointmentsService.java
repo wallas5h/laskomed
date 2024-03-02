@@ -145,8 +145,12 @@ public class AppointmentsService {
 
   @Transactional
   public Boolean isExistMedicalAppointment(MedicalAppointmentRequestDTO request) {
-    MedicalAppointmentDTO byBookingId = getMedicalAppointmentById(request);
-    return Objects.isNull(byBookingId);
+    try{
+      getMedicalAppointmentById(request);
+      return true;
+    } catch (Exception e){
+      return false;
+    }
   }
 
   public MedicalAppointmentDTO getMedicalAppointmentById(MedicalAppointmentRequestDTO request) {

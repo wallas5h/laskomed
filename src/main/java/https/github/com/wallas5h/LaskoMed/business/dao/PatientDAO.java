@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface PatientDAO {
   PatientDTO findById(Long patientId);
 
-  void save(PatientEntity newPatientEntiy);
+  PatientEntity save(PatientEntity newPatientEntiy);
 
   PatientDTO findByUserId(Long userId);
 

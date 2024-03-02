@@ -39,9 +39,9 @@ public class AuthController {
   @PostMapping(
       value = REGISTER,
       produces = {
-          MediaType.APPLICATION_JSON_VALUE,
-          MediaType.APPLICATION_XML_VALUE
-      })
+          MediaType.APPLICATION_JSON_VALUE
+      }
+)
   public ResponseEntity<Map<String, Object>> register(
       @RequestBody RegisterRequest request
   ){

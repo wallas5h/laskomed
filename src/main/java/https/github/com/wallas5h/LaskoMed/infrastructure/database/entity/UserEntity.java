@@ -3,6 +3,8 @@ package https.github.com.wallas5h.LaskoMed.infrastructure.database.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,18 +28,16 @@ public class UserEntity implements UserDetails {
   @Column(name = "user_id")
   private Long userId;
 
-  @NotBlank
+  @NotBlank(message = "Username cannot be blank")
+  @Size(min = 3, message = "Username must have min 3 characters")
   @Column(name = "username")
   private String username;
 
-
-//  @Pattern(regexp = "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/")
-//  @Size(min = 7 , max = 32)
   @Column(name = "password")
   private String password;
 
-  @NotBlank
-  @Email
+  @NotBlank(message = "Email cannot be blank")
+  @Email(message = "Invalid email format. Email should have @")
   @Column(name = "email")
   private String email;
 

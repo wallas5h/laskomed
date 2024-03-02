@@ -36,8 +36,8 @@ public class PatientRepository implements PatientDAO {
   }
 
   @Override
-  public void save(PatientEntity newPatientEntiy) {
-    patientJpaRepository.save(newPatientEntiy);
+  public PatientEntity save(PatientEntity newPatientEntiy) {
+    return patientJpaRepository.save(newPatientEntiy);
   }
 
   @Override
@@ -49,6 +49,8 @@ public class PatientRepository implements PatientDAO {
         ));
   }
   public Optional<PatientEntity> findByUserIdOptional(Long userId) {
-    return patientJpaRepository.findByUserId(userId);
+    Optional<Optional<PatientEntity>> result = Optional.ofNullable(patientJpaRepository.findByUserId(userId));
+
+    return result.flatMap(innerOptional -> innerOptional);
   }
 }

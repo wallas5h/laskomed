@@ -4,12 +4,14 @@ import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.api.mapper.DiagnosedDiseaseMapper;
 import https.github.com.wallas5h.LaskoMed.api.mapper.PatientMapper;
 import https.github.com.wallas5h.LaskoMed.api.utils.EnumsContainer;
+import https.github.com.wallas5h.LaskoMed.api.utils.UserServiceAdvice;
 import https.github.com.wallas5h.LaskoMed.business.dao.PatientDAO;
 import https.github.com.wallas5h.LaskoMed.business.dao.UserDao;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.AddressEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.BookingAppointmentEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.PatientRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.AvailableAppointmentJpaRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.DiagnosesDiseaseJpaRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.PatientJpaRepository;
@@ -41,6 +43,8 @@ public class PatientService {
   private DiagnosedDiseaseMapper diagnosedDiseaseMapper;
   private EntityManager entityManager;
   private JwtTokenProvider jwtTokenProvider;
+  private UserServiceAdvice userServiceAdvice;
+  private PatientRepository patientRepository;
 
   public PatientDTO getPatientDetails(Long patientId) {
    return patientDAO.findById(patientId);
@@ -51,6 +55,7 @@ public class PatientService {
     return appointmentsService.getPatientUpcomingBookings(patientId);
   }
   public List<MedicalAppointmentDTO> getPatientAppointments(Long patientId) {
+
     return appointmentsService.getPatientMedicalAppointments(patientId);
   }
 
@@ -63,7 +68,8 @@ public class PatientService {
     return appointmentsService.getPatientMedicalAppointments(patientId, specialization);
   }
 
-  public ResponseEntity<?> changeBookingStatus(Long patientId, BookingAppointmentRequestDTO request) {
+  public ResponseEntity<?> changeBookingStatus( BookingAppointmentRequestDTO request) {
+    Long patientId = getPatientIdByUserId();
     int changedBookingStatus = appointmentsService.changeBookingStatus(patientId, request);
     if (changedBookingStatus < 1) {
       return ResponseEntity.status(400).body("Incorrect input data");
@@ -128,6 +134,7 @@ public class PatientService {
         .toList();
   }
 
+  // @TODO obsługa błedu gdy token wygaśnie
   public void createPatient(PatientCreateRequest request, Long userId) throws Exception {
 
    if(patientDAO.findByUserIdOptional(userId).isPresent()){
@@ -161,5 +168,11 @@ public class PatientService {
 
       patientDAO.save(newPatientEntiy);
 
+  }
+
+  public Long getPatientIdByUserId() {
+    Long userId = userServiceAdvice.getUserId();
+    PatientDTO patientDTO = patientRepository.findByUserId(userId);
+    return patientDTO.getPatientId();
   }
 }

@@ -16,4 +16,10 @@ public interface PatientJpaRepository extends JpaRepository<PatientEntity, Long>
     WHERE pa.appUser.userId = :id
     """)
   Optional<PatientEntity> findByUserId(@Param("id") Long userId);
+
+  @Query("""
+    SELECT pa FROM PatientEntity pa
+    WHERE pa.pesel = :pesel
+    """)
+  Optional<PatientEntity> findByPesel(@Param("pesel") String pesel);
 }

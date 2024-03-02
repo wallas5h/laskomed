@@ -22,19 +22,19 @@ import java.util.List;
 import java.util.Map;
 
 @Tag(name = "Patient", description = "Methods for patient management")
-@SecurityRequirement(name="Bearer Authentication" )
+@SecurityRequirement(name="Bearer Authentication")
 @RestController
-@RequestMapping(PatientController.PATIENTS)
+@RequestMapping(PatientController.BASE)
 @AllArgsConstructor
 public class PatientController {
-  public static final String PATIENTS = "/patients";
-  public static final String PATIENT_ID = "/{patientId}";
+  public static final String BASE = "/patients";
+  public static final String PATIENT_DETAILS = "/details";
   public static final String PATIENTS_APPOINTMENTS = "/appointments";
   public static final String PATIENTS_APPOINTMENTS_RESERVE = "/appointments/reserve";
-  public static final String PATIENT_ID_APPOINTMENTS_UPCOMING = "/{patientId}/appointments/upcoming";
+  public static final String APPOINTMENTS_UPCOMING = "/appointments/upcoming";
+  public static final String PATIENT_APPOINTMENTS_HISTORY = "/appointments/history";
+  public static final String PATIENT_APPOINTMENTS_HISTORY_ID = "/appointments/history/{appointmentId}";
   public static final String PATIENT_ID_APPOINTMENTS_UPCOMING_ID = "/{patientId}/appointments/upcoming/{appointmentId}";
-  public static final String PATIENT_ID_APPOINTMENTS_HISTORY = "/{patientId}/appointments/history";
-  public static final String PATIENT_ID_APPOINTMENTS_HISTORY_ID = "/{patientId}/appointments/history/{appointmentId}";
 
   private PatientService patientService;
   private UserServiceAdvice userServiceAdvice;
@@ -72,20 +72,23 @@ public class PatientController {
       @ApiResponse(responseCode = "200", description = "Found the patient's deatails",
           content = { @Content(mediaType = "application/json",
               schema = @Schema(implementation = PatientDTO.class)) }),
-      @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-          content = @Content),
       @ApiResponse(responseCode = "404", description = "Patient not found",
           content = @Content),
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(PATIENT_ID)
-  public PatientDTO getPatientDetails(
-      @Parameter(description = "patient id")
-      @PathVariable Long patientId
+  @GetMapping(PATIENT_DETAILS)
+  public ResponseEntity<PatientDTO> getPatientDetails(
   ) {
-    return patientService.getPatientDetails(patientId);
-//    @TODO dodać sprawdzenie czy user wpisuje swoje patientId
+    Long patientId=patientService.getPatientIdByUserId();
+
+    PatientDTO patientDTO = patientService.getPatientDetails(patientId);
+
+    if (patientDTO != null) {
+      return ResponseEntity.ok(patientDTO);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 
   @Operation(summary = "Get patient's upcoming bookings")
@@ -100,11 +103,9 @@ public class PatientController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(PATIENT_ID_APPOINTMENTS_UPCOMING)
-  public List<BookingAppointmentDTO> getUpcomingPatientAppointments(
-      @Parameter(description = "patient id")
-      @PathVariable Long patientId
-  ) {
+  @GetMapping(APPOINTMENTS_UPCOMING)
+  public List<BookingAppointmentDTO> getUpcomingPatientAppointments() {
+    Long patientId=patientService.getPatientIdByUserId();
     return patientService.getPatientUpcomingAppointments(patientId);
   }
 
@@ -160,13 +161,11 @@ public class PatientController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @PatchMapping(PATIENT_ID_APPOINTMENTS_UPCOMING)
+  @PatchMapping(APPOINTMENTS_UPCOMING)
   public ResponseEntity<?> changeBookingsStatus(
-      @Parameter(description = "patient id")
-      @PathVariable Long patientId,
       @Valid @RequestBody BookingAppointmentRequestDTO request
   ) {
-    return patientService.changeBookingStatus(patientId, request);
+    return patientService.changeBookingStatus( request);
   }
 
   @Operation(summary = "Get patient appointments history")
@@ -181,11 +180,10 @@ public class PatientController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(PATIENT_ID_APPOINTMENTS_HISTORY)
+  @GetMapping(PATIENT_APPOINTMENTS_HISTORY)
   public List<MedicalAppointmentDTO> getPatientAppointments(
-      @Parameter(description = "patient id")
-      @PathVariable Long patientId
   ) {
+    Long patientId=patientService.getPatientIdByUserId();
     return patientService.getPatientAppointments(patientId);
   }
 
@@ -201,13 +199,12 @@ public class PatientController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(PATIENT_ID_APPOINTMENTS_HISTORY_ID)
+  @GetMapping(PATIENT_APPOINTMENTS_HISTORY_ID)
   public MedicalAppointmentDTO getAppointmentDetails(
-      @Parameter(description = "patient id")
-      @PathVariable Long patientId,
       @Parameter(description = "appointment id")
       @PathVariable Long appointmentId
   ) {
+    Long patientId=patientService.getPatientIdByUserId();
     return patientService.getPatientMedicalAppointmentDetails(patientId, appointmentId);
   }
 

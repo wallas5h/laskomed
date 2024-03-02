@@ -1,3 +1,12 @@
+create doctor availability
+{
+"dateAvailable": "2024-03-22",
+"startTime":"08:00:00",
+"endTime": "10:00:00",
+"clinicId": "1",
+"doctorId": "1"
+}
+
 {
  "appointmentStatus":"facility"
  "diagnosis":"podejrzenie zawały"
@@ -44,15 +53,16 @@ createPatient
 "surname": "testowy",
 "pesel": "99090900900",
 "birthdate": "1999-09-09",
-"email": "testowy@mail.com",
+"email": "testowy2@mail.com",
 "phone": "555555555",
 "gender": "male",
 "medicalPackage": "standard",
 "address": {
-      "city": "Warszawa",
-      "street": "Karmelicka",
-      "houseNumber": "3",
-      "apartmentNumber": "9"
+"city": "Warszawa",
+"street": "Karmelicka",
+"houseNumber": "33",
+"apartmentNumber": "99",
+"postalCode":"00-149"
 }
 }
 

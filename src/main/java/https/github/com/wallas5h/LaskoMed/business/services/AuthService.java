@@ -10,6 +10,7 @@ import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserRol
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.RoleRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.UserRoleJpaRepository;
 import https.github.com.wallas5h.LaskoMed.security.JwtTokenProvider;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -39,6 +42,7 @@ public class AuthService {
   private UserRoleJpaRepository userRoleJpaRepository;
   private EntityManager entityManager;
 
+  @Transactional
   public ResponseEntity<Map<String, Object>> register(RegisterRequest request) {
     Set<RoleEntity> roles = new HashSet<>();
     Map<String, Object> response = new HashMap<>();
@@ -61,6 +65,11 @@ public class AuthService {
       return ResponseEntity.badRequest().body(response);
     }
 
+    if (StringUtils.isBlank(request.getPassword())) {
+      response.put("error", "Invalid. Password cannot be blank");
+      return ResponseEntity.badRequest().body(response);
+    }
+
     UserEntity userEntity = UserEntity.builder()
         .username(request.getUsername())
         .email(request.getEmail())
@@ -70,7 +79,14 @@ public class AuthService {
         .enabled(request.getEnabled())
         .build();
 
-    UserEntity newUser = userDao.save(userEntity);
+    UserEntity newUser;
+//    UserEntity newUser= userDao.save(userEntity);
+    try{
+      newUser= userDao.save(userEntity);
+    } catch (Exception e){
+      response.put("error", "Invalid user data");
+      return ResponseEntity.badRequest().body(response);
+    }
 
     if (Objects.isNull(newUser)) {
       response.put("error", "Sorry, try later.");
@@ -112,9 +128,9 @@ public class AuthService {
           request.getUsernameOrEmail(),
           request.getPassword()
       ));
-    } catch (BadCredentialsException e){
+    } catch (Exception e){
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-          "error", "Invalid credentials"
+          "error", "Invalid authentication"
       ));
     }
 

@@ -12,6 +12,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(of = "patientId")
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

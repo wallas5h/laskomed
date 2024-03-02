@@ -9,4 +9,4 @@ spring:
       ddl-auto: validate
   #        tylko do testów poniżej:
   security:
-    enabled: false
+    enabled: true

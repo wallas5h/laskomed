@@ -21,7 +21,7 @@ import java.util.Objects;
 // Execute Before Executing Spring Security Filters
 // Validate the JWT Token and Provides user details to Spring Security for Authentication
 @Component
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private JwtTokenProvider jwtTokenProvider;
