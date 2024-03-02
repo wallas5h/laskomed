@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version "${springBootVersion}"
 	id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+	id 'jacoco'
 }
 
 group = 'https.github.com.wallas5h'
@@ -54,7 +55,6 @@ dependencies {
 
 	//tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
 	testCompileOnly 'org.projectlombok:lombok'
@@ -62,6 +62,13 @@ dependencies {
 	implementation group: 'org.testcontainers', name: 'testcontainers-bom', version: '1.19.3', ext: 'pom'
 	testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.3.0'
 	testImplementation "org.slf4j:slf4j-api:${wiremockSlf4jVersion}"
+	testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '6.2.2'
+
+	//testcontainers
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:postgresql'
+	implementation group: 'org.testcontainers', name: 'testcontainers-bom', version: '1.19.3', ext: 'pom'
 }
 
 tasks.named('test') {
@@ -73,4 +80,21 @@ test {
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
+	finalizedBy jacocoTestReport
 }
+//dependencyManagement {
+//	imports {
+//		mavenBom "org.testcontainers:testcontainers-bom: ${testcontainersVersion}"
+//	}
+//}
+
+
+
+jacocoTestReport {
+	reports {
+		xml.required = false
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+}
+
