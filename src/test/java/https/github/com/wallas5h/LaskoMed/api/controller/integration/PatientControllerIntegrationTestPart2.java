@@ -53,7 +53,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class PatientControllerIntegrationTest3 {
+public class PatientControllerIntegrationTestPart2 {
 
   private MockMvc mockMvc;
 
@@ -139,7 +139,6 @@ public class PatientControllerIntegrationTest3 {
     UserPatient userPatientData = getUserPatient();
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("specialization", "Ortopeda");
-    params.add("location", "Warsaw");
 
     // doctor add availabilities
     createDoctorAvailabilities();

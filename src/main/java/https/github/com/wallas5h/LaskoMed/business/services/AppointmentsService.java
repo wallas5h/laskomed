@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -146,18 +145,29 @@ public class AppointmentsService {
   @Transactional
   public Boolean isExistMedicalAppointment(MedicalAppointmentRequestDTO request) {
     try{
-      getMedicalAppointmentById(request);
+      getMedicalAppointmentByBookingId(request);
       return true;
     } catch (Exception e){
       return false;
     }
   }
 
-  public MedicalAppointmentDTO getMedicalAppointmentById(MedicalAppointmentRequestDTO request) {
+  public MedicalAppointmentDTO getMedicalAppointmentByBookingId(MedicalAppointmentRequestDTO request) {
     BookingAppointmentEntity bookingAppointment = entityManager.find(
         BookingAppointmentEntity.class, request.getBookingAppointmentId());
 
     return medicalAppointmentDAO.findByBookingId(bookingAppointment.getBookingId());
+  }
+  public MedicalAppointmentDTO getMedicalAppointmentByBookingId(String  bookingId) {
+    BookingAppointmentEntity bookingAppointment = entityManager.find(
+        BookingAppointmentEntity.class, bookingId);
+
+    try{
+      return medicalAppointmentDAO.findByBookingId(bookingAppointment.getBookingId());
+    } catch (Exception e){
+      return null;
+    }
+
   }
 
   private BigDecimal getMedicalAppointmentCost(String medicalPackage, String type, String status) {

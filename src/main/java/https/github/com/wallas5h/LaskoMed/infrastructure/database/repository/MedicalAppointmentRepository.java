@@ -60,7 +60,7 @@ public class MedicalAppointmentRepository implements MedicalAppointmentDAO {
    return medicalAppointmentJpaRepository.findByBookingId(bookingId)
        .map( medicalAppointmentMapper::mapFromEntityToDto)
        .orElseThrow(() -> new EntityNotFoundException(
-           "MedicalAppointmentEntity not found, appointmentId: [%s]".formatted(bookingId)
+           "MedicalAppointmentEntity not found, bookingId: [%s]".formatted(bookingId)
        ));
   }
 

@@ -2,9 +2,9 @@ package https.github.com.wallas5h.LaskoMed.api.controller;
 
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.api.utils.UserServiceAdvice;
+import https.github.com.wallas5h.LaskoMed.business.services.AppointmentsService;
 import https.github.com.wallas5h.LaskoMed.business.services.DoctorService;
 import https.github.com.wallas5h.LaskoMed.business.services.PatientService;
-import https.github.com.wallas5h.LaskoMed.infrastructure.configuration.SpringDocConfiguration;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,11 +13,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,25 +30,24 @@ import java.util.Objects;
 @Tag(name = "Doctor", description = "Methods for doctor management")
 @SecurityRequirement(name="Bearer Authentication" )
 @RestController
-@RequestMapping(DoctorController.DOCTORS)
+@RequestMapping(DoctorController.BASE)
 @AllArgsConstructor
 public class DoctorController {
-  public static final String DOCTORS = "/doctors";
-  public static final String DOCTORS_ID = "/{doctorId}";
-  public static final String DOCTORS_ID_AVAILABILITIES = "/{doctorId}/availabilities";
-  public static final String DOCTORS_ID_AVAILABILITIES_PRESENT = "/{doctorId}/availabilities/present";
+  public static final String BASE = "/doctors";
+  public static final String DOCTOR_DETAILS = "/details";
+  public static final String DOCTORS_AVAILABILITIES_PRESENT = "/availabilities/present";
   public static final String DOCTORS_AVAILABILITIES = "/availabilities";
   public static final String DOCTORS_AVAILABILITIES_CREATE = "/availabilities/create";
-  public static final String DOCTORS_ID_APPOINTMENTS = "/{doctorId}/appointments";
   public static final String APPOINTMENTS_PATIENT = "/appointments/patient/{patientId}";
   public static final String APPOINTMENTS_PATIENT_DISEASE = "/appointments/patient/{patientId}/disease";
-  public static final String DOCTORS_PROCESSING_APPOINTMENT = "/{doctorId}/appointments/processing";
-  public static final String DOCTORS_ID_APPOINTMENTS_UPCOMING = "/{doctorId}/appointments/upcoming";
+  public static final String DOCTORS_PROCESSING_APPOINTMENT = "/appointments/processing";
+  public static final String DOCTORS_APPOINTMENTS_UPCOMING = "/appointments/upcoming";
 
 
   private DoctorService doctorService;
   private PatientService patientService;
   private UserServiceAdvice userServiceAdvice;
+  private AppointmentsService appointmentsService;
 
   @Operation(summary = "Create new doctor")
   @ApiResponses(value = {
@@ -97,11 +94,10 @@ public class DoctorController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(DOCTORS_ID)
+  @GetMapping(DOCTOR_DETAILS)
   public DoctorDTO doctorDetails(
-      @Parameter(description = "doctor id")
-      @PathVariable Long doctorId
   ) {
+    Long doctorId=doctorService.getPatientIdByUserId();
     return doctorService.getDoctorDetails(doctorId);
   }
 
@@ -117,11 +113,9 @@ public class DoctorController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(DOCTORS_ID_AVAILABILITIES)
-  public List<DoctorAvailabilityDTO> getDoctorAllAvailabilities(
-      @Parameter(description = "doctor id")
-      @PathVariable Long doctorId
-  ) {
+  @GetMapping(DOCTORS_AVAILABILITIES)
+  public List<DoctorAvailabilityDTO> getDoctorAllAvailabilities() {
+    Long doctorId=doctorService.getPatientIdByUserId();
     return doctorService.getDoctorAvailabilities(doctorId);
   }
 
@@ -137,11 +131,10 @@ public class DoctorController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(DOCTORS_ID_AVAILABILITIES_PRESENT)
+  @GetMapping(DOCTORS_AVAILABILITIES_PRESENT)
   public List<DoctorAvailabilityDTO> getDoctorPresentAvailabilities(
-      @Parameter(description = "doctor id")
-      @PathVariable Long doctorId
   ) {
+    Long doctorId=doctorService.getPatientIdByUserId();
     return doctorService.getDoctorPresentAvailabilities(doctorId);
   }
 
@@ -158,11 +151,10 @@ public class DoctorController {
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
-  @GetMapping(DOCTORS_ID_APPOINTMENTS_UPCOMING)
+  @GetMapping(DOCTORS_APPOINTMENTS_UPCOMING)
   public List<BookingAppointmentDTO> getDoctorUpcomingAppointments(
-      @Parameter(description = "doctor id")
-      @PathVariable Long doctorId
   ) {
+    Long doctorId=doctorService.getPatientIdByUserId();
     return doctorService.getDoctorUpcomingAppointments(doctorId);
   }
 
@@ -206,7 +198,6 @@ public class DoctorController {
     return ResponseEntity.ok("Availability added successfully");
   }
 
-//  @TODO podwójne zapytanie wywołyje błąd, dodać opcję update
 @Operation(summary = "Create medical appointment")
 @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Created",
@@ -224,10 +215,57 @@ public class DoctorController {
           MediaType.APPLICATION_XML_VALUE,
       }
   )
-  public MedicalAppointmentDTO addMedicalAppointment(
+  public ResponseEntity<Map<String, Object>> addMedicalAppointment(
       @Valid @RequestBody MedicalAppointmentRequestDTO request
   ) {
-    return doctorService.addMedicalAppointment(request);
+  Map<String, Object> response=new HashMap<>();
+    if(appointmentsService.isExistMedicalAppointment(request)){
+      return updateMedicalAppointment(request);
+    } else{
+      try{
+        MedicalAppointmentDTO medicalAppointmentDTO = doctorService.addMedicalAppointment(request);
+        response.put("appointment", medicalAppointmentDTO);
+        response.put("message", "Medical appointment added");
+        return ResponseEntity.ok().body(response);
+      } catch(Exception e){
+        response.put("error", e.getMessage());
+        return ResponseEntity.badRequest().body(response);
+      }
+    }
+
+  }
+
+@Operation(summary = "Update medical appointment")
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Created",
+        content = { @Content(mediaType = "application/json",
+            schema = @Schema(implementation = MedicalAppointmentDTO.class)) }),
+    @ApiResponse(responseCode = "400", description = "Invalid input data",
+        content = @Content),
+    @ApiResponse(responseCode = "401", description = "Unauthorised access",
+        content = @Content)
+})
+
+  @PutMapping(
+      value = DOCTORS_PROCESSING_APPOINTMENT,
+      produces = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE,
+      }
+  )
+  public ResponseEntity<Map<String, Object>> updateMedicalAppointment(
+      @Valid @RequestBody MedicalAppointmentRequestDTO request
+  ) {
+  Map<String, Object> response=new HashMap<>();
+      try{
+        MedicalAppointmentDTO medicalAppointmentDTO = doctorService.updateMedicalAppointment(request);
+        response.put("appointment", medicalAppointmentDTO);
+        response.put("message", "Medical appointment updated");
+        return ResponseEntity.ok().body(response);
+      } catch(Exception e){
+        response.put("error", e.getMessage());
+        return ResponseEntity.badRequest().body(response);
+      }
   }
 
   @Operation(summary = "Get a list of patient's appointments by doctor specialization ")

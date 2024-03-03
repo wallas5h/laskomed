@@ -1,9 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.util;
 
-import https.github.com.wallas5h.LaskoMed.api.dto.AddressCreateRequestDto;
-import https.github.com.wallas5h.LaskoMed.api.dto.PatientCreateRequest;
 import https.github.com.wallas5h.LaskoMed.api.dto.RegisterRequest;
-import https.github.com.wallas5h.LaskoMed.api.dto.UserDTO;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.AddressEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.RoleEntity;
@@ -20,7 +17,7 @@ public class EntityFixtures {
   public static UserEntity someUserEntity(){
 
     Set<RoleEntity> roles = new HashSet<>();
-    roles.add(someRoleEntity());
+    roles.add(somePatientRoleEntity());
 
     return  UserEntity.builder()
         .username("newTestowy")
@@ -31,15 +28,30 @@ public class EntityFixtures {
         .enabled(true)
         .build();
   }
-  public static UserEntity someUserEntity2(){
+  public static UserEntity someUserPatientEntity(){
 
     Set<RoleEntity> roles = new HashSet<>();
-    roles.add(someRoleEntity());
+    roles.add(somePatientRoleEntity());
 
 
     return  UserEntity.builder()
         .username("john.doe")
         .email("john.doe@example.com")
+        .password("test")
+        .roles(roles)
+        .confirmed(true)
+        .enabled(true)
+        .build();
+  }
+  public static UserEntity someUserDoctorEntity(){
+
+    Set<RoleEntity> roles = new HashSet<>();
+    roles.add(someDoctorRoleEntity());
+
+
+    return  UserEntity.builder()
+        .username("jan.mocny")
+        .email("jan.mocny@example.com")
         .password("test")
         .roles(roles)
         .confirmed(true)
@@ -71,10 +83,16 @@ public class EntityFixtures {
         .build();
   }
 
-  public static RoleEntity someRoleEntity(){
+  public static RoleEntity somePatientRoleEntity(){
     return
         RoleEntity.builder()
         .name("PATIENT")
+        .build();
+  }
+  public static RoleEntity someDoctorRoleEntity(){
+    return
+        RoleEntity.builder()
+        .name("DOCTOR")
         .build();
   }
 

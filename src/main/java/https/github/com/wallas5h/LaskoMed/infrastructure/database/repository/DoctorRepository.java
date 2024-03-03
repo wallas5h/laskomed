@@ -34,4 +34,13 @@ public class DoctorRepository implements DoctorDAO {
   public void save(DoctorEntity newDoctorEntity) {
     doctorJpaRepository.save(newDoctorEntity);
   }
+
+  @Override
+  public DoctorDTO findByUserId(Long userId) {
+    return doctorJpaRepository.findByUserId(userId)
+        .map(a -> doctorMapper.mapFromEntityToDto(a))
+        .orElseThrow(()->new EntityNotFoundException(
+            "Doctor not found, userId: [%s]".formatted(userId)
+        ));
+  }
 }

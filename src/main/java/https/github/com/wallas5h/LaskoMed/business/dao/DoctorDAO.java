@@ -11,4 +11,6 @@ public interface DoctorDAO {
   Optional<DoctorEntity> findByUserIdOptional(Long userId);
 
   void save(DoctorEntity newDoctorEntity);
+
+  DoctorDTO findByUserId(Long userId);
 }

@@ -58,8 +58,8 @@ public class DtoFixtures {
 
   public static DoctorCreateRequest someDoctorCreateRequest() {
     return DoctorCreateRequest.builder()
-        .name("test")
-        .surname("test")
+        .name("jan")
+        .surname("mocny")
         .pesel("12312312")
         .specialization("test")
         .PwzNumber("12345")

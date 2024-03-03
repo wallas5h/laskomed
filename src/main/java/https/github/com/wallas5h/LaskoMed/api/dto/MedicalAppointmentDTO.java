@@ -22,5 +22,5 @@ public class MedicalAppointmentDTO {
   private BookingAppointmentDtoId bookingAppointment;
   private DoctorsDtoId doctor;
 
-  private String errorMessage;
+//  private String errorMessage;
 }
