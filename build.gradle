@@ -55,6 +55,7 @@ dependencies {
 
 	//tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'com.h2database:h2'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
 	testCompileOnly 'org.projectlombok:lombok'
