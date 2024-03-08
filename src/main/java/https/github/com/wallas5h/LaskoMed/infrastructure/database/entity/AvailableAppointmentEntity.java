@@ -10,6 +10,7 @@ import java.time.LocalTime;
 @Setter
 @EqualsAndHashCode(of = "availableAppointmentId")
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

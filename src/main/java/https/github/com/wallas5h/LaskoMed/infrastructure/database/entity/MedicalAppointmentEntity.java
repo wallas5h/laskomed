@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @EqualsAndHashCode(of = "appointmentId")
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

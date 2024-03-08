@@ -9,6 +9,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(of = "clinicId")
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,7 +31,7 @@ public class ClinicEntity {
   private String nip;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "clinic_id")
+  @JoinColumn(name = "address_id")
   private AddressEntity address;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "clinic")

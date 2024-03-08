@@ -1,4 +1,4 @@
-CREATE SEQUENCE app_user_seq START 2;
+CREATE SEQUENCE app_user_seq START WITH 2 INCREMENT BY 1;
 
 INSERT INTO app_user (username, password, email, enabled, confirmed)
 VALUES ('john.doe', '$2a$12$qm09Fx35l7AzYQ8eWTVkru72plkZW5PUbi7lXvxILDsVpxfpXZcGW', 'john.doe@example.com', true, true);

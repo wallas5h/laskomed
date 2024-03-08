@@ -9,6 +9,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(of = "doctorId")
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

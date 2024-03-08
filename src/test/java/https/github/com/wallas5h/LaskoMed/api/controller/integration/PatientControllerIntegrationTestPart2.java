@@ -420,7 +420,7 @@ public class PatientControllerIntegrationTestPart2 {
   }
 
   @NotNull
-  private UserPatient getUserPatient() {
+  public UserPatient getUserPatient() {
     ResponseEntity<Map<String, Object>> loginResponseEntity = authService.login(DtoFixtures.patientLoginRequest());
     Map<String, Object> body = loginResponseEntity.getBody();
     String token = (String) body.get("token");
@@ -450,7 +450,7 @@ public class PatientControllerIntegrationTestPart2 {
     return new Result(existingPatient, patientId);
   }
 
-  private record UserPatient(String token, Optional<PatientEntity> patientEntity) {
+  public record UserPatient(String token, Optional<PatientEntity> patientEntity) {
   }
 
   private record UserDoctor(String token, Optional<DoctorEntity> doctorEntity) {
