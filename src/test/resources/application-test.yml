@@ -1,12 +1,42 @@
-# pod WireMock
-#api:
-#  cepik:
-#    url: http://localhost:9999
+
+#spring:
+#  flyway:
+#    baseline-on-migrate: true
+##  jpa:
+##    hibernate:
+##      ddl-auto: validate
+#  jpa:
+#    hibernate:
+#      ddl-auto: none
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#  #        tylko do testów poniżej:
+#  security:
+#    enabled: false
+
+
+#http://localhost:8080/laskomed
+
 
 spring:
+  flyway:
+    baseline-on-migrate: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    show-sql: true
+    hikari:
+      idle-timeout: 10000
+      connectionTimeout: 20000
+      minimumIdle: 10
+      maximumPoolSize: 20
+
   jpa:
     hibernate:
       ddl-auto: validate
-  #        tylko do testów poniżej:
-  security:
-    enabled: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false

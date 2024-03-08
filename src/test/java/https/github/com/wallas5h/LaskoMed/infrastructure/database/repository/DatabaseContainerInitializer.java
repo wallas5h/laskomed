@@ -1,4 +1,4 @@
-package https.github.com.wallas5h.LaskoMed.api.database;
+package https.github.com.wallas5h.LaskoMed.infrastructure.database.repository;
 
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
