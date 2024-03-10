@@ -22,7 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
-import static https.github.com.wallas5h.LaskoMed.util.EntityFixtures.*;
+import static https.github.com.wallas5h.LaskoMed.util.EntityFixtures.someDoctorEntity2;
+import static https.github.com.wallas5h.LaskoMed.util.EntityFixtures.someUserDoctorEntity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

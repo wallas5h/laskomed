@@ -1,6 +1,9 @@
 package https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa;
 
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.*;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.ClinicEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
+import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import https.github.com.wallas5h.LaskoMed.util.EntityFixtures;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
@@ -14,7 +17,6 @@ import org.springframework.test.context.TestPropertySource;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")

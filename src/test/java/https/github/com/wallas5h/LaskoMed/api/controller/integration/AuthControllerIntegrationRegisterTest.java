@@ -1,7 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.api.controller.integration;
 
 import https.github.com.wallas5h.LaskoMed.api.controller.AuthController;
-import https.github.com.wallas5h.LaskoMed.api.dto.LoginRequest;
 import https.github.com.wallas5h.LaskoMed.api.dto.RegisterRequest;
 import https.github.com.wallas5h.LaskoMed.util.DtoFixtures;
 import org.hamcrest.Matchers;

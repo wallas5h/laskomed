@@ -11,8 +11,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
-import static org.testcontainers.shaded.org.hamcrest.MatcherAssert.assertThat;
-
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")
 @AllArgsConstructor(onConstructor = @__(@Autowired))

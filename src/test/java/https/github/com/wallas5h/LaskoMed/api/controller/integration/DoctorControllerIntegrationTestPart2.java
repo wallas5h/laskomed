@@ -1,6 +1,5 @@
 package https.github.com.wallas5h.LaskoMed.api.controller.integration;
 
-import https.github.com.wallas5h.LaskoMed.api.controller.DoctorController;
 import https.github.com.wallas5h.LaskoMed.api.dto.*;
 import https.github.com.wallas5h.LaskoMed.api.mapper.BookingAppointmentMapper;
 import https.github.com.wallas5h.LaskoMed.api.mapper.DoctorMapper;

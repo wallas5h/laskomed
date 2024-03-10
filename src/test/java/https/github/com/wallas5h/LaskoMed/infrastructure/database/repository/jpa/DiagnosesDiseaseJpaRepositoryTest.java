@@ -5,7 +5,6 @@ import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorE
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import https.github.com.wallas5h.LaskoMed.util.EntityFixtures;
-import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.jetbrains.annotations.NotNull;
@@ -16,8 +15,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")

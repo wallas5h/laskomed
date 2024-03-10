@@ -1,11 +1,8 @@
 package https.github.com.wallas5h.LaskoMed.api.controller.unit;
 
-import https.github.com.wallas5h.LaskoMed.api.controller.DoctorController;
 import https.github.com.wallas5h.LaskoMed.api.controller.PatientController;
-import https.github.com.wallas5h.LaskoMed.api.dto.DoctorCreateRequest;
 import https.github.com.wallas5h.LaskoMed.api.dto.PatientCreateRequest;
 import https.github.com.wallas5h.LaskoMed.api.utils.UserServiceAdvice;
-import https.github.com.wallas5h.LaskoMed.business.services.DoctorService;
 import https.github.com.wallas5h.LaskoMed.business.services.PatientService;
 import https.github.com.wallas5h.LaskoMed.util.DtoFixtures;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

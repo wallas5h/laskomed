@@ -2,18 +2,14 @@ package https.github.com.wallas5h.LaskoMed.api.controller.integration;
 
 import https.github.com.wallas5h.LaskoMed.api.controller.AuthController;
 import https.github.com.wallas5h.LaskoMed.api.dto.LoginRequest;
-import https.github.com.wallas5h.LaskoMed.api.dto.RegisterRequest;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
-import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.UserRepository;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.repository.jpa.UserJpaRepository;
 import https.github.com.wallas5h.LaskoMed.util.DtoFixtures;
-import https.github.com.wallas5h.LaskoMed.util.EntityFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
@@ -23,10 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
-import static https.github.com.wallas5h.LaskoMed.util.EntityFixtures.someUserDoctorEntity;
 import static https.github.com.wallas5h.LaskoMed.util.EntityFixtures.someUserEntity;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
