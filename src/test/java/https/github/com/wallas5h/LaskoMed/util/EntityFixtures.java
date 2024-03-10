@@ -70,6 +70,17 @@ public class EntityFixtures {
         .specialization("test")
         .build();
   }
+  public static DoctorEntity someDoctorEntity2() {
+    return DoctorEntity.builder()
+        .appUser(someUserDoctorEntity())
+        .name("jan")
+        .surname("mocny")
+        .pesel("12312312")
+        .specialization("test")
+        .pwzNumber("12345")
+        .phone("555555555")
+        .build();
+  }
 
   public static PatientEntity somePatientEntity() {
     return PatientEntity.builder()
