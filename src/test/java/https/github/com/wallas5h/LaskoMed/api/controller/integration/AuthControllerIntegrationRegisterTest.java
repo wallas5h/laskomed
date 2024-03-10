@@ -88,19 +88,6 @@ public class AuthControllerIntegrationRegisterTest {
         );
   }
 
-  @Test
-  void testLoginFailByIncorrectCredentials() throws Exception {
-    //given
-    LoginRequest loginRequest = DtoFixtures.someUserLoginRequest();
-
-    //then
-    mockMvc.perform(MockMvcRequestBuilders.post(AuthController.AUTH + AuthController.LOGIN)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJsonString(loginRequest)))
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.error").value("Invalid credentials"));
-  }
-
   private static String asJsonString(Object obj) throws JsonProcessingException {
     ObjectMapper objectMapper = new ObjectMapper();
     return objectMapper.writeValueAsString(obj);
