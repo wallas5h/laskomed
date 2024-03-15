@@ -99,3 +99,8 @@ jacocoTestReport {
 	}
 }
 
+//docker
+bootJar {
+	archiveFileName = "laskomed.${archiveExtension.get()}"
+}
+

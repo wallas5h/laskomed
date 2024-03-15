@@ -1,0 +1,86 @@
+
+
+version: '3.1'
+services:
+  postgres:
+    image: postgres:15.0
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=laskomed
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - spring-boot-postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  backend:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/laskomed
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    networks:
+      - spring-boot-postgres
+    depends_on:
+      - postgres
+volumes:
+  db-data:
+networks:
+  spring-boot-postgres:
+
+#version: '3.3'
+#
+#services:
+#  laskomed:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    image: laskomed:1.0
+#    ports:
+#      - "8080:8080"
+
+#version: '3.1'
+#
+#services:
+#  laskomed:
+#    image: laskomed:1.0
+#    ports:
+#      - "8080:8080"
+#    environment:
+##      SPRING_PROFILES_ACTIVE: "default" # lub odpowiedni profil aktywny dla Twojego środowiska
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/laskomed # adres URL bazy danych, tutaj podany jako 'postgres' ze względu na użycie kontenera serwera PostgreSQL
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: 1234
+#      SPRING_FLYWAY_BASELINE_ON_MIGRATE: "true"
+#    depends_on:
+#      - postgres
+#    networks:
+#      - laskomed-network
+#
+#  postgres:
+#    image: postgres:15.0
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_DB: laskomed
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 1234
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#    networks:
+#      - laskomed-network
+#
+#volumes:
+#  db-data:
+#
+#networks:
+#  laskomed-network:
