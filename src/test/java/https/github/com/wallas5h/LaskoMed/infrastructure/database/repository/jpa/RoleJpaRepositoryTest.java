@@ -18,7 +18,7 @@ class RoleJpaRepositoryTest {
   private RoleRepository roleRepository;
 
   @Test
-  void thatFindRoleByNameWorks(){
+  void thatFindRoleByNameWorks() {
     RoleEntity roleEntity = RoleEntity.builder()
         .name(EnumsContainer.RoleNames.PATIENT.name())
         .build();

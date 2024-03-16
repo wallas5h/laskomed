@@ -17,20 +17,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.Map;
 import java.util.UUID;
 
-// własna obsługa błędów
 @Slf4j
 @RestControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)  // zapis sugeruje ze ta obsługa błędów jest najważniejsza, użyty w pierwszej kolejnosci
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-  private static final Map< Class<?>, HttpStatus> EXCEPTION_STATUS= Map.of(
+  private static final Map<Class<?>, HttpStatus> EXCEPTION_STATUS = Map.of(
       BindException.class, HttpStatus.BAD_REQUEST,
       ConstraintViolationException.class, HttpStatus.BAD_REQUEST,
       IllegalArgumentException.class, HttpStatus.BAD_REQUEST,
       EntityNotFoundException.class, HttpStatus.NOT_FOUND
   );
 
-  // nadpisanie domyślnej metody obsługującej błędy wraz ze swoimi zmianami
   @Override
   protected ResponseEntity<Object> handleExceptionInternal(
       @NonNull Exception ex,
@@ -39,12 +37,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       @NonNull HttpStatusCode statusCode,
       @NonNull WebRequest request
   ) {
-    final String errorId= UUID.randomUUID().toString();
+    final String errorId = UUID.randomUUID().toString();
     log.error("Exception: ID={}, HttpStatus={}", errorId, statusCode, ex);
 
     return super.handleExceptionInternal(
         ex,
-        ExceptionMessage.of(errorId),  // instead body
+        ExceptionMessage.of(errorId),
         headers,
         statusCode,
         request
@@ -52,13 +50,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<?> handle (Exception exception){
+  public ResponseEntity<?> handle(Exception exception) {
     ResponseEntity<?> responseEntity = doHandle(exception, getHttpStatusFromException(exception.getClass()));
     return responseEntity;
   }
 
-  private ResponseEntity<?> doHandle(Exception exception, HttpStatus status){
-    final String errorId= UUID.randomUUID().toString();
+  private ResponseEntity<?> doHandle(Exception exception, HttpStatus status) {
+    final String errorId = UUID.randomUUID().toString();
     log.error("Exception: ID={}, HttpStatus={}", errorId, status, exception);
 
     return ResponseEntity

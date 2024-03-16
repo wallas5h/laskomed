@@ -10,10 +10,10 @@ import org.mapstruct.Mapping;
 public interface DiagnosedDiseaseMapper {
   DiagnosedDiseaseDTO map(DiagnosedDisease diagnosedDisease);
 
-  @Mapping(target = "patient", ignore = true )
+  @Mapping(target = "patient", ignore = true)
   DiagnosedDisease mapFromEntity(DiagnosedDiseaseEntity entity);
 
-//  @Mapping(target = "patient", ignore = true )
+  //  @Mapping(target = "patient", ignore = true )
   DiagnosedDiseaseDTO mapFromEntityToDto(DiagnosedDiseaseEntity entity);
 
   DiagnosedDiseaseEntity mapToEntity(DiagnosedDisease object);

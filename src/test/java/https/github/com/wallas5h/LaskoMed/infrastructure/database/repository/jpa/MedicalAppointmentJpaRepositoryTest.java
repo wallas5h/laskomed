@@ -65,7 +65,7 @@ class MedicalAppointmentJpaRepositoryTest {
         medicalAppointment.withDoctorComment("test2")
     );
 
-    Assertions.assertThat(updated>0);
+    Assertions.assertThat(updated > 0);
   }
 
 

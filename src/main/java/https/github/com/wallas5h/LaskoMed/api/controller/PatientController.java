@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Tag(name = "Patient", description = "Methods for patient management")
-@SecurityRequirement(name="Bearer Authentication")
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping(PatientController.BASE)
 @AllArgsConstructor
@@ -34,7 +34,6 @@ public class PatientController {
   public static final String APPOINTMENTS_UPCOMING = "/appointments/upcoming";
   public static final String PATIENT_APPOINTMENTS_HISTORY = "/appointments/history";
   public static final String PATIENT_APPOINTMENTS_HISTORY_ID = "/appointments/history/{appointmentId}";
-  public static final String PATIENT_ID_APPOINTMENTS_UPCOMING_ID = "/{patientId}/appointments/upcoming/{appointmentId}";
 
   private PatientService patientService;
   private UserServiceAdvice userServiceAdvice;
@@ -51,17 +50,17 @@ public class PatientController {
   @PostMapping
   public ResponseEntity<Map<String, Object>> createPatient(
       @RequestBody PatientCreateRequest request
-  ){
+  ) {
     Map<String, Object> response = new HashMap<>();
 
-    try{
+    try {
       Long userId = userServiceAdvice.getUserId();
       patientService.createPatient(request, userId);
 
       response.put("message", "Patient added successfully");
       return ResponseEntity.ok().body(response);
 
-    } catch (Exception e){
+    } catch (Exception e) {
       response.put("error", e.getMessage());
       return ResponseEntity.badRequest().body(response);
     }
@@ -70,8 +69,8 @@ public class PatientController {
   @Operation(summary = "Get patient details by id")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Found the patient's deatails",
-          content = { @Content(mediaType = "application/json",
-              schema = @Schema(implementation = PatientDTO.class)) }),
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = PatientDTO.class))}),
       @ApiResponse(responseCode = "404", description = "Patient not found",
           content = @Content),
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
@@ -80,7 +79,7 @@ public class PatientController {
   @GetMapping(PATIENT_DETAILS)
   public ResponseEntity<PatientDTO> getPatientDetails(
   ) {
-    Long patientId=patientService.getPatientIdByUserId();
+    Long patientId = patientService.getPatientIdByUserId();
 
     PatientDTO patientDTO = patientService.getPatientDetails(patientId);
 
@@ -94,8 +93,8 @@ public class PatientController {
   @Operation(summary = "Get patient's upcoming bookings")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Found the patient's upcoming appointments",
-          content = { @Content(mediaType = "application/json",
-              schema = @Schema(implementation = BookingAppointmentDTO.class)) }),
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = BookingAppointmentDTO.class))}),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied",
           content = @Content),
       @ApiResponse(responseCode = "404", description = "Not found patient and appointments",
@@ -105,7 +104,7 @@ public class PatientController {
   })
   @GetMapping(APPOINTMENTS_UPCOMING)
   public List<BookingAppointmentDTO> getUpcomingPatientAppointments() {
-    Long patientId=patientService.getPatientIdByUserId();
+    Long patientId = patientService.getPatientIdByUserId();
     return patientService.getPatientUpcomingAppointments(patientId);
   }
 
@@ -114,8 +113,8 @@ public class PatientController {
   @Operation(summary = "Get available appointments filtered by specialization and location")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Found available appointments",
-          content = { @Content(mediaType = "application/json",
-              schema = @Schema(implementation = BookingAppointmentDTO.class)) }),
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = BookingAppointmentDTO.class))}),
       @ApiResponse(responseCode = "401", description = "Unauthorised access",
           content = @Content)
   })
@@ -126,7 +125,7 @@ public class PatientController {
       @Parameter(description = "city")
       @RequestParam(required = false) String location) {
 
-    return patientService.getAvailableMedicalAppointments( specialization, location);
+    return patientService.getAvailableMedicalAppointments(specialization, location);
   }
 
   @Operation(summary = "Create appointment reservation by patient")
@@ -153,7 +152,7 @@ public class PatientController {
   @Operation(summary = "Change reservation status")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Reservation changed",
-       content = @Content),
+          content = @Content),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied",
           content = @Content),
       @ApiResponse(responseCode = "404", description = "Not found patient's booking",
@@ -165,14 +164,14 @@ public class PatientController {
   public ResponseEntity<?> changeBookingsStatus(
       @Valid @RequestBody BookingAppointmentRequestDTO request
   ) {
-    return patientService.changeBookingStatus( request);
+    return patientService.changeBookingStatus(request);
   }
 
   @Operation(summary = "Get patient appointments history")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Found the patient's appointments history",
-          content = { @Content(mediaType = "application/json",
-              schema = @Schema(implementation = MedicalAppointmentDTO.class)) }),
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = MedicalAppointmentDTO.class))}),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied",
           content = @Content),
       @ApiResponse(responseCode = "404", description = "Not found patient or bookings",
@@ -183,15 +182,15 @@ public class PatientController {
   @GetMapping(PATIENT_APPOINTMENTS_HISTORY)
   public List<MedicalAppointmentDTO> getPatientAppointments(
   ) {
-    Long patientId=patientService.getPatientIdByUserId();
+    Long patientId = patientService.getPatientIdByUserId();
     return patientService.getPatientAppointments(patientId);
   }
 
   @Operation(summary = "Get appointment details by id")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Found the appointment details",
-          content = { @Content(mediaType = "application/json",
-              schema = @Schema(implementation = MedicalAppointmentDTO.class)) }),
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = MedicalAppointmentDTO.class))}),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied",
           content = @Content),
       @ApiResponse(responseCode = "404", description = "Not found booking",
@@ -204,7 +203,7 @@ public class PatientController {
       @Parameter(description = "appointment id")
       @PathVariable Long appointmentId
   ) {
-    Long patientId=patientService.getPatientIdByUserId();
+    Long patientId = patientService.getPatientIdByUserId();
     return patientService.getPatientMedicalAppointmentDetails(patientId, appointmentId);
   }
 

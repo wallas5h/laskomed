@@ -24,7 +24,7 @@ class AvailableAppointmentJpaRepositoryTest {
   private EntityManager entityManager;
 
   @Test
-  void thatGetAvailableMedicalAppointmentsWorks(){
+  void thatGetAvailableMedicalAppointmentsWorks() {
 
     DoctorEntity doctorEntity = createDoctor();
     AvailableAppointmentEntity entity = createAvailableAppointment(doctorEntity);

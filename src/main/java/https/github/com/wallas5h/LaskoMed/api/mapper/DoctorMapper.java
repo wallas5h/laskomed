@@ -5,7 +5,6 @@ import https.github.com.wallas5h.LaskoMed.domain.Doctor;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface DoctorMapper {
@@ -18,6 +17,6 @@ public interface DoctorMapper {
   DoctorEntity mapToEntity(Doctor object);
 
   default Long mapUserId(UserEntity appUser) {
-    return appUser == null ? null : appUser.getUserId() ;
+    return appUser == null ? null : appUser.getUserId();
   }
 }

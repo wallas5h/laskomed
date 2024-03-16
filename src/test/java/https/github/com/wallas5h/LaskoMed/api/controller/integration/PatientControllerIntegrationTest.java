@@ -83,6 +83,7 @@ public class PatientControllerIntegrationTest {
         .andExpect(jsonPath("$.error").exists())
         .andExpect(jsonPath("$.error").isNotEmpty());
   }
+
   private PatientEntity createPatient(UserEntity userEntity) {
     return patientJpaRepository.saveAndFlush(somePatientEntity().withAppUser(userEntity));
   }

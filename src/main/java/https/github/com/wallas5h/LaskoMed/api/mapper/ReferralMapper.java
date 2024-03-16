@@ -10,14 +10,14 @@ import org.mapstruct.Mapping;
 public interface ReferralMapper {
   ReferralDTO map(Referral address);
 
-  @Mapping(target = "address", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
+  @Mapping(target = "address", ignore = true)
+  @Mapping(target = "doctor", ignore = true)
+  @Mapping(target = "clinic", ignore = true)
   Referral mapFromEntity(ReferralEntity entity);
 
-  @Mapping(target = "address", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
+  @Mapping(target = "address", ignore = true)
+  @Mapping(target = "doctor", ignore = true)
+  @Mapping(target = "clinic", ignore = true)
   ReferralDTO mapFromEntityToDto(ReferralEntity entity);
 
   ReferralEntity mapToEntity(Referral object);

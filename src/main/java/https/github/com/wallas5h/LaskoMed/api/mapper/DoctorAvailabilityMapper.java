@@ -4,7 +4,6 @@ import https.github.com.wallas5h.LaskoMed.api.dto.DoctorAvailabilityDTO;
 import https.github.com.wallas5h.LaskoMed.domain.DoctorAvailability;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorAvailabilityEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface DoctorAvailabilityMapper {

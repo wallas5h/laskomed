@@ -50,10 +50,10 @@ public class DoctorControllerIntegrationTest {
 
     //then
     mockMvc.perform(
-        MockMvcRequestBuilders.post(DoctorController.BASE)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJsonString(doctorCreateRequest))
-            .header(HttpHeaders.AUTHORIZATION, generateToken(user)))
+            MockMvcRequestBuilders.post(DoctorController.BASE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(doctorCreateRequest))
+                .header(HttpHeaders.AUTHORIZATION, generateToken(user)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.message").exists())
         .andExpect(jsonPath("$.message").value("Doctor added successfully"));
@@ -68,7 +68,7 @@ public class DoctorControllerIntegrationTest {
 
     //then
     mockMvc.perform(
-            MockMvcRequestBuilders.post(DoctorController.BASE )
+            MockMvcRequestBuilders.post(DoctorController.BASE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(doctorCreateRequest))
                 .header(HttpHeaders.AUTHORIZATION, generateToken(user)))
@@ -91,6 +91,7 @@ public class DoctorControllerIntegrationTest {
   private UserEntity createUser() {
     return userJpaRepository.saveAndFlush(someUserDoctorEntity());
   }
+
   private DoctorEntity createDoctor(UserEntity user) {
     return doctorJpaRepository.saveAndFlush(someDoctorEntity2().withAppUser(user));
   }

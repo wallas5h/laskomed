@@ -10,12 +10,12 @@ import org.mapstruct.Mapping;
 public interface AddressMapper {
   AddressDTO map(Address address);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
+  @Mapping(target = "patient", ignore = true)
+  @Mapping(target = "clinic", ignore = true)
   AddressDTO mapFromEntityToDto(AddressEntity entity);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
+  @Mapping(target = "patient", ignore = true)
+  @Mapping(target = "clinic", ignore = true)
   Address mapFromEntity(AddressEntity entity);
 
   AddressEntity mapToEntity(Address object);

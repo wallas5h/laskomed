@@ -10,10 +10,10 @@ import org.mapstruct.Mapping;
 public interface MedicalAppointmentMapper {
   MedicalAppointmentDTO map(MedicalAppointment medicalAppointment);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
-  @Mapping(target = "bookingAppointment", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
+  @Mapping(target = "patient", ignore = true)
+  @Mapping(target = "clinic", ignore = true)
+  @Mapping(target = "bookingAppointment", ignore = true)
+  @Mapping(target = "doctor", ignore = true)
   MedicalAppointment mapFromEntity(MedicalAppointmentEntity entity);
 
 

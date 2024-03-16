@@ -18,25 +18,25 @@ public class DoctorEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="doctor_id")
+  @Column(name = "doctor_id")
   private Long doctorId;
 
-  @Column(name="name")
+  @Column(name = "name")
   private String name;
 
-  @Column(name="surname")
+  @Column(name = "surname")
   private String surname;
 
-  @Column(name="pesel")
+  @Column(name = "pesel")
   private String pesel;
 
-  @Column(name="specialization")
+  @Column(name = "specialization")
   private String specialization;
 
-  @Column(name="PWZ_number")
+  @Column(name = "PWZ_number")
   private String pwzNumber;
 
-  @Column(name="phone")
+  @Column(name = "phone")
   private String phone;
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

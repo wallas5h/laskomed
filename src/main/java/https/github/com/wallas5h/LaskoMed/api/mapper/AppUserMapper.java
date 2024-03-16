@@ -13,9 +13,9 @@ public interface AppUserMapper {
 
   UserDTO mapFromEntityToDto(UserEntity entity);
 
-  @Mapping(target = "roles", ignore = true )
+  @Mapping(target = "roles", ignore = true)
   User mapFromEntity(UserEntity entity);
 
-  @Mapping(target = "roles", ignore = true )
+  @Mapping(target = "roles", ignore = true)
   UserEntity mapToEntity(User object);
 }

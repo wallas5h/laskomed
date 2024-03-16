@@ -83,13 +83,6 @@ test {
 	}
 	finalizedBy jacocoTestReport
 }
-//dependencyManagement {
-//	imports {
-//		mavenBom "org.testcontainers:testcontainers-bom: ${testcontainersVersion}"
-//	}
-//}
-
-
 
 jacocoTestReport {
 	reports {

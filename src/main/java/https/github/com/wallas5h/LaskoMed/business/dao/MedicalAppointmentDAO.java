@@ -4,7 +4,6 @@ import https.github.com.wallas5h.LaskoMed.api.dto.MedicalAppointmentDTO;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.MedicalAppointmentEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MedicalAppointmentDAO {
   List<MedicalAppointmentDTO> findByPatientId(Long patientId);

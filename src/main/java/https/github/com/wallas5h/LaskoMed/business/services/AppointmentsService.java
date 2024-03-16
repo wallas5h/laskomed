@@ -144,10 +144,10 @@ public class AppointmentsService {
 
   @Transactional
   public Boolean isExistMedicalAppointment(MedicalAppointmentRequestDTO request) {
-    try{
+    try {
       getMedicalAppointmentByBookingId(request);
       return true;
-    } catch (Exception e){
+    } catch (Exception e) {
       return false;
     }
   }
@@ -158,13 +158,14 @@ public class AppointmentsService {
 
     return medicalAppointmentDAO.findByBookingId(bookingAppointment.getBookingId());
   }
-  public MedicalAppointmentDTO getMedicalAppointmentByBookingId(String  bookingId) {
+
+  public MedicalAppointmentDTO getMedicalAppointmentByBookingId(String bookingId) {
     BookingAppointmentEntity bookingAppointment = entityManager.find(
         BookingAppointmentEntity.class, bookingId);
 
-    try{
+    try {
       return medicalAppointmentDAO.findByBookingId(bookingAppointment.getBookingId());
-    } catch (Exception e){
+    } catch (Exception e) {
       return null;
     }
 
@@ -201,7 +202,7 @@ public class AppointmentsService {
   @Transactional
   public int changeBookingStatus(Long patientId, BookingAppointmentRequestDTO request) {
     isBookingStatusValid(request);
-    OffsetDateTime currentDateTime= OffsetDateTime.now();
+    OffsetDateTime currentDateTime = OffsetDateTime.now();
 
     changeAvailableAppointmentToActiveIfRequestIsToCanceled(request);
 
@@ -215,9 +216,9 @@ public class AppointmentsService {
   }
 
   private void changeAvailableAppointmentToActiveIfRequestIsToCanceled(BookingAppointmentRequestDTO request) {
-    if(request.getBookingStatus().equals(EnumsContainer.BookingStatus.CANCELLED.name())){
+    if (request.getBookingStatus().equals(EnumsContainer.BookingStatus.CANCELLED.name())) {
       Optional<BookingAppointmentEntity> bookingEntity = bookingAppointmentDAO.findById(Long.valueOf(request.getBookingId()));
-      if(bookingEntity.isPresent()){
+      if (bookingEntity.isPresent()) {
         availableAppointmentDAO.changeAvailableAppointmentToActive(bookingEntity);
       }
     }
@@ -227,6 +228,7 @@ public class AppointmentsService {
     return medicalAppointmentDAO.findByPatientId(patientId);
 
   }
+
   public List<MedicalAppointmentDTO> getPatientMedicalAppointments(Long patientId, String specialization) {
     return medicalAppointmentDAO.findByPatientIdAndSpecialization(patientId, specialization);
   }
@@ -302,6 +304,6 @@ public class AppointmentsService {
   }
 
   public record MapResult(BookingAppointmentEntity bookingAppointment,
-                           MedicalAppointmentEntity newMedicalAppointmentEntity) {
+                          MedicalAppointmentEntity newMedicalAppointmentEntity) {
   }
 }

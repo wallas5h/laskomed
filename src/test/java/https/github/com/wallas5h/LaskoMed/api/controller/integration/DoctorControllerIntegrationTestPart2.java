@@ -271,7 +271,7 @@ public class DoctorControllerIntegrationTestPart2 {
     String content = asJsonString(doctorsResultOfAppointmentRequest);
 
     //then
-     mockMvcPerform(userDoctor, MockMvcRequestBuilders.post(BASE + DOCTORS_PROCESSING_APPOINTMENT),
+    mockMvcPerform(userDoctor, MockMvcRequestBuilders.post(BASE + DOCTORS_PROCESSING_APPOINTMENT),
         content)
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.message", Matchers.is("Medical appointment added")))
@@ -307,7 +307,7 @@ public class DoctorControllerIntegrationTestPart2 {
     String responseBody = asJsonString(patientAppointments);
 
     //then
-    MvcResult result = mockMvcPerform(userDoctor, MockMvcRequestBuilders.get(BASE + APPOINTMENTS_PATIENT,patientId),
+    MvcResult result = mockMvcPerform(userDoctor, MockMvcRequestBuilders.get(BASE + APPOINTMENTS_PATIENT, patientId),
         params)
         .andExpect(status().isOk())
         .andReturn();
@@ -339,7 +339,7 @@ public class DoctorControllerIntegrationTestPart2 {
 
 
     //then
-    MvcResult result = mockMvcPerform(userDoctor, MockMvcRequestBuilders.get(BASE + APPOINTMENTS_PATIENT,patientId))
+    MvcResult result = mockMvcPerform(userDoctor, MockMvcRequestBuilders.get(BASE + APPOINTMENTS_PATIENT, patientId))
         .andExpect(status().isOk())
         .andReturn();
 

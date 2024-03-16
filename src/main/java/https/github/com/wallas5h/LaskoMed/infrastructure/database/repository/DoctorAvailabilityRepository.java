@@ -17,6 +17,7 @@ import java.util.List;
 public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
   private DoctorAvailabilityJpaRepository doctorAvailabilityJpaRepository;
   private DoctorAvailabilityMapper doctorAvailabilityMapper;
+
   @Override
   public List<DoctorAvailabilityDTO> findByDoctorId(Long doctorId) {
     return doctorAvailabilityJpaRepository.findByDoctorId(doctorId).stream()

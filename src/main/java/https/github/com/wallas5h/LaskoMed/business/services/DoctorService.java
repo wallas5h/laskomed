@@ -13,15 +13,12 @@ import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -56,9 +53,9 @@ public class DoctorService {
   }
 
   public List<BookingAppointmentDTO> getDoctorUpcomingAppointments(Long doctorId) {
-    OffsetDateTime offsetDateTime= OffsetDateTime.of(
+    OffsetDateTime offsetDateTime = OffsetDateTime.of(
         LocalDate.now(), LocalTime.now().minusHours(1), ZoneOffset.UTC);
-    OffsetDateTime toDateTime=offsetDateTime.plusDays(60);
+    OffsetDateTime toDateTime = offsetDateTime.plusDays(60);
     return appointmentsService.getDoctorAppointmentsByDateRange(doctorId, offsetDateTime, toDateTime);
   }
 
@@ -125,18 +122,18 @@ public class DoctorService {
 
 
   public MedicalAppointmentDTO addMedicalAppointment(MedicalAppointmentRequestDTO request) {
-      MedicalAppointmentEntity medicalAppointmentEntity = appointmentsService.addMedicalAppointment(request);
-      return medicalAppointmentMapper.mapFromEntityToDto(medicalAppointmentEntity);
+    MedicalAppointmentEntity medicalAppointmentEntity = appointmentsService.addMedicalAppointment(request);
+    return medicalAppointmentMapper.mapFromEntityToDto(medicalAppointmentEntity);
   }
 
   public MedicalAppointmentDTO updateMedicalAppointment(MedicalAppointmentRequestDTO request) {
-      appointmentsService.updateMedicalAppointment(request);
-      return appointmentsService.getMedicalAppointmentByBookingId(request);
+    appointmentsService.updateMedicalAppointment(request);
+    return appointmentsService.getMedicalAppointmentByBookingId(request);
   }
 
   public void createDoctor(DoctorCreateRequest request, Long userId) throws Exception {
 
-    if(doctorDAO.findByUserIdOptional(userId).isPresent()){
+    if (doctorDAO.findByUserIdOptional(userId).isPresent()) {
       throw new Exception("Doctor exist with this credentials.");
     }
 
@@ -147,7 +144,7 @@ public class DoctorService {
         .surname(request.getSurname())
         .pesel(request.getPesel())
         .specialization(request.getSpecialization())
-        .pwzNumber(request.getPwzNumber())  // @TODO api zewnętrzne PWZ po pesel
+        .pwzNumber(request.getPwzNumber())
         .phone(request.getPhone())
         .appUser(userReference)
         .build();

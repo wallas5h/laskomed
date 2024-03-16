@@ -62,7 +62,9 @@ class DoctorControllerTest {
 
     when(userServiceAdvice.getUserId()).thenReturn(1L);
 
-    doAnswer(invocation -> {throw new Exception("Some error message");})
+    doAnswer(invocation -> {
+      throw new Exception("Some error message");
+    })
         .when(doctorService).createDoctor(any(DoctorCreateRequest.class), any(Long.class));
 
     //when

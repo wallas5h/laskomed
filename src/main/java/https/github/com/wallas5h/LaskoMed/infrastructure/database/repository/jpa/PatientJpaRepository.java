@@ -12,14 +12,14 @@ import java.util.Optional;
 public interface PatientJpaRepository extends JpaRepository<PatientEntity, Long> {
 
   @Query("""
-    SELECT pa FROM PatientEntity pa
-    WHERE pa.appUser.userId = :id
-    """)
+      SELECT pa FROM PatientEntity pa
+      WHERE pa.appUser.userId = :id
+      """)
   Optional<PatientEntity> findByUserId(@Param("id") Long userId);
 
   @Query("""
-    SELECT pa FROM PatientEntity pa
-    WHERE pa.pesel = :pesel
-    """)
+      SELECT pa FROM PatientEntity pa
+      WHERE pa.pesel = :pesel
+      """)
   Optional<PatientEntity> findByPesel(@Param("pesel") String pesel);
 }

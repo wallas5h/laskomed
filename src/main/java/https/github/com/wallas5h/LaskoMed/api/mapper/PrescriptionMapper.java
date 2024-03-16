@@ -10,14 +10,14 @@ import org.mapstruct.Mapping;
 public interface PrescriptionMapper {
   PrescriptionDTO map(Prescription prescription);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
+  @Mapping(target = "patient", ignore = true)
+  @Mapping(target = "clinic", ignore = true)
+  @Mapping(target = "doctor", ignore = true)
   Prescription mapFromEntity(PrescriptionEntity entity);
 
-  @Mapping(target = "patient", ignore = true )
-  @Mapping(target = "clinic", ignore = true )
-  @Mapping(target = "doctor", ignore = true )
+  @Mapping(target = "patient", ignore = true)
+  @Mapping(target = "clinic", ignore = true)
+  @Mapping(target = "doctor", ignore = true)
   PrescriptionDTO mapFromEntityToDto(PrescriptionEntity entity);
 
   PrescriptionEntity mapToEntity(Prescription object);

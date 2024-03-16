@@ -18,16 +18,16 @@ public class ClinicEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="clinic_id")
+  @Column(name = "clinic_id")
   private Long clinicId;
 
-  @Column(name="name")
+  @Column(name = "name")
   private String name;
 
-  @Column(name="regon")
+  @Column(name = "regon")
   private String regon;
 
-  @Column(name="nip")
+  @Column(name = "nip")
   private String nip;
 
   @OneToOne(fetch = FetchType.LAZY)

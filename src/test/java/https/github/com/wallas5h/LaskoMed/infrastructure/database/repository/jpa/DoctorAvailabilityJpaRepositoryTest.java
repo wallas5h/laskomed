@@ -29,7 +29,7 @@ class DoctorAvailabilityJpaRepositoryTest {
   private EntityManager entityManager;
 
   @Test
-  void thatFindByDoctorIdWorks(){
+  void thatFindByDoctorIdWorks() {
     DoctorAvailabilityEntity doctorAvailability = createDoctorAvailability();
 
     List<DoctorAvailabilityEntity> result = doctorAvailabilityJpaRepository.findByDoctorId(doctorAvailability.getDoctor().getDoctorId());
@@ -38,7 +38,7 @@ class DoctorAvailabilityJpaRepositoryTest {
   }
 
   @Test
-  void thatFindPresentAvailabilitiesWorks(){
+  void thatFindPresentAvailabilitiesWorks() {
     DoctorAvailabilityEntity doctorAvailability = createDoctorAvailability();
 
     List<DoctorAvailabilityEntity> result = doctorAvailabilityJpaRepository.findPresentAvailabilities(
@@ -49,7 +49,7 @@ class DoctorAvailabilityJpaRepositoryTest {
   }
 
   @Test
-  void thatFindConflictingAvailabilitiesWorks(){
+  void thatFindConflictingAvailabilitiesWorks() {
     DoctorAvailabilityEntity doctorAvailability = createDoctorAvailability();
 
     List<DoctorAvailabilityEntity> result = doctorAvailabilityJpaRepository.findConflictingAvailabilities(
@@ -57,7 +57,7 @@ class DoctorAvailabilityJpaRepositoryTest {
         doctorAvailability.getDateAvailable(),
         doctorAvailability.getStartTime(),
         doctorAvailability.getEndTime()
-        );
+    );
 
     Assertions.assertThat(result.contains(doctorAvailability));
   }

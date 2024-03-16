@@ -16,6 +16,7 @@ import java.util.Optional;
 public class DoctorRepository implements DoctorDAO {
   private DoctorJpaRepository doctorJpaRepository;
   private DoctorMapper doctorMapper;
+
   @Override
   public DoctorDTO findAllByDoctorId(Long doctorId) {
     return doctorJpaRepository.findAllByDoctorId(doctorId)
@@ -39,7 +40,7 @@ public class DoctorRepository implements DoctorDAO {
   public DoctorDTO findByUserId(Long userId) {
     return doctorJpaRepository.findByUserId(userId)
         .map(a -> doctorMapper.mapFromEntityToDto(a))
-        .orElseThrow(()->new EntityNotFoundException(
+        .orElseThrow(() -> new EntityNotFoundException(
             "Doctor not found, userId: [%s]".formatted(userId)
         ));
   }

@@ -17,9 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -81,9 +79,9 @@ public class AuthService {
 
     UserEntity newUser;
 //    UserEntity newUser= userDao.save(userEntity);
-    try{
-      newUser= userDao.save(userEntity);
-    } catch (Exception e){
+    try {
+      newUser = userDao.save(userEntity);
+    } catch (Exception e) {
       response.put("error", "Invalid user data");
       return ResponseEntity.badRequest().body(response);
     }
@@ -123,12 +121,12 @@ public class AuthService {
       ));
     }
 
-    try{
+    try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
           request.getUsernameOrEmail(),
           request.getPassword()
       ));
-    } catch (Exception e){
+    } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
           "error", "Invalid authentication"
       ));

@@ -29,19 +29,19 @@ public class PrescriptionEntity {
   @Column(name = "prescription_completion_date")
   private LocalDate prescriptionCompletionDate;
 
-  @Column(name="nfz_department")
+  @Column(name = "nfz_department")
   private String nfz_department;
 
-  @Column(name="patient_additional_rights_code")
+  @Column(name = "patient_additional_rights_code")
   private String patientAdditionalRightsCode;
 
-  @Column(name="medication_name")
+  @Column(name = "medication_name")
   private String medicationName;
 
-  @Column(name="dosage")
+  @Column(name = "dosage")
   private String dosage;
 
-  @Column(name="instructions")
+  @Column(name = "instructions")
   private String instructions;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

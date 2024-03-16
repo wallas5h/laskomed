@@ -14,10 +14,10 @@ import java.util.List;
 public interface DoctorAvailabilityJpaRepository extends JpaRepository<DoctorAvailabilityEntity, Long> {
 
   @Query("""
-        SELECT dae FROM DoctorAvailabilityEntity dae
-        WHERE dae.doctor.doctorId = :id
-        ORDER BY dae.dateAvailable, dae.startTime
-        """)
+      SELECT dae FROM DoctorAvailabilityEntity dae
+      WHERE dae.doctor.doctorId = :id
+      ORDER BY dae.dateAvailable, dae.startTime
+      """)
   List<DoctorAvailabilityEntity> findByDoctorId(final @Param("id") Long doctorId);
 
   @Query("""

@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
+
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -21,14 +22,14 @@ class PatientJpaRepositoryTest {
   private PatientJpaRepository patientJpaRepository;
 
   @Test
-  void thatFindByUserIdWorks(){
+  void thatFindByUserIdWorks() {
     PatientEntity patientEntity = createPatient();
     Optional<PatientEntity> patientEntity1 = patientJpaRepository.findByUserId(patientEntity.getAppUser().getUserId());
     Assertions.assertThat(patientEntity1.isPresent());
   }
 
   @Test
-  void thatFindByPeselWorks(){
+  void thatFindByPeselWorks() {
     PatientEntity patientEntity = createPatient();
     Optional<PatientEntity> patientEntity1 = patientJpaRepository.findByPesel(patientEntity.getPesel());
     Assertions.assertThat(patientEntity1.isPresent());

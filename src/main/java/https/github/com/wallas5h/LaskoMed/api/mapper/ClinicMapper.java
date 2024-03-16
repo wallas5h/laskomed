@@ -13,7 +13,7 @@ public interface ClinicMapper {
 //  @Mapping(target = "address", ignore = true )
 //  ClinicDTO mapFromEntityToDto(ClinicEntity entity);
 
-  @Mapping(target = "address", ignore = true )
+  @Mapping(target = "address", ignore = true)
   Clinic mapFromEntity(ClinicEntity entity);
 
   ClinicEntity mapToEntity(Clinic object);

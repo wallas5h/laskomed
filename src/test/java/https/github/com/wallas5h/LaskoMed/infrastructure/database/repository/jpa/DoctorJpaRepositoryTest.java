@@ -21,7 +21,7 @@ class DoctorJpaRepositoryTest {
   private DoctorJpaRepository doctorJpaRepository;
 
   @Test
-  void thatFindDoctorByUserIdWorks(){
+  void thatFindDoctorByUserIdWorks() {
     UserEntity userEntity = userJpaRepository.saveAndFlush(EntityFixtures.someUserEntity());
 
     DoctorEntity doctorEntity = doctorJpaRepository

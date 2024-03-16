@@ -18,7 +18,7 @@ public class DoctorAvailabilityEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="availability_id")
+  @Column(name = "availability_id")
   private Long availabilityId;
 
   @Column(name = "date_available")

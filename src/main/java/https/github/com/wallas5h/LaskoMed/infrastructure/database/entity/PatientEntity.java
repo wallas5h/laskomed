@@ -3,7 +3,6 @@ package https.github.com.wallas5h.LaskoMed.infrastructure.database.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.springframework.lang.NonNull;
 
 import java.time.LocalDate;
 import java.util.Set;

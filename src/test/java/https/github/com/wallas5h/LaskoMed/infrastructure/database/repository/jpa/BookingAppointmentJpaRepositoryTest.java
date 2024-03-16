@@ -15,6 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 import java.time.*;
 import java.util.List;
 import java.util.Optional;
+
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -26,65 +27,64 @@ class BookingAppointmentJpaRepositoryTest {
   private PatientJpaRepository patientJpaRepository;
   private EntityManager entityManager;
 
-@Test
-void thatFindByDoctorIdWorks(){
-  BookingAppointmentEntity booking = createBooking();
+  @Test
+  void thatFindByDoctorIdWorks() {
+    BookingAppointmentEntity booking = createBooking();
 
-  List<BookingAppointmentEntity> bookingResult = bookingRepository.findByDoctorId(booking.getDoctor().getDoctorId());
-  Assertions.assertThat(booking.equals(bookingResult));
-}
+    List<BookingAppointmentEntity> bookingResult = bookingRepository.findByDoctorId(booking.getDoctor().getDoctorId());
+    Assertions.assertThat(booking.equals(bookingResult));
+  }
 
-@Test
-void thatFindByDoctorIdAndDateRangeWorks(){
-  BookingAppointmentEntity booking = createBooking();
+  @Test
+  void thatFindByDoctorIdAndDateRangeWorks() {
+    BookingAppointmentEntity booking = createBooking();
 
-  List<BookingAppointmentEntity> bookingResult = bookingRepository.findByDoctorIdAndDateRange(
-      booking.getDoctor().getDoctorId(),
-      booking.getBookingDate(),
-      booking.getBookingDate().plusDays(1)
-          );
-  Assertions.assertThat(booking.equals(bookingResult));
-}
+    List<BookingAppointmentEntity> bookingResult = bookingRepository.findByDoctorIdAndDateRange(
+        booking.getDoctor().getDoctorId(),
+        booking.getBookingDate(),
+        booking.getBookingDate().plusDays(1)
+    );
+    Assertions.assertThat(booking.equals(bookingResult));
+  }
 
-@Test
-void thatFindByPatientIdWorks(){
-  BookingAppointmentEntity booking = createBooking();
+  @Test
+  void thatFindByPatientIdWorks() {
+    BookingAppointmentEntity booking = createBooking();
 
-  List<BookingAppointmentEntity> bookingResult = bookingRepository.findByPatientId(booking.getPatient().getPatientId());
-  Assertions.assertThat(booking.equals(bookingResult));
-}
+    List<BookingAppointmentEntity> bookingResult = bookingRepository.findByPatientId(booking.getPatient().getPatientId());
+    Assertions.assertThat(booking.equals(bookingResult));
+  }
 
-@Test
-void thatFindByPatientIdAndDate(){
-  BookingAppointmentEntity booking = createBooking();
-  Optional<BookingAppointmentEntity> bookingResult = bookingRepository.findByPatientIdAndDate(
-      booking.getPatient().getPatientId(),
-      booking.getBookingDate()
-  );
-  Assertions.assertThat(booking.equals(bookingResult.get()));
-}
+  @Test
+  void thatFindByPatientIdAndDate() {
+    BookingAppointmentEntity booking = createBooking();
+    Optional<BookingAppointmentEntity> bookingResult = bookingRepository.findByPatientIdAndDate(
+        booking.getPatient().getPatientId(),
+        booking.getBookingDate()
+    );
+    Assertions.assertThat(booking.equals(bookingResult.get()));
+  }
 
-@Test
-void thatUpdateBookingStatusWorks(){
-  BookingAppointmentEntity booking = createBooking();
+  @Test
+  void thatUpdateBookingStatusWorks() {
+    BookingAppointmentEntity booking = createBooking();
 
-  int updated = bookingRepository.updateBookingStatus(booking.getBookingId(), EnumsContainer.BookingStatus.COMPLETED.name());
-  Assertions.assertThat(updated>0);
-}
+    int updated = bookingRepository.updateBookingStatus(booking.getBookingId(), EnumsContainer.BookingStatus.COMPLETED.name());
+    Assertions.assertThat(updated > 0);
+  }
 
-@Test
-void thatUpdateBookingStatusByPatientWorks(){
-  BookingAppointmentEntity booking = createBooking();
+  @Test
+  void thatUpdateBookingStatusByPatientWorks() {
+    BookingAppointmentEntity booking = createBooking();
 
-  int updated = bookingRepository.updateBookingStatusByPatient(
-      booking.getBookingId(),
-      EnumsContainer.BookingStatus.CANCELLED.name(),
-      booking.getPatient().getPatientId(),
-      booking.getBookingDate()
-  );
-  Assertions.assertThat(updated>0);
-}
-
+    int updated = bookingRepository.updateBookingStatusByPatient(
+        booking.getBookingId(),
+        EnumsContainer.BookingStatus.CANCELLED.name(),
+        booking.getPatient().getPatientId(),
+        booking.getBookingDate()
+    );
+    Assertions.assertThat(updated > 0);
+  }
 
 
   @NotNull
@@ -116,8 +116,8 @@ void thatUpdateBookingStatusByPatientWorks(){
   @NotNull
   private List<AvailableAppointmentEntity> createAvailableAppointments() {
     LocalDate dateAvailable = LocalDate.now().plusDays(2);
-    LocalTime startTime = LocalTime.of(8,0,0);
-    LocalTime endTime = LocalTime.of(16,0,0);
+    LocalTime startTime = LocalTime.of(8, 0, 0);
+    LocalTime endTime = LocalTime.of(16, 0, 0);
 
     ClinicEntity clinicEntity = entityManager.find(ClinicEntity.class, 1L);
     DoctorEntity doctorEntity = createDoctor();

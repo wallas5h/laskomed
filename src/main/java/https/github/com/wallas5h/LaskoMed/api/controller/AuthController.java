@@ -41,14 +41,14 @@ public class AuthController {
       produces = {
           MediaType.APPLICATION_JSON_VALUE
       }
-)
+  )
   public ResponseEntity<Map<String, Object>> register(
       @RequestBody RegisterRequest request
-  ){
+  ) {
     return authService.register(request);
   }
 
-  @Operation(summary = "Login patient")
+  @Operation(summary = "Login user")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "User logged",
           content = @Content),
@@ -58,7 +58,7 @@ public class AuthController {
   @PostMapping(LOGIN)
   public ResponseEntity<Map<String, Object>> login(
       @RequestBody LoginRequest request
-  ){
+  ) {
     return authService.login(request);
   }
 }

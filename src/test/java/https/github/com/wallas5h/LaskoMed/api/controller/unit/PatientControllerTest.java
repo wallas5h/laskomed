@@ -57,11 +57,13 @@ class PatientControllerTest {
 
     when(userServiceAdvice.getUserId()).thenReturn(1L);
 
-    doAnswer(invocation -> {throw new Exception("Some error message");})
+    doAnswer(invocation -> {
+      throw new Exception("Some error message");
+    })
         .when(patientService).createPatient(any(PatientCreateRequest.class), any(Long.class));
 
     //when
-    ResponseEntity<Map<String, Object>> responseEntity  = patientController.createPatient(DtoFixtures.somePatientCreateRequest());
+    ResponseEntity<Map<String, Object>> responseEntity = patientController.createPatient(DtoFixtures.somePatientCreateRequest());
 
     //then
     assertNotNull(responseEntity.getBody());

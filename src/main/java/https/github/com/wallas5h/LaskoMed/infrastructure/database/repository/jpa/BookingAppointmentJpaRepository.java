@@ -21,6 +21,7 @@ public interface BookingAppointmentJpaRepository extends JpaRepository<BookingAp
       ORDER BY CAST(ba.bookingDate AS date)
       """)
   List<BookingAppointmentEntity> findByDoctorId(final @Param("id") Long doctorId);
+
   @Query("""
       SELECT ba FROM BookingAppointmentEntity ba
       WHERE ba.doctor.doctorId = :id
@@ -50,6 +51,7 @@ public interface BookingAppointmentJpaRepository extends JpaRepository<BookingAp
       """)
   int updateBookingStatus(@Param("bookingId") Long bookingId,
                           @Param("newStatus") String newStatus);
+
   @Modifying
   @Query("""
       UPDATE BookingAppointmentEntity ba
@@ -62,8 +64,8 @@ public interface BookingAppointmentJpaRepository extends JpaRepository<BookingAp
       @Param("bookingId") Long bookingId,
       @Param("newStatus") String newStatus,
       final @Param("id") Long patientId,
-      @Param("date")OffsetDateTime date
-      );
+      @Param("date") OffsetDateTime date
+  );
 
   @Query("""
       SELECT ba FROM BookingAppointmentEntity ba
@@ -73,6 +75,6 @@ public interface BookingAppointmentJpaRepository extends JpaRepository<BookingAp
       """)
   Optional<BookingAppointmentEntity> findByPatientIdAndDate(
       final @Param("id") Long patientId,
-      @Param("date")OffsetDateTime date
+      @Param("date") OffsetDateTime date
   );
 }

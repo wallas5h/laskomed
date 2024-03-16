@@ -1,7 +1,6 @@
 package https.github.com.wallas5h.LaskoMed.infrastructure.database.repository;
 
 import https.github.com.wallas5h.LaskoMed.business.dao.DiagnosedDiseaseDAO;
-import https.github.com.wallas5h.LaskoMed.business.services.AppointmentsService;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DiagnosedDiseaseEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.DoctorEntity;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.PatientEntity;

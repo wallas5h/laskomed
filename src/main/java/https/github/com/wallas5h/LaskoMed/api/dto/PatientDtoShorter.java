@@ -13,14 +13,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PatientDtoShorter {
 
-    private Long patientId;
-    private String name;
-    private String surname;
-    private String pesel;
-    private LocalDate birthdate;
-    private String email;
-    private String phone;
-    private String medicalPackage;
-    private String gender;
+  private Long patientId;
+  private String name;
+  private String surname;
+  private String pesel;
+  private LocalDate birthdate;
+  private String email;
+  private String phone;
+  private String medicalPackage;
+  private String gender;
 
 }

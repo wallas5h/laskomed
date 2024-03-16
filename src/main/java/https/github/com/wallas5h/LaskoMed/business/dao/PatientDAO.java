@@ -12,5 +12,5 @@ public interface PatientDAO {
 
   PatientDTO findByUserId(Long userId);
 
-  Optional<PatientEntity>  findByUserIdOptional(Long userId);
+  Optional<PatientEntity> findByUserIdOptional(Long userId);
 }

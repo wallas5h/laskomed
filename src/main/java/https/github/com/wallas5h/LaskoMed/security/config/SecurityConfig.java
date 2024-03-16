@@ -6,7 +6,6 @@ import jakarta.servlet.DispatcherType;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,7 +35,7 @@ public class SecurityConfig {
           authorize.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
           authorize.requestMatchers("/css/**", "/favicon.ico", "/error").permitAll();
           authorize.requestMatchers("/auth/register", "/auth/login").permitAll();
-          authorize.requestMatchers( "/swagger-ui/**", "/v3/api-docs/**").permitAll();
+          authorize.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
           authorize.anyRequest().authenticated();
         })
         .httpBasic(Customizer.withDefaults());
@@ -47,7 +46,7 @@ public class SecurityConfig {
     http.sessionManagement((session) -> session
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-    http.exceptionHandling( exception -> exception
+    http.exceptionHandling(exception -> exception
         .authenticationEntryPoint(authenticationEntryPoint));
 
     http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);

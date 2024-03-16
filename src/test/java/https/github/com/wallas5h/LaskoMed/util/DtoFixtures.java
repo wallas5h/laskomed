@@ -27,12 +27,14 @@ public class DtoFixtures {
         .password("Testpassword1")
         .build();
   }
+
   public static LoginRequest doctorLoginRequest() {
     return LoginRequest.builder()
         .usernameOrEmail("adam.mocny")
         .password("test")
         .build();
   }
+
   public static LoginRequest patientLoginRequest() {
     return LoginRequest.builder()
         .usernameOrEmail("john.doe")

@@ -54,7 +54,7 @@ public class AuthControllerIntegrationRegisterTest {
     perform
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.message", Matchers.is("User registered successfully")));
-    
+
   }
 
   @ParameterizedTest
@@ -75,16 +75,16 @@ public class AuthControllerIntegrationRegisterTest {
 
   }
 
-  public static Stream<Arguments> shouldRegisterFail(){
+  public static Stream<Arguments> shouldRegisterFail() {
     RegisterRequest registerRequest = DtoFixtures.someUserRegisterRequest();
     return Stream.of(
-    Arguments.of( registerRequest.withRole("")),
-    Arguments.of( registerRequest.withUsername("")),
-    Arguments.of( registerRequest.withUsername("aa")),
-    Arguments.of( registerRequest.withEmail("")),
-    Arguments.of( registerRequest.withEmail("a.mail.com")),
-    Arguments.of( registerRequest.withPassword(""))
-        );
+        Arguments.of(registerRequest.withRole("")),
+        Arguments.of(registerRequest.withUsername("")),
+        Arguments.of(registerRequest.withUsername("aa")),
+        Arguments.of(registerRequest.withEmail("")),
+        Arguments.of(registerRequest.withEmail("a.mail.com")),
+        Arguments.of(registerRequest.withPassword(""))
+    );
   }
 
   private static String asJsonString(Object obj) throws JsonProcessingException {

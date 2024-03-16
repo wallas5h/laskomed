@@ -3,11 +3,9 @@ package https.github.com.wallas5h.LaskoMed.security;
 import https.github.com.wallas5h.LaskoMed.infrastructure.database.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -27,21 +25,22 @@ public class JwtTokenProvider {
   @Value("${app.jwt-expiration-milliseconds}")
   private long jwtExpirationDate;
 
-  public String getUsername(String token){
+  public String getUsername(String token) {
     // get username from JWT token
     return extractClaim(token, Claims::getSubject);
   }
+
   public String getUserId(String token) {
     return extractClaim(token, Claims::getId);
   }
 
-  private <T> T extractClaim (String token, Function<Claims, T> claimDecoder){
+  private <T> T extractClaim(String token, Function<Claims, T> claimDecoder) {
     Claims claims = extractAllClaims(token);
     return claimDecoder.apply(claims);
   }
 
 
-  private Claims extractAllClaims(String token){
+  private Claims extractAllClaims(String token) {
     return Jwts.parser()
         .verifyWith((SecretKey) key())
         .build()
@@ -50,11 +49,11 @@ public class JwtTokenProvider {
 
   }
 
-  public String generateToken(UserEntity userDetails){
+  public String generateToken(UserEntity userDetails) {
     return generateToken(userDetails, new HashMap<>());
   }
 
-  private String generateToken(UserEntity userDetails, Map<String, Object> extractAllClaims){
+  private String generateToken(UserEntity userDetails, Map<String, Object> extractAllClaims) {
 
     Date currentDate = new Date(System.currentTimeMillis());
     Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
@@ -68,12 +67,12 @@ public class JwtTokenProvider {
         .compact();
   }
 
-  private Key key(){
+  private Key key() {
     return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
   }
 
   // validate JWT token
-  public boolean validateToken(String token, UserDetails userDetails){
+  public boolean validateToken(String token, UserDetails userDetails) {
     String username = getUsername(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpire(token));
   }

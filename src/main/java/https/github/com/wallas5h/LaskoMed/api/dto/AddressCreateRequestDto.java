@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressCreateRequestDto {
-    private String city;
-    private String street;
-    private String houseNumber;
-    private String apartmentNumber;
-    private String postalCode;
+  private String city;
+  private String street;
+  private String houseNumber;
+  private String apartmentNumber;
+  private String postalCode;
 
 }

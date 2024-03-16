@@ -1,6 +1,5 @@
 package https.github.com.wallas5h.LaskoMed.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;

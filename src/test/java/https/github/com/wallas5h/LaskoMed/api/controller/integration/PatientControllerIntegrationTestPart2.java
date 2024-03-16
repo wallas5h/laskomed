@@ -263,7 +263,7 @@ public class PatientControllerIntegrationTestPart2 {
 
     //then
     MvcResult result = mockMvcPerform(userPatientData,
-        MockMvcRequestBuilders.get(BASE + PATIENT_APPOINTMENTS_HISTORY+ "/" +stringAppointmentId))
+        MockMvcRequestBuilders.get(BASE + PATIENT_APPOINTMENTS_HISTORY + "/" + stringAppointmentId))
         .andExpect(status().isOk())
         .andReturn();
 
@@ -382,8 +382,9 @@ public class PatientControllerIntegrationTestPart2 {
             .characterEncoding("UTF-8")
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + userPatientData.token()));
   }
+
   @NotNull
-  private ResultActions mockMvcPerform(UserPatient userPatientData, MockHttpServletRequestBuilder method,Long id
+  private ResultActions mockMvcPerform(UserPatient userPatientData, MockHttpServletRequestBuilder method, Long id
   ) throws Exception {
     return mockMvc.perform(
         method

@@ -26,6 +26,7 @@ public class PatientRepository implements PatientDAO {
   private AppointmentsService appointmentsService;
   private PatientMapper patientMapper;
   private DiagnosedDiseaseMapper diagnosedDiseaseMapper;
+
   @Override
   public PatientDTO findById(Long patientId) {
     Optional<PatientEntity> optionalPatientEntity = patientJpaRepository.findById(patientId);
@@ -42,12 +43,13 @@ public class PatientRepository implements PatientDAO {
 
   @Override
   public PatientDTO findByUserId(Long userId) {
-    Optional<PatientEntity> optionalPatientEntity =patientJpaRepository.findByUserId(userId);
+    Optional<PatientEntity> optionalPatientEntity = patientJpaRepository.findByUserId(userId);
     return optionalPatientEntity.map(patientMapper::mapFromEntityToDto)
         .orElseThrow(() -> new EntityNotFoundException(
             "PatientEntity not found, userId: [%s]".formatted(userId)
         ));
   }
+
   public Optional<PatientEntity> findByUserIdOptional(Long userId) {
     Optional<Optional<PatientEntity>> result = Optional.ofNullable(patientJpaRepository.findByUserId(userId));
 

@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -57,17 +56,17 @@ public class MedicalAppointmentRepository implements MedicalAppointmentDAO {
 
   @Override
   public MedicalAppointmentDTO findByBookingId(Long bookingId) {
-   return medicalAppointmentJpaRepository.findByBookingId(bookingId)
-       .map( medicalAppointmentMapper::mapFromEntityToDto)
-       .orElseThrow(() -> new EntityNotFoundException(
-           "MedicalAppointmentEntity not found, bookingId: [%s]".formatted(bookingId)
-       ));
+    return medicalAppointmentJpaRepository.findByBookingId(bookingId)
+        .map(medicalAppointmentMapper::mapFromEntityToDto)
+        .orElseThrow(() -> new EntityNotFoundException(
+            "MedicalAppointmentEntity not found, bookingId: [%s]".formatted(bookingId)
+        ));
   }
 
   @Override
   public MedicalAppointmentDTO findById(Long appointmentId) {
     return medicalAppointmentJpaRepository.findById(appointmentId)
-        .map( medicalAppointmentMapper::mapFromEntityToDto)
+        .map(medicalAppointmentMapper::mapFromEntityToDto)
         .orElseThrow(() -> new EntityNotFoundException(
             "MedicalAppointmentEntity not found, appointmentId: [%s]".formatted(appointmentId)
         ));

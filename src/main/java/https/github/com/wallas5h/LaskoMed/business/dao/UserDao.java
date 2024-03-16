@@ -8,6 +8,7 @@ public interface UserDao {
   UserEntity save(UserEntity userEntity);
 
   UserEntity findByUsernameOrEmail(String usernameOrEmail);
+
   UserEntity findByUsernameOrEmail(String username, String email);
 
   Optional<UserEntity> findByUsername(String username);

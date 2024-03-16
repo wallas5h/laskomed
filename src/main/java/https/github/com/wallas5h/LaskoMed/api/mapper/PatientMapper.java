@@ -10,17 +10,17 @@ import org.mapstruct.Mapping;
 public interface PatientMapper {
   PatientDTO map(Patient patient);
 
-  @Mapping(target = "address.patient", ignore = true )
-  @Mapping(target = "appointments", ignore = true )
-  @Mapping(target = "bookings", ignore = true )
-  @Mapping(target = "prescriptions", ignore = true )
-  @Mapping(target = "referrals", ignore = true )
-  @Mapping(target = "diagnosedDiseases", ignore = true )
+  @Mapping(target = "address.patient", ignore = true)
+  @Mapping(target = "appointments", ignore = true)
+  @Mapping(target = "bookings", ignore = true)
+  @Mapping(target = "prescriptions", ignore = true)
+  @Mapping(target = "referrals", ignore = true)
+  @Mapping(target = "diagnosedDiseases", ignore = true)
   PatientDTO mapFromEntityToDto(PatientEntity patient);
 
-  @Mapping(target = "prescriptions", ignore = true )
-  @Mapping(target = "referrals", ignore = true )
-  @Mapping(target = "diagnosedDiseases", ignore = true )
+  @Mapping(target = "prescriptions", ignore = true)
+  @Mapping(target = "referrals", ignore = true)
+  @Mapping(target = "diagnosedDiseases", ignore = true)
   Patient mapFromEntity(PatientEntity entity);
 
   PatientEntity mapToEntity(Patient object);

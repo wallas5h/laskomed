@@ -26,7 +26,7 @@ class DiagnosesDiseaseJpaRepositoryTest {
   private PatientJpaRepository patientJpaRepository;
 
   @Test
-  void thatFindByPatientIdWorks(){
+  void thatFindByPatientIdWorks() {
     DiagnosedDiseaseEntity diagnosesDisease = createDiagnosesDisease();
 
     Set<DiagnosedDiseaseEntity> result = diagnosesDiseaseJpaRepository.findByPatientId(diagnosesDisease.getPatient().getPatientId());

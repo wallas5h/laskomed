@@ -31,6 +31,7 @@ public class BookingAppointmentRepository implements BookingAppointmentDAO {
   private BookingAppointmentMapper bookingAppointmentMapper;
   private MedicalAppointmentMapper medicalAppointmentMapper;
   private AvailableAppointmentMapper availableAppointmentMapper;
+
   @Override
   public List<BookingAppointmentDTO> findByPatientId(Long patientId) {
     return bookingAppointmentJpaRepository.findByPatientId(patientId).stream()
@@ -57,14 +58,14 @@ public class BookingAppointmentRepository implements BookingAppointmentDAO {
   @Override
   public List<BookingAppointmentDTO> findByDoctorId(Long doctorId) {
     return bookingAppointmentJpaRepository.findByDoctorId(doctorId).stream()
-        .map( bookingAppointmentMapper::mapFromEntityToDto)
+        .map(bookingAppointmentMapper::mapFromEntityToDto)
         .toList();
   }
 
   @Override
   public List<BookingAppointmentDTO> findByDoctorIdAndDateRange(Long doctorId, OffsetDateTime fromDateTime, OffsetDateTime toDateTime) {
     return bookingAppointmentJpaRepository.findByDoctorIdAndDateRange(doctorId, fromDateTime, toDateTime).stream()
-        .map( bookingAppointmentMapper::mapFromEntityToDto)
+        .map(bookingAppointmentMapper::mapFromEntityToDto)
         .toList();
   }
 

@@ -14,13 +14,13 @@ import java.util.List;
 public interface AvailableAppointmentJpaRepository extends JpaRepository<AvailableAppointmentEntity, Long> {
 
   @Query("""
-    SELECT aa FROM AvailableAppointmentEntity aa
-    WHERE aa.dateAvailable >= :date
-    AND aa.isActive= true
-    AND (COALESCE(:specialization, '') = '' OR aa.doctor.specialization = :specialization)
-    AND (COALESCE(:city, '') = '' OR aa.clinic.address.city = :city)
-    ORDER BY aa.dateAvailable, aa.startTime
-    """)
+      SELECT aa FROM AvailableAppointmentEntity aa
+      WHERE aa.dateAvailable >= :date
+      AND aa.isActive= true
+      AND (COALESCE(:specialization, '') = '' OR aa.doctor.specialization = :specialization)
+      AND (COALESCE(:city, '') = '' OR aa.clinic.address.city = :city)
+      ORDER BY aa.dateAvailable, aa.startTime
+      """)
   List<AvailableAppointmentEntity> getAvailableMedicalAppointments(
       @Param("date") LocalDate date,
       @Param("specialization") String specialization,

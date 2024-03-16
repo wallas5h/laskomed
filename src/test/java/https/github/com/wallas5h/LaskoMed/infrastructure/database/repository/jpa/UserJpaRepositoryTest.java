@@ -20,7 +20,7 @@ class UserJpaRepositoryTest {
   private final UserJpaRepository userJpaRepository;
 
   @Test
-  void thatUserCanBeFindByUsernameOrEmail(){
+  void thatUserCanBeFindByUsernameOrEmail() {
     UserEntity userEntity = EntityFixtures.someUserEntity();
     saveExampleUser();
 
@@ -30,7 +30,7 @@ class UserJpaRepositoryTest {
   }
 
   @Test
-  void thatUserCanBeFindByUsername(){
+  void thatUserCanBeFindByUsername() {
     UserEntity userEntity = EntityFixtures.someUserEntity();
     saveExampleUser();
 
@@ -39,7 +39,7 @@ class UserJpaRepositoryTest {
   }
 
   @Test
-  void thatUserCanBeFindByEmail(){
+  void thatUserCanBeFindByEmail() {
     UserEntity userEntity = EntityFixtures.someUserEntity();
     saveExampleUser();
 
@@ -47,7 +47,7 @@ class UserJpaRepositoryTest {
     Assertions.assertThat(byEmail.isPresent());
   }
 
-  void saveExampleUser(){
+  void saveExampleUser() {
     userJpaRepository.saveAndFlush(EntityFixtures.someUserEntity());
   }
 

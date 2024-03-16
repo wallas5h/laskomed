@@ -2,7 +2,6 @@ package https.github.com.wallas5h.LaskoMed.infrastructure.configuration;
 
 import https.github.com.wallas5h.LaskoMed.LaskoMedApplication;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -22,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 public class SpringDocConfiguration {
 
   @Bean
-  public GroupedOpenApi groupedOpenApi(){
+  public GroupedOpenApi groupedOpenApi() {
     return GroupedOpenApi.builder()
         .group("default")
         .pathsToMatch("/**")
@@ -31,7 +30,7 @@ public class SpringDocConfiguration {
   }
 
   @Bean
-  public OpenAPI springDocOpenApi(){
+  public OpenAPI springDocOpenApi() {
     return new OpenAPI()
         .components(new Components())
         .info(new Info()
@@ -42,9 +41,8 @@ public class SpringDocConfiguration {
   }
 
 
-
-  private Contact contact(){
-    return  new Contact()
+  private Contact contact() {
+    return new Contact()
         .name("Waldemar Laskowski")
         .url("https://www.linkedin.com/in/waldemar-laskowski-183951238")
         .email("wallas5h@gmail.com");

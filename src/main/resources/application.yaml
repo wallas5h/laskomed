@@ -1,6 +1,4 @@
 
-#http://localhost:8080/laskomed
-
 server:
   port: 8080
   servlet:
@@ -9,11 +7,6 @@ app:
   jwt-secret: FxfGyCNl3uUwR2b/Te+s+TOe2l2FjL8ceWjA32vG62n0kY1/A+yW7M3fZdV6wLy9
   jwt-expiration-milliseconds: 86400000
 
-# api store dla zewnętrznego api
-api:
-  petStore:
-    url: https://petstore3.swagger.io/api/v3/
-
 spring:
   flyway:
     baseline-on-migrate: true
@@ -21,8 +14,8 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
     show-sql: true
-    url: jdbc:postgresql://postgres:5432/laskomed  # pod dockera
-#    url: jdbc:postgresql://localhost:5432/laskomed  # pod localne uruchomienie aplikacji
+#    url: jdbc:postgresql://postgres:5432/laskomed  # pod dockera
+    url: jdbc:postgresql://localhost:5432/laskomed  # pod localne uruchomienie aplikacji
     username: postgres
     password: 1234
     hikari:
@@ -37,10 +30,4 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-  # tylko na developmencie
-logging:
-  level:
-    org:
-      springframework:
-        security: TRACE
+        format_sql: false
