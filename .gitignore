@@ -54,6 +54,8 @@ gradle-app.setting
 # notes
 notes.md
 notes2.md
+notes4_docker.md
 drop_tables.sql
+readme.md
 
 /htmlReport/**
