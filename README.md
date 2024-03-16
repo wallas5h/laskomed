@@ -94,5 +94,5 @@ POST http://localhost:8080/laskomed/api/patients
 "postalCode":"00-149"
 }
 ```
-### More endpoints you will find in documentation:  
+### You will find more endpoints in the documentation.  
 `http://localhost:8080/laskomed/api/swagger-ui/index.html`
