@@ -35,7 +35,8 @@ LaskoMed requires [Docker](https://www.docker.com/products/docker-desktop/) to r
 2. Start Docker.
 3. Build the application with the command: `docker compose up`
 4. The application will be available at the address `http://localhost:8080/laskomed/api`
-5. If you have currently installed and used PgAdmin you will have to kill this process `sudo lsof -i :5432` and `sudo kill -9 PID`
+5. If you currently have PgAdmin installed and running, you will need to kill this process using the commands: 
+`sudo lsof -i :5432` and `sudo kill -9 PID`.
 
 After everything builds and ready, you can test the application using [Postman](https://www.postman.com/)
 or use [Swagger-ui](http://localhost:8080/swagger-ui.html)
