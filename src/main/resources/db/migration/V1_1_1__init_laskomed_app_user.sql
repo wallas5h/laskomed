@@ -4,6 +4,6 @@
     username        VARCHAR(32) UNIQUE         NOT NULL,
     password        VARCHAR(255)               NOT NULL,
     email           VARCHAR(32) UNIQUE         NOT NULL ,
-    enabled BOOLEAN NOT NULL DEFAULT true,
+    enabled BOOLEAN NOT NULL DEFAULT false,
     confirmed BOOLEAN NOT NULL DEFAULT false
 );
