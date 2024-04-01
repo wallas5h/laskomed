@@ -52,6 +52,8 @@ gradle-app.setting
 .gradletasknamecache
 
 # notes
+notes.md
+application.properties
 
 
 /htmlReport/**

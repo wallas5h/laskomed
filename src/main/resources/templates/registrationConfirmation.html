@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Potwierdzenie rejestracji</title>
+</head>
+<body>
+<h1>Witaj, [(${user.username})]!</h1>
+<p>Dziękujemy za rejestrację w naszej aplikacji.</p>
+<p>Aby potwierdzić swoje konto, kliknij w poniższy link:</p>
+<BUTTON><a th:href="${confirmUrl} ">Confirm Registration</a></BUTTON>
+<p>Jeśli nie rejestrowałeś się w naszej aplikacji, zignoruj to powiadomienie.</p>
+
+</body>
+</html>
