@@ -34,8 +34,9 @@ public class SecurityConfig {
         .authorizeHttpRequests((authorize) -> {
           authorize.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
           authorize.requestMatchers("/css/**", "/favicon.ico", "/error").permitAll();
-          authorize.requestMatchers("/auth/register", "/auth/login").permitAll();
+          authorize.requestMatchers("/auth/register", "/auth/login", "/auth/confirm-registration/**").permitAll();
           authorize.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
+          authorize.requestMatchers("/mail/**").permitAll();
           authorize.anyRequest().authenticated();
         })
         .httpBasic(Customizer.withDefaults());

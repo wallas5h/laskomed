@@ -16,7 +16,5 @@ public class RegisterRequest {
   @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$", message = "Invalid password format")
   private String password;
   private String email;
-  private Boolean enabled;
-  private Boolean confirmed;
   private String role;
 }

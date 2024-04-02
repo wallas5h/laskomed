@@ -16,8 +16,6 @@ public class DtoFixtures {
         .email("newtest@mail.com")
         .password("Testpassword1")
         .role(EnumsContainer.RoleNames.PATIENT.name())
-        .confirmed(true)
-        .enabled(true)
         .build();
   }
 

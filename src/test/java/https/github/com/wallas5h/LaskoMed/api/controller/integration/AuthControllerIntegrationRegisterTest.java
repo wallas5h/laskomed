@@ -53,7 +53,8 @@ public class AuthControllerIntegrationRegisterTest {
 
     perform
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.message", Matchers.is("User registered successfully")));
+        .andExpect(jsonPath("$.message",
+            Matchers.is("User registered successfully. Check your email and confirm registration")));
 
   }
 
