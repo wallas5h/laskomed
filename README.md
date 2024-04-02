@@ -40,7 +40,7 @@ LaskoMed requires [Docker](https://www.docker.com/products/docker-desktop/) to r
 4. The application will be available at the address `http://localhost:8080/laskomed/api`
 5. If you currently have PgAdmin installed and running, you will need to kill this process using the commands: 
 `sudo lsof -i :5432` and `sudo kill -9 PID`.
-6. Before running the application, create a file named "application.properties" and add email account data.
+6. Before running the application, create a file named "application.properties" and add email account configuration.
 ``` Example for gmail
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
@@ -70,8 +70,6 @@ POST http://localhost:8080/laskomed/api/auth/register
  "username":"testowy",
  "password":"TestPassword123.",
  "email":"testowy@mail.com",
- "enabled":true,
- "confirmed":true,
  "role":"PATIENT"
 }
 ```
