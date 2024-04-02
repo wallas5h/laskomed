@@ -14,8 +14,8 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
     show-sql: true
-#    url: jdbc:postgresql://postgres:5432/laskomed  # pod dockera
-    url: jdbc:postgresql://localhost:5432/laskomed  # pod localne uruchomienie aplikacji
+    url: jdbc:postgresql://postgres:5432/laskomed  # pod dockera
+#    url: jdbc:postgresql://localhost:5432/laskomed  # pod localne uruchomienie aplikacji
     username: postgres
     password: 1234
     hikari:

@@ -10,8 +10,10 @@ LaskoMed is an application for managing patients, doctors, and medical appointme
 
 ## Functions:
 
+- User registration
 - Patient registration
 - Doctor registration
+- Confirmation registration via email
 - Patient data management 
 - Doctor data management 
 - Planning medical appointments
@@ -24,6 +26,7 @@ LaskoMed is an application for managing patients, doctors, and medical appointme
 - Spring Boot
 - Spring Data JPA
 - Spring Security
+- Spring Email
 - JWT Token
 - PostgreSQL
 - Gradle
@@ -37,6 +40,15 @@ LaskoMed requires [Docker](https://www.docker.com/products/docker-desktop/) to r
 4. The application will be available at the address `http://localhost:8080/laskomed/api`
 5. If you currently have PgAdmin installed and running, you will need to kill this process using the commands: 
 `sudo lsof -i :5432` and `sudo kill -9 PID`.
+6. Before running the application, create a file named "application.properties" and add email account data.
+``` Example for gmail
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=example@gmail.com
+spring.mail.password="your password"
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
 
 After everything builds and ready, you can test the application using [Postman](https://www.postman.com/)
 or use [Swagger-ui](http://localhost:8080/swagger-ui.html)
