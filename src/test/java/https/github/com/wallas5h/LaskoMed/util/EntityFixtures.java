@@ -147,8 +147,6 @@ public class EntityFixtures {
         .email("test@mail.com")
         .password("testpassword")
         .role("PATIENT")
-        .confirmed(true)
-        .enabled(true)
         .build();
   }
 
